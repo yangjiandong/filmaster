@@ -1,0 +1,13 @@
+{% load i18n %}
+<section class="others-ratings shitlist">
+<h1>{% trans "Shitlist" %}</h1>
+{% if movies %}
+    {% include 'aside/movies/movie_list.html' %}
+    
+    {% if show_more %}
+    <a href="{% url shitlist username=act_user.username %}">{% trans "show all" %}</a>
+    {% endif %}
+{% else %}
+    <p> {% trans "There are no movies on user's shitlist" %}
+{% endif %}
+</section>

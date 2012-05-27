@@ -1,0 +1,36 @@
+{% load i18n %}
+<section class="stream">
+	<h1>{% trans "More than 25,000 people rate movies on Filmaster" %}</h1>
+	<p>{% trans "see what they think about the service" %}</p>
+    {% ifequal request.lang 'pl' %} 
+	<ul>
+		<li>
+			<a href="#">Benedykt<img src="/static/layout/benedykt.45.jpg" alt="Benedykt XVI" /></a>
+			<p>Postrafiam sertecznie wszyskich Filmasterów.</p>
+		</li>
+		<li>
+			<a href="http://thenextweb.com/apps/2011/03/14/filmasters-iphone-app-is-foursquare-for-cinemagoers/">Martin Bryant<img src="/static/layout/martin_bryant.45.jpg" alt="Martin Bryant" /></a>
+			<p>Filmaster to idealny serwis dla hardkorowych kinomaniaków. (<a href="http://thenextweb.com/apps/2011/03/14/filmasters-iphone-app-is-foursquare-for-cinemagoers/">TheNextWeb</a>)</p>
+		</li>
+		<li>
+			<a href="http://techland.time.com/2011/03/14/filmaster-app-makes-moviegoing-more-social/">Graeme McMillan<img src="/static/layout/mcmillan.45.jpg" alt="McMillan" /></a>
+			<p>Filmaster wzbogaca chodzenie do kina o element towarzyski (<a href="http://techland.time.com/2011/03/14/filmaster-app-makes-moviegoing-more-social/">Time</a>)</p>
+		</li>
+	</ul>
+    {% else %}
+	<ul>
+		<li>
+			<a href="http://techland.time.com/2011/03/14/filmaster-app-makes-moviegoing-more-social/">Graeme McMillan<img src="/static/layout/mcmillan.45.jpg" alt="McMillan" /></a>
+			<p>Filmaster makes moviegoing more social. (<a href="http://techland.time.com/2011/03/14/filmaster-app-makes-moviegoing-more-social/">Time</a>)</p>
+		</li>
+		<li>
+			<a href="http://thenextweb.com/apps/2011/03/14/filmasters-iphone-app-is-foursquare-for-cinemagoers/">Martin Bryant<img src="/static/layout/martin_bryant.45.jpg" alt="Martin Bryant" /></a>
+			<p>Filmaster could well appeal to hardcore movie geeks. (<a href="http://thenextweb.com/apps/2011/03/14/filmasters-iphone-app-is-foursquare-for-cinemagoers/">TheNextWeb</a>)</p>
+		</li>
+		<li>
+			<a href="http://gigaom.com/2011/09/29/raindance-is-hot-stuff-for-polish-movie-site-filmaster/">Bobbie Johnson<img src="/static/layout/bobbie.jpg" alt="Bobbie Johnson" /></a>
+			<p>The recommendations are pretty good. (<a href="http://gigaom.com/2011/09/29/raindance-is-hot-stuff-for-polish-movie-site-filmaster/">GigaOM</a>)</p>
+		</li>
+	</ul>
+    {% endifequal %}
+</section><!-- .stream -->

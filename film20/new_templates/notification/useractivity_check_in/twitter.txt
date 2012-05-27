@@ -1,0 +1,4 @@
+{% load notification %}
+{% load i18n %}
+{% blocktrans with film|autocut:ctx as film%}is watching {{film}}{% endblocktrans %}{% if channel %} {% blocktrans %}in{% endblocktrans %} {{channel}} {% blocktrans %}at{% endblocktrans %} {{time|date:TIME_FORMAT}}{% endif %}
+{%filter short_url%}{{url}}{%endfilter%} via @filmaster {{hashtags|default:''}}

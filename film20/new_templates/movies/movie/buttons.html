@@ -1,0 +1,36 @@
+{% load i18n %}
+{% load display_user %}
+{% load map_url %}
+{% load pyif %}
+{% load expr %}
+
+{% if buttons_form.basket_action.errors %}
+    <div class="error">
+    {{ buttons_form.basket_action.errors }}
+    </div>
+{% endif %}
+
+<div class="error-message-placeholder"></div>
+<div class="info-message-placeholder"></div>   
+
+<form action="{% url add_to_basket %}" method="post" class="collection-form">
+<input type="hidden" class="permalink" value="{{ film.permalink }}" />
+<input type="hidden" name="film_id" value="{{ film.parent_id }}" />
+<input type="hidden" name="basket_action" value="add_to_collection" /> 
+{% if user_film_basket == 1%}
+    <input type="submit" value="{% trans "Remove from collection" %}" />
+{% else %}
+<input type="submit" value="{% if film.is_tv_series %}{% trans "Add tv series to collection" %}{% else %}{% trans "Add to collection" %}{% endif %}" class="active" />
+{% endif %}
+{% csrf_token %}
+</form>
+
+{% if shop_item %}
+<form action="{{ shop_item.url_product }}" method="post" id="buttons-form-4">
+<input type="hidden" name="film_id" value="{{ the_film.parent_id }}" />
+<input type="hidden" name="basket_action" value="buy_this_film" />
+<input type="submit" value="{% trans "Buy this film" %}" class="film-buy" />
+{% csrf_token %}
+</form>
+{% endif %}
+

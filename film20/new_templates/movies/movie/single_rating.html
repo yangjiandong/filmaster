@@ -1,0 +1,8 @@
+{% load map_url %}
+<div>
+    <a href="{% url_username_link rating.user%}" class="username">{{rating.user}}</a>
+    {% if rating.score %}
+        <span class="score">{{rating.percent_score}}%</span>
+    {% endif %}
+    <span class="rating" data-value="{{rating.rating}}">{{rating.rating}}</span>
+</div>

@@ -1,0 +1,16 @@
+{% load i18n %}
+{% load showtimes %}
+<h1>{% pretty_weekday date %}</h1>
+<ul>
+{% for film in films %}
+    <li>
+        {% include "showtimes/film_tv.html" %}
+        <h2>{{film.channels.0}}
+        {%with screening=film.channels.0.screenings.0 %}
+            {%include "showtimes/screening.html" %}
+        {%endwith%}
+        </h2>
+    </li>
+{% endfor %}
+</ul>
+

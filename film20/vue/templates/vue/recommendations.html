@@ -1,0 +1,14 @@
+{% load posters %}
+{% load expr %}
+<ul class="recommended-films {{class}}">
+{% for film in recommendations %}
+    {% if film %}
+    <li data-film-id="{{film.id}}">
+        <a class="film poster" rel="{% url vue_film_details film.id %}"><img width="121" height="162" src="{% poster 121 162 film %}" /></a>
+        <h2><a class="film" rel="{% url vue_film_details film.id %}">{{film.get_title}}</a>{% if settings.DEBUG and film.similar%} <span style="color:red">*</span>{%endif%}</h2>
+    </li>
+    {% else %}
+    <li></li>
+    {% endif %}
+{% endfor %}
+</ul>

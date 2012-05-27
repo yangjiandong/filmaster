@@ -1,0 +1,14 @@
+{% load map_url %}
+{% load account %}
+{% load debug %}
+{% load movie %}
+{% load i18n %}
+
+{% if film %}
+<h1>{% trans "Rate film" %}</h1>
+<section class="rate-movie">
+	{% block form %}
+		{% film_ratings_form film %}
+	{% endblock %}
+</section><!-- .rate-movie -->
+{% endif %}

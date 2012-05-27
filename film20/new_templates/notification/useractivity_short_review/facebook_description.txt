@@ -1,0 +1,2 @@
+{% load i18n %}
+{{ short_review.review_text }}

@@ -1,0 +1,96 @@
+{% extends "moderation/merging_tools/index.html" %}
+
+{% load i18n %}
+{% load movie %}
+{% load posters %}
+{% load map_url %}
+
+{% block title %}
+    {% trans "Admin tools - merging movies | resolve" %}
+{% endblock %}
+
+{% block content-section %}
+
+<h1>{% trans "Admin tools - merging movies | resolve step" %} {{ step }}</h1>
+<div class="moderation-content notification-setting">
+<form action="{% url movie-merging-tool-resolve duplicate_film.pk %}" method="POST">
+    <input type="hidden" name="step" value="2" />
+    <table class="moderation-table">
+        <thead>
+            <tr>
+                <th>&nbsp;</th>
+                <th>A</th>
+                <th>B</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% with A=duplicate_film.filmA B=duplicate_film.filmB %}
+            <tr>
+                <td>{% trans "title" %}</td>
+                <td>{{ A.get_title }}</td>
+                <td>{{ B.get_title }}</td>
+            </tr>
+            <tr>
+                <td>{% trans "IMDB link" %}</td>
+                <td>{% if A.imdb_link %}<a href="{{ A.imdb_link }}">{{ A.imdb_link }}</a>{% endif %}</td>
+                <td>{% if B.imdb_link %}<a href="{{ B.imdb_link }}">{{ B.imdb_link }}</a>{% endif %}</td>
+            </tr>
+            <tr>
+                <td>{% trans "Poster" %}</td>
+                <td><img src="{% poster 180 258 A %}" width="180" height="258" /></td>
+                <td><img src="{% poster 180 258 B %}" width="180" height="258" /></td>
+            </tr>
+            <tr>
+                <td>{% trans "Description" %}</td>
+                <td>{% film_description A '' '' %}</td>
+                <td>{% film_description B '' '' %}</td>
+            </tr>
+            <tr>
+                <td>{% trans "Directors" %}</td>
+                <td>{% film_directors A %}</td>
+                <td>{% film_directors B %}</td>
+            </tr>
+            <tr>
+                <td>{% trans "Actors" %}</td>
+                <td>
+                    <section class="crew">
+                    <ul id="crew">
+                        {% for actor in A.get_actors %}
+                            <li>{% url_person actor.person %}{% if actor.character %} {% trans "as" %} {{ actor.character }}{% endif %}{% if not forloop.last or actors_extra %}, {%endif%}</li>
+                        {% endfor %}
+                    </ul>
+                    </section>
+                </td>
+                <td>
+                    <section class="crew">
+                    <ul id="crew">
+                        {% for actor in B.get_actors %}
+                            <li>{% url_person actor.person %}{% if actor.character %} {% trans "as" %} {{ actor.character }}{% endif %}{% if not forloop.last or actors_extra %}, {%endif%}</li>
+                        {% endfor %}
+                    </ul>
+                    </section>
+                </td>
+            </tr>
+            <tr>
+                <td>{% trans "Number of ratings" %}</td>
+                <td>{{ stats.number_of_ratings.A }}</td>
+                <td>{{ stats.number_of_ratings.B }}</td>
+            </tr>
+            <tr>
+                <td>{% trans "Number of activities" %}</td>
+                <td>{{ stats.number_of_activities.A }}</td>
+                <td>{{ stats.number_of_activities.B }}</td>
+            </tr>
+            <tfoot>
+                <tr>
+                    <td></td>
+                    <td><input type="submit" name="A" value="{% trans "KEEP THIS" %}"/></td>
+                    <td><input type="submit" name="B" value="{% trans "KEEP THIS" %}"/></td>
+                </tr>
+            </tfoot>
+            {% endwith %}
+        </tbody>
+    </table>
+</form>
+</div>
+{% endblock %}

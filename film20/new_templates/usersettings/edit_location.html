@@ -1,0 +1,26 @@
+{% extends "usersettings/base.html" %}
+{% load i18n %}
+
+{% block title %}{% blocktrans %}{{ user }}'s Dashboard{% endblocktrans %}{% endblock %}
+
+{% block content %}
+	<form method="POST" class="settings">
+		<h1>{% trans "Settings" %}: <span>{% trans "Set location" %}</span></h1>
+		{{ form.errors }}
+		<div id="map" class="mapinfo"></div>
+		<fieldset>
+            {{form.location}} {{form.country}}
+			<div class="geo" style="display:none">{{ form.latitude }} {{ form.longitude }}</div>
+		</fieldset>
+		<input type="submit" value="{% trans 'Save Changes' %}" />
+        {% csrf_token %}
+	</form>
+{% endblock %}
+
+{% block end-scripts %}
+<script type="text/javascript" src="{{ MEDIA_URL }}js/usersettings_location.js?v=5"></script>
+{% load json %}
+<script type="text/javascript">
+    window.geo = {{request.geo|json|default:"{}"}};
+</script>
+{% endblock %}

@@ -1,0 +1,85 @@
+{% extends "moderation/index.html" %}
+
+{% load i18n %}
+
+{% block title %}
+    {% trans "Moderator tools - rename a tag" %}
+{% endblock %}
+
+{% block head_extra %}
+ <style>
+    div.to-confirm h1 {
+        color: black;
+        text-transform: uppercase;
+        margin: 10px 0;
+    }
+    div.to-confirm ul {
+        list-style-type: none;
+        margin-left: 5px;
+    }
+    div.to-confirm ul li {
+        margin: 5px 0;
+    }
+    div.buttons {
+        margin-top: 10px;
+    }
+    div.buttons span {
+        padding-top: 15px;
+        padding-left: 10px;
+        vertical-align: middle;
+    }
+</style>
+{% endblock %}
+
+{% block content-section %}
+    <h1>{% trans "Moderator tools - rename a tag" %}</h1>
+    
+    <form method="post">
+    {% with tc=to_confirm %}
+    {% if tc %}
+        <div class="to-confirm">
+            <h1>{% trans "Are you sure you want rename this tags" %}:</h1>
+            <ul>
+                <li>
+                    {% with data=tc.tagA %}
+                        {% include "moderation/rename_tag/to_confirm_row.html" %}
+                    {% endwith %}
+                </li>
+                <li>
+                    {% with data=tc.tagB %}
+                        {% include "moderation/rename_tag/to_confirm_row.html" %}
+                    {% endwith %}
+                </li>
+            </ul>
+
+            <input id="id_tagA" type="hidden" name="tagA" value="{{ form.cleaned_data.tagA }}">
+            <input id="id_tagB" type="hidden" name="tagB" value="{{ form.cleaned_data.tagB }}">
+
+            <div class="buttons">
+                <input type="submit" name="confirm" value="{% trans "Yes, I'm sure" %}"/>
+                <span>{% trans "or" %} <a href="javascript:window.history.back()">{% trans "Cancel" %}</a></span>
+            </div>
+        </div>
+    {% else %}
+
+        {{ form.as_p }}
+        <div>
+            <input type="submit" value="{% trans "Rename" %}" />
+        </div>
+    {% endif %}
+    {% endwith %}
+    </form>
+{% endblock %}
+
+{% block end-scripts %}
+    <script>document.write("<script src='/static/js/plugins/jquery.autocomplete.min.js'>\x3C/script>")</script>
+    <script>
+        $( '#id_tagA' ).autocomplete( "/ajax/search_tag_autocomplete/", { mustMatch: true } );
+        $( '#id_tagB' ).autocomplete( "/ajax/search_tag_autocomplete/" );
+
+        $( '.tag-open' ).click( function() {
+            window.open( this.href );
+            return false;
+        });
+    </script>
+{% endblock %}

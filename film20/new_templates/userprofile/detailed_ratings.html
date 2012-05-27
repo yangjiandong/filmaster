@@ -1,0 +1,34 @@
+{% load i18n %}
+{% load movie %}
+{% load posters %}
+
+{% include "pagination/pagination.html" %}
+<ul class="collection rate-movies-simple">
+{% for rating in object_list %}
+    <li>
+        {% if False %}
+            {% with film=rating.film %}
+                {% include "movies/rating/single_film_simple.html" %}
+            {%endwith%}
+        {% else %}
+            <section class="rate-movie-simple">
+                <a class="t" href="{{ rating.film.get_absolute_url }}">
+                    <img width="50" height="70" src="{% poster 50 70 rating.film %}" alt="{{ rating.film.get_title }}" />
+                    {{ rating.film.get_title }}
+                </a>
+                <p>
+                    {{ rating.film.title|safe }}, {{ rating.film.release_year }}, {% film_directors rating.film %}
+                </p>
+
+		<p class="ratings-in-movie">
+                    {% if user_profile %}{{ user_profile.get_profile.get_current_display_name }} {% trans "rating" %}{% else %}{% trans "Your rating" %}:{% endif %} {{ rating.rating }}
+                    <meter class="rating-1-avg" value="{{ rating.rating }}" max="10">{{ rating.rating }}</meter>
+		</p>
+                {% add_edit_film_rate_form rating.film %}
+                </p>
+            </section>
+        {% endif %}
+    </li>
+{% endfor %}
+</ul><!-- .collection -->
+{% include "pagination/pagination.html" %}

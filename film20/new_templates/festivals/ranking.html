@@ -1,0 +1,22 @@
+{% extends "festivals/base.html" %}
+{% load i18n %}
+{% load pagination_tags %}
+{% load showtimes %}
+{% load map_url %}
+{% load qs %}
+
+{% block title %}{{ festival.name }} &laquo; {{subtitle}} {% endblock %}
+{% block description %}{{ subtitle }} for {{ festival.name }}{% endblock %}
+{% block head_extra %}
+{{block.super}}
+<meta property="og:title" content="{{ festival.name }} &laquo; {{subtitle}} "/>
+<meta property="og:description" content="{{ festival.name }} {{subtitle}}" />
+<meta property="og:type" content="movie"/>
+{% if festival.event_image %}<meta property="og:image" content="{{ settings.FULL_DOMAIN }}{{ settings.MEDIA_URL }}{{ festival.event_image }}"/>{% endif %}
+{% endblock %}
+{% block content %}
+    <section class="showtimes-theaters rate-movies-simple">
+        <h1>{{festival.name}} - {{subtitle}} </h1>
+    {% include "movies/ranking_list.html" %}    
+    </section>
+{%endblock%}

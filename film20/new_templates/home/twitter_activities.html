@@ -1,0 +1,12 @@
+{% load i18n %}
+{% load twittertags %}
+
+<div class="stream">
+
+    <ul>
+    {% for tweet in tweets %}
+        <li><a href="{% tweet_link tweet.id %}"># {{ tweet.text }}</a></li>
+    {% endfor %}
+    </ul>
+
+</div><!-- .stream -->

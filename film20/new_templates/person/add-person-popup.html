@@ -1,0 +1,29 @@
+{% load i18n %}
+
+<html>
+    <head>
+        <title>Add Person</title>
+
+        {% include "head.html" %}
+
+        <style>
+            #container, #content {
+                width: auto;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="content">
+            <div id="container">
+                <div id="content-section" class="add_films-main-panel">
+                    <h2>{% trans "Add person" %}</h2>
+                    <form method="POST">
+                        {{ form.as_p }}
+                        <p><input type="submit" value="{% trans "Submit" %}" /> | <a href="javascript:window.close()">{% trans "Cancel" %}</a></p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
+

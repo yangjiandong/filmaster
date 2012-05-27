@@ -1,0 +1,9 @@
+{% load i18n %}
+{% if accepted %}
+{% blocktrans with item as film and item.get_absolute_url as url %}Film {{ film }} has been accepted. Go to the film page at: <a href="{{ url }}">{{ url }}</a>{% endblocktrans %}
+{% else %}
+{% blocktrans with item as film and item.rejection_reason as reason %} Film {{ film }} has been rejected
+<br />
+{{ reason }}
+{% endblocktrans %}
+{% endif %}

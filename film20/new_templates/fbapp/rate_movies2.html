@@ -1,0 +1,55 @@
+{% extends 'fbapp/canvas.html' %}
+{% load i18n %}
+{% load movie %}
+{% load badges %}
+
+{% block body %}rate-movies-page{% endblock body %}
+
+{% block content %}
+<section id="rate-films" class="rate-films">
+    <p class="rate-movies-more" style="display:none">
+        <a class="main-button" href="{% url rate_films %}?rater=fbapp&films_nr=3"><span>Show other films</span></a>
+        <span class="ajax-loader" style="display: none;"></span>
+    </p>
+    <ul class="rate-movies-simple"></ul>
+</section>
+    {% block info %}
+        {% include "fbapp/rating_info.html" %}
+    {% endblock %}
+{% endblock content %}
+{% block end-script %}
+    <script>
+        disable_geolocation=true;
+    </script>
+    {#% load compress %#}
+    {#% compress js %#}
+        <script src="/static/js/libs/jquery-ui-1.8.16.custom.min.js"></script>
+        <script src="/static/js/plugins/jquery.form-2.11.js"></script>
+        <script src="/static/js/plugins/jquery.autogrow.min.js"></script>
+        <script src="/static/js/plugins/jquery.filmaster.js"></script>
+        <script src="/static/js/plugins/jquery.timeago.js"></script>
+        <script src="/static/js/plugins/jquery.ajaxmanager.js"></script>
+        <script src="/static/js/script.js?v=4"></script>
+    {#% endcompress %#}
+<script>
+    function hide_rater() {
+        if( $('.rating-info.all-rated').length ) {
+            $('#rate-films').slideUp()
+        }
+    }
+
+    $('body').bind('rated', function(event, type) {
+        $.post('', {}, function(data) {
+            data = $('<div>').append(data);
+            $('.rating-info').replaceWith(data.find('.rating-info'));
+            $('.global-progress').replaceWith(data.find('.global-progress'));
+            hide_rater();
+        })
+    })
+    hide_rater();
+</script>
+{% endblock end-script %}
+
+{% block footer %}
+{% include "fbapp/rating_progress.html" %}
+{% endblock %}

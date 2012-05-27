@@ -1,0 +1,67 @@
+{%extends "showtimes/base.html"%}
+{% load i18n %}
+{% load showtimes %}
+{% load movie %}
+{% load map_url %}
+{% load posters %}
+{% load qs %}
+
+{% block showtimes-title %}{% if theaters %}{% trans "in theaters" %}{% else %}{% trans "on TV" %}{% endif %}{% endblock %}
+{% block showtimes-id %}theaters{% endblock %}
+{% block head_extra %}
+{% with film=screening.film %}
+{% if film %}
+<meta property="og:title" content="{{ film.get_title }}"/>
+<meta property="og:description" content="{{film.description|striptags|truncatewords:60|default_tr:'This film does not have a description, yet.'}}" />
+<meta property="og:type" content="movie"/>
+<meta property="og:url" content="{%permalink_film film%}"/>
+<meta property="og:image" content="{{ settings.FULL_DOMAIN }}{% poster 50 auto film %}"/>
+{% endif %}
+{% endwith %}
+{% endblock %}
+
+{%block showtimestop%}
+{%if channel%}
+	<section class="cinema-description">
+    <h1 class="cinema_name"><a href="{% channelurl channel %}">{{channel}}</a></h1>
+	</section><!-- .cinema-description -->
+{%endif%}
+{%endblock%}
+
+{% block showtimescontent %}
+{% if days %}
+<div class="filters">
+        <ul>
+        {%for day in days%}
+                {%with d=day|date:"Y-m-d"%}
+                <li><a class="{%if day == date%}selected{%endif%}" href='?{% qs_copy 'date' day.date 'page' 1 %}'>{{day|date:"l"}}</a></li>
+                {%endwith%}
+        {%endfor%}
+        </ul>
+</div>
+{% endif %}
+    <section class="showtime-list rate-movie-simple">
+        {% include "showtimes/film.html" %}
+        <ul class="in-cinemas">
+            <li>
+                <a href="{%channelurl channel%}">{{channel}}</a>
+                <ul>
+                    {% include "showtimes/screenings.html" %}
+                </ul>
+            </li>
+        </ul><!-- .in-cinemas -->
+    </section>
+    {% include "wall/wall.html" %}
+{% endblock %}
+
+{% block secondary-content-aside %}
+    <aside class="filmaster">
+    {% if user.is_authenticated %}
+        {% screening_checkin screening %}
+    {% endif %}
+        <section class="stream">
+            {% short_reviews 10 'films' films %}
+        </section><!-- .stream -->
+    </aside>
+{% endblock secondary-content-aside %}
+    

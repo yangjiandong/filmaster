@@ -1,0 +1,25 @@
+{% extends "userprofile/base.html" %}
+{% load i18n %}  
+{% block title %}{% trans "Your notifications" %}{% endblock %}
+{% block content %}  
+
+{% for notice in notices %}
+<div class="notice">
+<p {% if forloop.first %}class="first-notice"{% endif %}>
+{{ notice|safe }}
+</p>
+<p>
+Time: {{ notice.added }}
+</p>
+
+<div class="derecha">
+<a href="/notification/archive/{{ notice.id }}/">Archive</a>&nbsp;&nbsp;
+<a class="deletelink" href="/notificacion/remove/{{ notice.id }}/"
+onClick="if(!confirm('Are you sure you want to remove it'))return false;">Remove</a> 
+</div>
+
+</div>
+
+{% endfor %}
+
+{% endblock %}

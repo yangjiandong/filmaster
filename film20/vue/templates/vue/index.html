@@ -1,0 +1,215 @@
+{% extends "vue/base.html" %}
+{% load i18n %}
+
+{% block info %}
+<div class="global-progress">
+    <section class="status">
+        <div class="progress-bar" id="rate-movies-progress">
+            {% if rated_movies < 15 %}
+                <progress value="{{ rating_progress }}" max="100">{{ rating_progress }}%</progress>
+                <span class="progress">
+                    <span id="rate-movie-progress" style="width: {{ rating_progress }}%;"></span>
+                </span>
+            <h1>Rate <span id="movies-to-rate">{{ movies_to_rate }}</span> more movies and check what to watch in Vue Cinemas!</h1>
+            {% else %}
+            <h1>Keep rating movies to improve your recommendations!</h1>
+            {% endif %}
+        </div>
+    </section>
+</div>
+{% endblock %}
+
+{% block content %}
+<section class="recommendations vue">
+    <span class='ajax-loader'></span>
+    <h1>Your top 6 recommended films to see at Vue</h1>
+    <h2 class="vue"><a href="{% url detailed_recommendations_vue %}">See all your 2012 recommendations</a></h2>
+    <p>What do you feel like watching?</p>
+    {% include "vue/mood_selector.html" %}
+    {% with recommendations=vue_recommendations class="vue" %}
+        {% include "vue/recommendations.html" %}
+    {% endwith %}
+</section>
+
+<section id="rate-films" class="rate-films">
+    <h1>Rate films</h1>
+    <p class="rate-movies-more">
+        <a class="main-button" href="{% url rate_films %}?rater=vue"><span>Show other films</span></a>
+        <span class="ajax-loader" style="display: none;"></span>
+    </p>
+    
+    <ul class="rate-movies-simple"></ul>
+    <p class="rate-movies-more">
+        <a class="main-button" href="http://filmaster.com/rate-movies/"><span>Show other films</span></a>
+        <span class="ajax-loader" style="display: none;"></span>
+        </p>
+</section>
+{% if settings.DEBUG %}
+<section>
+<ul>
+    {% for f in similar_debug %}
+    <li>{{f.0}}, {{f.1}}</li>
+    {% endfor %}
+</ul>
+</section>
+{% endif %}
+{% endblock %}
+{% block end-scripts %}
+<script>
+    (function() {
+
+        var mood = '';
+        var recommendations_kind = 'vue';
+        var recommendations_mood = {all:'', vue:''}
+
+        function fetch_recommendations(kind, opts) {
+            var tag=mood;
+            opts = opts || {}
+            var ajax_loader = $('section.recommendations .ajax-loader').show()
+            $.get('/vue/ajax/recommendations/' + kind + '/', {mood:tag, recalc:opts.recalc}, function(resp) {
+                ajax_loader.hide();
+                var dest = 'ul.recommended-films.' + kind
+                replace_recommendations(dest, resp, opts.skip_animation)
+                recommendations_mood[kind] = tag;
+            });
+        }
+        window.reload_recommendations = function() {
+            fetch_recommendations(recommendations_kind, {'skip_animation': true});
+        }
+        function replace_recommendations(prev, cur, skip_animation) {
+            var prev_map = {}
+            var offsets = {}
+            var cx = 0;
+            var cy = 0;
+            var n=0;
+            var DURATION = 500;
+            var EASING = null;
+
+            prev = $(prev);
+            cur = $(cur);
+
+            if(!skip_animation) {
+                prev.find('li').each(function(i) {
+                    var id = $(this).attr('data-film-id')
+                    if(id) prev_map[id] = i;
+                    offsets[i] = wrap($(this)).offset()
+                    cx += offsets[i].left;
+                    cy += offsets[i].top;
+                    n+=1;
+                });
+                cx /= n;
+                cy /= n;
+                function move_out(k) {
+                    var item = wrap($(prev.find('li')[k])).remove().css('position', 'absolute');
+                    $(cur.find('li')[k]).append(item);
+                    var pos = offsets[k]
+                    item.animate({top:(pos.top - cy) + 'px', left:(pos.left - cx)*2 + 'px', opacity:0.0}, {
+                        complete:function() {
+                            $(this).remove();
+                        },
+                        duration:DURATION,
+                        easing:EASING
+                    })
+                }
+
+                cur.find('li').each(function(i) {
+                    var id = $(this).attr('data-film-id')
+                    var cur_item = wrap($(this))
+                    var pos = offsets[i];
+                    if(id in prev_map) {
+                        var prev_pos = offsets[prev_map[id]];
+                        var opacity=1;
+                        delete prev_map[id];
+                    } else {
+                        var prev_pos = {top:(pos.top - (cy - pos.top)), left:(pos.left - (cx - pos.left))};
+                        var opacity=0.0;
+                        move_out(i);
+                    }
+                    cur_item.css({top:(prev_pos.top-pos.top) + 'px', left:(prev_pos.left - pos.left)*2 + 'px', opacity:opacity})
+                    .animate({top:0, left:0, opacity:1}, {
+                        duration:DURATION,
+                        easing:EASING
+                    })
+                })
+                for(var k in prev_map) 
+                    move_out(prev_map[k]);
+            }
+            prev.replaceWith(cur);
+            $("body").trigger("recommend");
+        }
+
+        function wrap(item) {
+            var wrapper=item.find('.wrapper');
+            if(!wrapper.length) {
+                item.css('position', 'relative');
+                var wrapper = $('<div class="wrapper">')
+                var content = item.find('>*')
+                if(content.length)
+                    content.wrapAll(wrapper)
+                else
+                    item.append(wrapper);
+                wrapper=item.find('.wrapper'); 
+                wrapper.css('position', 'relative')
+            };
+            return wrapper;
+        }
+
+        $('.mood-selector > li > a').click(function() {
+            var $this = $(this),
+                $button = $this.parent();
+            $button.parent().find('.pressed').removeClass('pressed')
+            $button.addClass('pressed')
+            mood = $button.attr('data-tag')
+            fetch_recommendations(recommendations_kind, {skip_animation:true});
+            return false;
+        })
+
+        $('.mood-selector li:first').addClass('pressed');
+
+        // init_channel("{{request.unique_user.username}}", function() {});
+
+        $('body').bind("channel_message", function(e, msg) {
+            if(msg == "recommendations_ready") {
+//                fetch_recommendations('all');
+            }
+        })
+
+        $('body').bind('rated', function(event, type) {
+            fetch_recommendations('vue', {recalc:true});
+//            $.post('/vue/ajax/rated/', {rated:"1"});
+            // update progress bar
+            var $progress_container = $( "#rate-movies-progress"),
+                $movies_to_rate = $( "#movies-to-rate", $progress_container );
+                $progress = $( "#rate-movie-progress", $progress_container ),
+                $info = $( "h1", $progress_container ),
+                movies_to_rate = $movies_to_rate.text()
+            ;
+
+            if ( $movies_to_rate.length ) {
+                $movies_to_rate.text( --movies_to_rate );
+                $progress.css( "width", ( ( 15 - movies_to_rate ) * 100 )/15 + "%" );
+
+                if ( movies_to_rate == 0 ) {
+                    $progress.slideUp( function() {
+                        $info.hide().html( "Keep rating movies to improve your recommendations!" );
+                        $progress.parent().remove();
+                        $progress.slideDown( function() {
+                            $info.fadeIn( "1000" );
+                        });
+                    });
+                }
+            }
+        })
+
+        $('section.recommendations').delegate('a.tab', 'click', function() {
+            recommendations_kind = $(this).attr('href').substring(1)
+            if(recommendations_mood[recommendations_kind] != mood)
+                fetch_recommendations(recommendations_kind, {skip_animation:true});
+            $('section.recommendations').removeClass('vue all').addClass(recommendations_kind);
+            return true;
+        })
+
+
+    })();
+    </script>
+{% endblock %}

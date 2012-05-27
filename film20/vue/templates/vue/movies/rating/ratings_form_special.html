@@ -1,0 +1,36 @@
+{% load map_url %}
+{% load i18n %}
+{% load debug %}
+{% load movie %}
+{% load posters %}
+
+<form method="POST" action="{% url process_ratings %}">
+	<fieldset>
+		<figure>
+			<img width="200" height="266" src="{% poster 200 266 film %}" alt="" />
+			<figcaption>
+				<p class="msg"></p>
+                <a style="display:none" class="movie" href="{% url show_film film.permalink %}">{{ film.get_title }} {%if film.release_year %}<span>({{film.release_year}})</span>{%endif%}</a>
+                <a class="film" rel="{% url vue_film_details film.id %}?from_rater=1">{{ film.get_title }}{%if film.release_year %} <span>({{film.release_year}})</span>{%endif%}</a>
+
+			</figcaption>
+			<p class="rate">
+				<label for="{{form.rating_1.id_for_label}}">{{form.rating_1.label}}</label>
+				{{form.rating_1}}
+                <span class="rating-1 r{{ form.rating_1.value }}"></span>
+                </p>
+                <a href="#" class="skip-movie">{% trans "skip" %}</a>
+		</figure>
+		<div class="overlay"><span class="ajax-loader"></span></div>
+		<div class="final">
+		</div><!-- .final -->
+	</fieldset>
+    <input class="user-profile" type="hidden" value="{%  url_user_link request.user %}" />
+    <input type="hidden" name="rater" value="vue" />
+    {{form.film_id}}
+	{% csrf_token %}
+	<input type="submit" value="{% trans "Submit" %}" />
+</form>
+
+
+

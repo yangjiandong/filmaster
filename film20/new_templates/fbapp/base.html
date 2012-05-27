@@ -1,0 +1,393 @@
+{% load i18n %}
+<html>
+<head>
+    <link rel="stylesheet" media="screen,projection" href="/static/css/style.css?v=2.18" />
+    <script>{% include "js/static.js" %}</script>
+    {% include 'head.html' %}
+    <style type='text/css'>
+    /** TODO: move to fbapp.css **/
+    html, body { 
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        overflow: auto;
+    }
+    body.results {
+        overflow: auto;
+    }
+    #container { 
+        width: auto; 
+        height: auto !important;
+        height: 100%;
+        min-height: 100%;
+    }
+
+    #container > header {
+        height: 50px; 
+        color: #a09795;
+        box-shadow: 0 40px 0 #101010 inset;
+        -webkit-box-shadow: 0 40px 0 #101010 inset;
+    }
+
+    #about {
+        float: right;
+        color: #a09795;
+        padding: 13px 13px 0 0;
+        font-size: 12px;
+    }
+
+    #about p {
+        display: inline;
+    }
+
+    #about ul {
+        display: inline;
+        margin: 0;
+    }
+
+    #about li {
+        list-style: none;
+        display: inline;
+        padding-left: 10px;
+    }
+
+    #main {
+        padding: 10px 12px 5px 12px;
+        overflow: hidden;
+        position: relative;
+    }
+
+    #main > div.content {
+        width: auto;
+        float: none;
+        padding: 20px 25px;
+        border: 1px solid #fff;
+        box-shadow: 0px 0px 5px #ccc;
+    }
+    
+    #main > div.content p,
+    #main > div.content .event-message {
+        font-size: 13px;
+    }
+    
+    #main > div.content .event-message {
+        margin: 5px 0;
+    }
+    
+    #main > div.content .your-points {
+        font-weight: bold;
+        color: #777;
+    }
+
+    #main > div.content h1 {
+        font-size: 20px;
+        margin-bottom: 1em;
+    }
+
+    #main > div.content h2 {
+        font-size: 15px;
+        margin-bottom: .5em;
+    }
+    
+    #main > div.content h3 {
+        font-size: 13px;
+        margin-bottom: .5em;
+    }
+
+
+    #main > div.content div.empty {
+        color: #666;
+    }
+
+    #main > div.content div.play {
+        text-align: center;
+        margin: 30px 0;
+    }
+
+    #main > div.content div.play a,
+    #main > div.content div.play input,
+    #main > div.content .login-or-signup .col input[type="submit"],
+    section.quiz > p a, section.rating-info > p a {
+        font-size: 13px;
+        color: #333;
+        background: #eee;
+        border-radius: 3px;
+        text-shadow: 0 1px rgba(255, 255, 255, .75);
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.5), 0 -8px 15px -10px rgba(0, 0, 0, .2) inset;
+        padding: 2px 10px;
+        margin-left: 10px;
+        display:inline;
+    }
+    section.rating-info p {
+        text-align: center;
+    }
+
+    #rate-films {
+        margin:0 auto 1em auto;
+        width:670px;
+    }
+
+    #main > div.content div.play a:hover {
+        text-decoration: none;
+    }
+    
+    #main > div.content .friends,
+    #main > div.content .score-board {
+        padding: 5px;
+    }
+    
+    #main > div.content .friends a img,
+    #main > div.content .score-board a img {
+        width: 48px;
+        margin: 2px;
+        border-radius: 4px;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.5), 0 -8px 15px -10px rgba(0, 0, 0, .2) inset;
+    }
+    
+    #main > div.content .score-board a img {
+        vertical-align: middle;
+        margin: 0 5px;
+    }
+    #main > div.content .score-board li {
+        line-height: 55px;
+        margin-bottom: 5px;
+        font-size: 13px;
+    }
+    #main > div.content .score-board li:first-child {
+        font-size: 18px;
+        padding-bottom: 5px;
+        border-bottom: 1px solid #eee;
+    }
+
+    /** TICKETS **/
+    #main > div.content .tickets {
+        text-align: center;
+    }
+    
+    #main > div.content .tickets select {
+        margin-top: 20px;
+        padding: 5px;
+    }
+    
+    #main > div.content p.days-to-final {
+        text-align: center;
+    }
+
+    #main > div.content .event-tickets {
+        margin-top: 30px;
+    }
+
+    #main > div.content .event-tickets .radios label {
+        display: inline;
+        margin-left: 10px;
+        font-size: 13px;
+    }
+    
+    /** RATE MOVIES **/
+    .rate-movie a.skip-movie {
+        width: 240px;
+        background: rgba(0, 0, 0, 0.85);
+        left: 0px;
+        bottom: 0px;
+        color: #FFFFFF;
+        padding: 10px 0;
+        font-weight: bold;
+        position: absolute;
+        text-align: center;
+        text-shadow: -1px -1px 0 rgba(0, 0, 0, 0.2);
+    }
+
+    span.hide {
+        display: none;
+    }
+    
+    .rate-movies-simple {
+        margin: 0px;
+    }
+
+    .rate-movie,
+    section.rate-movie figcaption,
+    section.rate-movie form fieldset figure p.rate {
+        width: 220px;
+    }
+
+    .rate-movie figcaption > a {
+        paddin: 0 10px;
+    }
+
+    .global-progress .status {
+        float: none;
+        width: auto;
+    }
+
+    /** QUIZ **/
+    .content > form {
+        padding: 0;
+    }
+
+    div#my-timer {
+        margin-bottom: 10px;
+    }
+    
+
+    form#quizForm ul {
+        margin-top: 10px;
+        list-style-type: none;
+    }
+
+    form#quizForm ul > li {
+        margin: 5px;
+    }
+ 
+    form#quizForm ul > li label {
+        display: inline;
+        margin-left: 10px;
+        font-size: 13px;
+    }
+
+    /** LOGIN OR SIGNUP **/
+    #main > div.content .login-or-signup .col {
+        width: 50%;
+        float: left;
+        margin-top: 10px;
+    }
+
+    #main > div.content .login-or-signup .col > div {
+        padding: 10px;
+    }
+
+    #main > div.content .login-or-signup .col form {
+        padding: 0;
+    }
+
+    #main > div.content .login-or-signup .col input[type="submit"] {
+        display: block;
+    }
+    /** LANDING PAGE **/
+    .landing-page {
+        text-align: center;
+    }
+    #main > div.content > .landing-page h2 {
+        font-size: 2em;
+    }
+    .landing-page a span {
+        display: block;
+        padding: 10px;
+        text-transform: uppercase;
+        font-weight: bold;
+    }
+    section.top-movies li {
+        width: 150px;
+    }
+    </style>
+</head>
+<body class="{% block body %}{% endblock body %}">
+<div id="fb-root"></div>
+<div id='container'>
+    <header>
+        <hgroup>
+            <h1><a href="http://filmaster.pl" target='_blank'>Filmaster</a></h1>
+            <h2>watch.review.share</h2>
+        </hgroup>
+        <div id="about">
+            {% block menu %}
+            <ul>
+                {% if request.user.is_authenticated %}<li>{% trans "Welcome" %}: {{request.user}}</li>{% endif %}
+                <li><a href='{% url fbapp_terms %}' id="terms">Regulamin</a></li>
+                <li><a href='{% url fbapp_contact %}' id="contact">Kontakt</a></li>
+                {% block about %}{% endblock about %}
+            </ul>
+            {% endblock %}
+        </div><!-- #about -->
+    </header>
+    <div id="main">
+        <div class='content'>
+            {% block content %}{% endblock %}
+        </div>
+         <div class='footer'>
+            {% block footer %}{% endblock %}
+        </div>
+        
+    </div>
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+    <script>window.jQuery || document.write("<script src='/static/js/libs/jquery-1.6.2.min.js'>\x3C/script>")</script>
+    <script src="/static/js/plugins/jquery.form-2.11.js"></script>
+    <script src="http://connect.facebook.net/pl_PL/all.js"></script>
+    <script>
+        FB.init({
+                appId  : '{{APP_ID}}',
+                status : true,
+                oauth  : true
+            });
+
+        //FB.Canvas.setAutoResize( 100 );
+
+        function ajaxize_form(sel) {
+            $(sel).ajaxForm({
+                target:'#content',
+                success:function() {
+                    ajaxize_form(sel);
+                }
+            });
+        }
+        
+        $('body').delegate('a.ajax', 'click', function() {
+            $('#content').load($(this).attr('href'), null, function() {
+                ajaxize_form('form.ajax');
+            });
+            return false;
+        }).delegate('#invite', 'click', function() {
+            FB.ui({
+                method: 'apprequests',
+                message: '{% block invite_message %}Zagraj o Bilety !{% endblock %}',
+                max_recipients: 5,
+                data: 'ticket_contest',
+                filters: ['app_non_users'],
+                display: 'iframe',
+                access_token: '{{user_details.access_token}}'
+            }, function( response ) {
+                if ( response ) {
+                    $.post('.', {
+                        invites_sent: 1,
+                        request: response.request,
+                        to: response.to.join(','),
+                        success: function() {
+                            setTimeout(function(){
+                                document.location.reload()
+                            }, 100)
+                            return true;
+                        }
+                    })
+                }
+            });
+        }).delegate('#wallpost', 'click', function() {
+            FB.ui({
+                  method     : 'feed',
+                  link       : 'http://apps.facebook.com/{{ APP_ID }}/',
+                  picture    : '{% block wallpost_picture %}http://filmaster.pl/static/avatars/2011/Nov/01/filmaster.jpg{% endblock %}',
+                  name       : '{% block wallpost_name %}Biletomat od Filmastera{% endblock %}',
+                  caption    : '{% block wallpost_caption %}Co tydzień rozdajemy bilety, a raz w miesiącu nagrodę główną.{% endblock %}',
+                  description: '{% block wallpost_description %}Nie wiesz na co wybrać się do kina? Pomożemy! Oceń 10 filmów i rozwiąż krótki quiz filmowy, a otrzymasz dopasowane rekomendacje filmowe i telewizyjne. Zbierz najwięcej punktów i wygraj podwójne zaproszenie do kina.{% endblock %}',
+                  display: 'iframe',
+                  access_token: '{{user_details.access_token}}'
+            }, function( response ) {
+                if ( response ) {
+                    $.post('.', {
+                        wallpost_published: 1,
+                        post_id: response.post_id,
+                        success: function() {
+                            setTimeout(function(){
+                                document.location.reload()
+                            },100)
+                            return true;
+                        }
+                    })
+                }
+            });
+        });
+    </script>
+    {% block end-script %}{% endblock %}
+</div>
+</body>
+</html>

@@ -1,0 +1,3 @@
+{% load i18n %}
+{{user}} {% blocktrans %}canceled check-in on{% endblocktrans %} {{film}}{% if channel %} {% blocktrans %}at{% endblocktrans %} {{channel}}, {{time|date:TIME_FORMAT}}{% endif %}.
+visit: {{url}}

@@ -1,0 +1,17 @@
+{% extends "moderation/merging_tools/index.html" %}
+
+{% load i18n %}
+{% load posters %}
+
+{% block title %}
+    {% trans "Admin tools - merging people | resolve" %}
+{% endblock %}
+
+{% block content-section %}
+
+<h1>{% trans "Admin tools - merging people | resolved !" %}</h1>
+
+<div class="moderation-content notification-setting">
+    <p>{% trans "Go to person page at " %} {% url show_person selected.permalink as url %}<a href="{{ url }}">{{ url }}</a>.</p>
+</div>
+{% endblock %}

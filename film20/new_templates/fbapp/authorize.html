@@ -1,0 +1,38 @@
+{% extends "fbapp/base.html" %}
+{% load i18n %}
+{% block content %}
+{% if landing_page %}
+{% if inviting_users %}
+    <h1>{% trans "Join Filmaster" %}</h1>
+    {% for user in inviting_users %}
+        {% if not forloop.first %}{% if forloop.last %} and {% else %}, {% endif %}{% endif %}{{user}}
+    {% endfor %}
+    {% blocktrans count counter=invite_requests|length %}
+        invites you to join Filmaster.
+    {% plural %}
+        invite you to join Filmaster.
+    {% endblocktrans %}
+    <p><a id="authorize" href="#">{% trans "Sign up" %}!</a></p>
+{% else %}
+    <div class="landing-page">
+        {% block text %}
+        <h2>Graj o bilety</h2>
+        <a class="authorize" href="#"><img src="{{ MEDIA_URL }}img/cowboy.png" alt="[FILMASTER]" /></a>
+        <div class="play">
+            <a class="authorize" href="#">zagraj</a>
+        </div>
+        {% endblock %}
+    </div>
+{% endif %}
+{% endif %}
+{% endblock %}
+
+{% block end-script %}
+<script>
+    function authorize() {
+        top.location.href='{{auth_url|safe}}';
+    }
+    var a = $('.authorize').click(authorize);
+    if(!a.length) authorize();
+</script>
+{% endblock %}

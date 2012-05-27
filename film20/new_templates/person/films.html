@@ -1,0 +1,17 @@
+{% load i18n %}
+{%if films%}
+	<section class="movies">
+		<h1>{{title}}</h1>
+        {% trans "Show:" %}
+        <a href="{% url rankings  %}?year_from=&year_to=&related_actor={% if occupation == 'actor' %}{{ person }}{% endif %}&related_director={% if occupation == 'director' %}{{ person }}{% endif %}&popularity=3&filter={% trans "Apply filter" %}">{%trans "top rated movies" %}</a>
+        {% if user.is_authenticated %}
+            | <a href="{% url my_recommendations  %}?year_from=&year_to=&related_actor={% if occupation == 'actor' %}{{ person }}{% endif %}&related_director={% if occupation == 'director' %}{{ person }}{% endif %}&popularity=3&filter={% trans "Apply filter" %}">{%trans "your top recommendations" %}</a>
+        {% endif %}
+
+		<ul id="{{id}}">
+		{%for film in films%}
+			<li>{%include "movies/movie/related_film.html"%}</li>
+		{%endfor%}
+		</ul>
+	</section><!-- .movies -->
+{%endif%}

@@ -1,0 +1,82 @@
+{% extends "moderation/index.html" %}
+
+{% load i18n %}
+
+{% block title %}
+    {% trans "Moderator tools - create tag alias" %}
+{% endblock %}
+
+{% block head_extra %}
+ <style>
+    .ajax-loader {
+        display: none;
+        margin-top: 10px;
+        min-height: 16px;
+        padding-left: 25px;
+        background: url( /static/layout/ajax-loader-wall.gif) left center no-repeat;
+    }
+</style>
+{% endblock %}
+
+{% block content-section %}
+    <h1>{% trans "Moderator tools - translate tag " %}</h1>
+    
+    <form id="translate-tag" method="post">
+        {{ form.as_p }}
+        <div>
+            <div class="ajax-loader"></div>
+            <input type="submit" disabled="true" value="{% trans "Translate" %}" />
+        </div>
+    </form>
+{% endblock %}
+
+{% block end-scripts %}
+    <script>document.write("<script src='/static/js/plugins/jquery.autocomplete.min.js'>\x3C/script>")</script>
+    <script>
+
+        var $f = $( '#id_f' ),
+            $t = $( '#id_t' ),
+            $submit = $( '#translate-tag input[type=submit]' ),
+            $loader = $( '#translate-tag .ajax-loader' );
+
+        $f.autocomplete( "/ajax/search_tag_autocomplete/" );
+
+        if ( $f.val() != '' ) {
+            $submit.removeAttr( 'disabled' )
+            $t.removeAttr( 'disabled' )
+        } else {
+            $submit.attr( 'disabled', true );
+            $t.attr( 'disabled', true );
+        }
+        
+        $f.change( function() {
+
+            $( '.errorlist' ).hide();
+
+            $t.val( '' )
+                    .attr( 'autocomplete', 'off' )
+                    .attr( 'disabled', 'true' );
+
+            $submit.attr( 'disabled', 'true' );
+            
+            $loader.html( gettext( 'loading translation, please wait ...' ) )
+                   .show();
+
+            $.ajax({
+                url: "/ajax/tag-translation/" + $f.val(),
+                dataType: 'json',
+                success: function( data ) {
+                    $t.val( data.result )
+                            .removeAttr( 'disabled' );
+
+                    $submit.removeAttr( 'disabled' );
+                    $loader.hide();
+                },
+                error: function() {
+                    $loader.hide();
+                }
+            });
+        });
+
+    </script>
+{% endblock %}

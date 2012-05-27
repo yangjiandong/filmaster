@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<films>
+   <film>
+      <id>1</id>
+      <url>http://filmaster.pl/film/battlefield-earth-i/</url>
+      <title><![CDATA[Battlefield Earth I]]></title>
+      <localized-title><![CDATA[Battlefield Earth I]]></localized-title>
+      <amazonka-id>99900073478</amazonka-id>
+      <amazonka-url-produkt>http://www.amazonka.pl/2046_wong-kar-wai,99900073479.bhtml</amazonka-url-produkt>
+      <amazonka-url-koszyk>http://www.amazonka.pl/dramat/14579001/do-koszyka.bhtml</amazonka-url-koszyk>
+      <amazonka-url-zdjecie>http://www.amazonka.pl/photo/20/46/2046-99900073479_5908312738787_600.jpg</amazonka-url-zdjecie>
+   </film>
+   <film>
+      <id>2</id>
+      <url>http://filmaster.pl/film/battlefield-earth-ii/</url>
+      <title><![CDATA[Battlefield Earth II]]></title>
+      <localized-title><![CDATA[Battlefield Earth II]]></localized-title>
+      <amazonka-id>99900073479</amazonka-id>
+      <amazonka-url-produkt>http://www.amazonka.pl/2046_wong-kar-wai,99900073479.bhtml</amazonka-url-produkt>
+      <amazonka-url-koszyk>http://www.amazonka.pl/dramat/14579001/do-koszyka.bhtml</amazonka-url-koszyk>
+      <amazonka-url-zdjecie>http://www.amazonka.pl/photo/20/46/2046-99900073479_5908312738787_600.jpg</amazonka-url-zdjecie>
+   </film>
+   <film>
+      <id>2</id>
+      <url>http://filmaster.pl/film/battlefield-earth-ii/</url>
+      <title><![CDATA[Battlefield Earth II]]></title>
+      <localized-title><![CDATA[Battlefield Earth II]]></localized-title>
+      <amazonka-id>99900073479</amazonka-id>
+      <amazonka-url-produkt>http://www.amazonka.pl/2046_wong-kar-wai,99900073479.bhtml</amazonka-url-produkt>
+      <amazonka-url-koszyk>http://www.amazonka.pl/dramat/14579001/do-koszyka.bhtml</amazonka-url-koszyk>
+      <amazonka-url-zdjecie>http://www.amazonka.pl/photo/20/46/2046-99900073479_5908312738787_600.jpg</amazonka-url-zdjecie>
+   </film>
+</films>

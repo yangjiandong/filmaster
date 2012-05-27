@@ -1,0 +1,12 @@
+{% load i18n %}{% blocktrans with reply_text|striptags as reply_text %}{{ from_user }} has replied to your comment saying:
+
+******
+
+{{ reply_text }}
+
+******
+
+You can reply back at:
+
+{{ reply_url }}
+{% endblocktrans %}

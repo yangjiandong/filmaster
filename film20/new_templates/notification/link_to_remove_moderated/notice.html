@@ -1,0 +1,10 @@
+{% load i18n %}
+{% if item.moderation_status == 0 %}
+{% blocktrans with item.externallink.film as film and item.rejection_reason as reason and item.externallink.film.get_absolute_url as url %}Your suggestion to remove film {{ film }} trailer, has been rejected. Go to film page at: <a href="{{ url }}">{{ url }}</a>
+
+{{ reason }}
+{% endblocktrans %}
+{% else %}
+{% blocktrans with item.externallink.film as film and item.externallink.film.get_absolute_url as url  %}Your suggestion to remove film {{ film }} trailer, has been accepted. Go to film page at: <a href="{{ url }}">{{ url }}</a>
+{% endblocktrans %}
+{% endif %}

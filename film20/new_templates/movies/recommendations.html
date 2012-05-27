@@ -1,0 +1,52 @@
+{% extends "movies/base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Recommendations" %}{% endblock %}
+
+{% block primary-content-aside %}
+	{% include 'aside/movies/recommendations.html' %}
+{% endblock primary-content-aside %}
+
+{% block content %}
+	<section class="movie-list">
+	<h1>{% trans "Recommendations" %}</h1>
+        {% include "movies/filters/movies_filter.html" %}
+        {% if not films %}
+            {% if not default_filter %}
+                <div class="no-items">
+                    {% trans "Unfortunately we couldn't find any results matching your selection." %}<br/>
+                    {% trans "Try removing some filters." %}
+                </div>
+            {% endif %}
+            {# everything fine, show the list of recommendations #}
+        {% else %}
+            {% if not request.user.is_authenticated or not has_recommendations %}
+                <div class="no-items">
+                    {% if not has_recommendations %}
+                        <h2>
+                            {% trans "We don't have any recommendations, yet. Please " %}
+                                <a href="{% url rate_films %}"> {% trans "rate at least 15 movies " %}</a>
+                            {% trans "and wait a few minutes until we compute them." %}
+                        </h2>
+                        <p>{% trans "While we don't have your recommendations list, you can check out the best rated movies on Filmaster. " %}</p>
+                    {% else %}
+                        <h2>
+                            {% trans "We've prepared personalized movie recommendations for you" %} - <a href="{% url acct_signup %}">{% trans "sign up to check them out!" %}</a>
+                        </h2>
+                        <p>{% trans "Meanwhile, you can check out the best rated movies on Filmaster." %}</p>
+                    {% endif %}
+                </div>
+            {% else %}
+                <p>{% trans "These are the films that we recommend you based on your previous ratings. " %}{% if request.user.is_authenticated and has_recommendations %}<a href="{% url user_recommendations request.user %}?share">{% trans "Share your recommendations!" %}</a>{% endif %}</p>
+            {% endif %}
+            <ul class="collection rate-movies-simple">
+                {% for film in films|slice:":24" %}
+                <li>
+                    {% include 'movies/rating/single_film_simple.html' %}
+                </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+	</section><!-- .movie-list -->
+    {% include "pagination/pagination.html" %}
+{% endblock content %}

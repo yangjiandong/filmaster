@@ -1,0 +1,1 @@
+{% load i18n %}{% trans "User" %} {{ user }} {% trans "mentioned your nick." %}

@@ -1,0 +1,46 @@
+{% extends "dashboard/base.html" %}
+{% load i18n %}
+{% load planet_tags %}
+{% load widgets %}
+{% load map_url %}
+{% load movie %}
+
+{% block title %}{% trans "Edit article" %}{% endblock title %}
+
+{% block content %}
+    <section class="dashboard flatpage">
+    <h1>{% trans "Edit article" %}</h1>
+    <form action="." method="POST" id="edit_article_form" class="dashboard" method="post">
+        {% include "dashboard/modify_article_form.html" %}
+    </form>
+    </section>
+{% endblock content %}
+
+{% block films_rating %}
+{% if film %}
+<div class="rate-movie s1">
+    {% single_film_ratings_form film %}
+</div>
+{% else %}
+    {% related_films article %}
+{% endif %}
+{% endblock %}
+
+{% block head_extra %}
+<link rel="stylesheet" type="text/css" href="/static/markitup/skins/simple/style.css" />
+<link rel="stylesheet" type="text/css" href="/static/markitup/sets/default/style.css" />
+{% endblock %}
+
+{% block end-scripts %}
+{% include "dashboard/modify_article_javascript.html" %}
+
+<script type="text/javascript" src="/static/markitup/jquery.markitup.js"></script>
+<script type="text/javascript" src="/static/markitup/sets/default/set.js"></script>
+
+<script type="text/javascript">
+$( document ).ready( function()    {
+    $( '#id_body' ).markItUp( mySettings );
+    $( '#id_tag_list' ).autocomplete( "/ajax/search_tag_autocomplete/", { multiple:true });
+});
+</script>
+{% endblock end-scripts %}

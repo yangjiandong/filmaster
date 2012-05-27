@@ -1,0 +1,37 @@
+{% extends "movies/movie.html" %}
+{% load i18n %}
+{% load map_url %}
+{% load useractivity_tags %}
+{% load display_user %}
+
+{% block wall %}
+    <div class="filters">
+        <p>{% trans "Show:" %} </p>
+        <ul>
+            <li><a href="{% url show_film_all_ratings film.permalink %}">{% trans "all" %}</a></li>
+            <li><a href="{% url show_film_all_ratings film.permalink %}?show=friends">{% trans "friends" %}</a></li>
+            <li><a href="{% url show_film_all_ratings film.permalink %}?show=similar">{% trans "similar users" %}</a></li>
+        </ul>
+    </div><!-- .filters -->
+
+<ul>
+{% for rating in object_list %}
+    <li>
+        <section class="rate-movie-simple">
+            <a class="t" href="{% url show_profile rating.user %}">
+                <img width="50" height="70" src="{% avatars 45 rating.user %}" alt="{{ rating.user }}" />
+                {{ rating.user }}
+            </a>
+                {% if request.user.is_authenticated %}
+                    {% display_users_common_taste request.user rating.user %}
+                {% endif %}
+            <p class="ratings-in-movie">                    
+                <meter class="rating-1-avg" value="{{ rating.rating }}" max="10">{{ rating.rating }}</meter>
+            </p>
+            </p>
+        </section>
+    </li>
+{% endfor %}
+</ul><!-- .collection -->
+{% include "pagination/pagination.html" %}
+{% endblock wall %}

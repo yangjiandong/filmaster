@@ -1,0 +1,24 @@
+{% extends "wall/useractivity/base.html" %}
+{% load i18n %}
+{% load map_url %}
+{% load useractivity_tags %}
+{% load format_date %}
+{% load threadedcommentstags %}
+{% load sanitize %}
+{% load truncatechars %}
+
+{% block activity-header %}
+    {% include "wall/useractivity/wall_post_detail.html" %}
+{% endblock %}
+
+{% block activity-content %}
+    {{ activity.content|remove_spoiler|striptags|truncatechars:500}}
+    {% if activity.content|length > 500 %}[...] <a href="{{ activity.get_absolute_url }}" >{% trans "Read more" %}</a>{% endif %}
+{% endblock %}
+
+{% block activity-content-end %}
+    {% if activity.rating %}
+    	<p><meter class="rating-2" max="10" value="{{ activity.rating }}">{{ activity.rating }} {% trans "stars" %}</meter></p>
+    {% endif %}
+{% endblock %}
+

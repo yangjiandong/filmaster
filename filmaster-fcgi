@@ -1,0 +1,65 @@
+#! /bin/sh
+### BEGIN INIT INFO
+# Provides:		filmaster-fcgi
+# Required-Start:	$syslog
+# Required-Stop:	$syslog
+# Should-Start:		$local_fs
+# Should-Stop:		$local_fs
+# Default-Start:	2 3 4 5
+# Default-Stop:		0 1 6
+# Short-Description:	filmaster fcgi
+# Description:		filmaster fcgi
+### END INIT INFO
+
+HOME=`python -c "import os;print os.path.dirname(os.path.abspath('$0'));"`
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+DAEMONBOOTSTRAP=./runfcgi.sh
+NAME=filmaster-fcgi
+DESC=filmaster-fcgi
+PIDFILE=$HOME/filmaster_fcgi.pid
+
+cd $HOME
+
+test -x $DAEMON || exit 0
+test -x $DAEMONBOOTSTRAP || exit 0
+
+set -e
+
+. /lib/lsb/init-functions
+
+# test -r /etc/default/memcached && . /etc/default/memcached
+
+case "$1" in
+  stop)
+	echo -n "Stopping $DESC: "
+	start-stop-daemon --stop --oknodo --quiet --pidfile $PIDFILE --name python
+	echo "$NAME."
+	rm -f $PIDFILE
+	;;
+
+  start|restart|force-reload)
+	#
+	#	If the "reload" option is implemented, move the "force-reload"
+	#	option to the "reload" entry above. If not, "force-reload" is
+	#	just the same as "restart".
+	#
+	echo -n "Restarting $DESC: "
+        start-stop-daemon --stop --oknodo --quiet --pidfile $PIDFILE --name python
+	rm -f $PIDFILE
+	sleep 1
+	start-stop-daemon --start --background --quiet --chdir "$HOME" --exec "$DAEMONBOOTSTRAP" --pidfile $PIDFILE --umask 002
+        CNT=0
+	while ! test -f $PIDFILE -o "$CNT" -gt 10; do echo -n .;sleep 1; CNT=$(($CNT+1)); done
+	echo "$NAME."
+	;;
+  status)
+#	status_of_proc $DAEMON $NAME
+	;;
+  *)
+	N=/etc/init.d/$NAME
+	echo "Usage: $N {start|stop|restart|force-reload|status}" >&2
+	exit 1
+	;;
+esac
+
+exit 0

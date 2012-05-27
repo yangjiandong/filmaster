@@ -1,0 +1,10 @@
+{% load i18n %}
+
+<strong>{{ data.count }}</strong>
+{% if data.count > 0 %}
+    <a class="tag-open" href="{% url objects-tagged-with data.name %}">{% trans "objects tagged with tag" %}
+     '<i>{{ data.name }}'</i>
+    </a>
+{% else %}
+    {% trans "objects tagged with tag" %} '<i>{{ data.name }}'</i>
+{% endif %}

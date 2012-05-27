@@ -1,0 +1,6 @@
+{%load json%}
+{"id":{{message.pk|json}},
+"recipient":{{message.recipient.username|json}},
+"conversation_id":{{message.conversation_id|jsonstr}},
+"body":{{message.body|truncate:50|json}}
+}

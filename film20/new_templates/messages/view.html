@@ -1,0 +1,46 @@
+{% extends "messages/base.html" %} 
+{% load i18n %} 
+{% load map_url %} 
+{% load format_date %}
+{% load display_user %}
+{% load useractivity_tags %}
+
+{% block title %}{% trans "Private message from" %}: {{ message.sender }}{% endblock %}
+
+{% block content %}
+<div id="main-second-column-panel" class="pw"> 
+<h3>{% trans "Private message from" %}: {{ message.sender }}</h3>
+<h2>{{ message.subject }}</h2>
+
+<div class="private-message">
+    <div class="message-author"> 
+        <img src="{% avatars 72 message.sender %}" alt="{{ message.sender }}" />
+        <span class="message-author-nickname">{% url_user_link message.sender %}</span>
+        {% compare_users user message.sender %}
+        <span class="message-author-date">{% format_date message.sent_at %}</span>
+    </div> 
+    <div class="message-content">
+    <table>
+        <tr valign="top" class="h">
+            <td>
+                  <p>
+                  {{ message.body|urlize|linebreaksbr }}
+                  </p>
+            </td>
+        </tr>
+        <tr valign="bottom">
+            <td>
+                <div class="actions">
+                    {% ifequal message.recipient user %}
+                        <a id="c1635" href="{% url messages_reply message.id %}" class="button-odpowiedz"></a>
+                    {% endifequal %}
+                    <a href="{% url messages_delete message.id %}" class="button-usun"></a>
+                </div>
+            </td>
+        </tr>
+    </table>
+    </div>
+</div> 
+
+</div>
+{% endblock %}

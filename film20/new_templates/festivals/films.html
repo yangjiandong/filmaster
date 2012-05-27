@@ -1,0 +1,54 @@
+{% extends "festivals/base.html" %}
+{% load i18n %}
+{% load pagination_tags %}
+{% load showtimes %}
+{% load map_url %}
+{% load qs %}
+
+{% block title %}{{ festival.name }} &laquo; {{subtitle}} {% endblock %}
+{% block description %}{{ subtitle }} for {{ festival.name }}{% endblock %}
+{% block head_extra %}
+{{block.super}}
+<meta property="og:title" content="{{ festival.name }} &laquo; {{subtitle}} "/>
+<meta property="og:description" content="{{ festival.name }} {{subtitle}}" />
+<meta property="og:type" content="movie"/>
+{% if festival.event_image %}<meta property="og:image" content="{{ settings.FULL_DOMAIN }}{{ settings.MEDIA_URL }}{{ festival.event_image }}"/>{% endif %}
+{% endblock %}
+{% block content %}
+    <section class="showtimes-theaters rate-movies-simple">
+        <h1>{{festival.name}} - {{subtitle}} </h1>
+        <div class="filters">
+            <ul>
+                <li>{% a festival_films festival.permalink %}{% trans "by title" %}{% enda %}</li>
+                <li>{% a festival_films_by_orig_title festival.permalink %}{% trans "by original title" %}{% enda %}</li>
+                <li>{% a festival_recommendations festival.permalink %}{% trans "Recommendations" %}{% enda %}</li>
+            </ul>
+            <form class="search" method="get" action="?">
+                    <input autocomplete="off" type="text" name="q" value="{{query_string}}" >
+                    <input type="submit" value="Szukaj">
+            </form>
+        </div>
+    {% if object_list %}
+    {% for film in object_list %}
+			<section class="rate-movie-simple">
+				{% include "showtimes/film.html" %}
+				<ul class="in-cinemas">
+					{%for c in film.channels%}
+						<li>
+							<a href="{%channelurl c%}">{{c}}</a>
+							<ul>
+								{%with screenings=c.screenings%}
+							        {% include "festivals/screenings.html" %}
+								{%endwith%}
+							</ul>
+						</li>
+					{%endfor%}
+				</ul><!-- .in-cinemas -->
+			</section>
+    {% endfor %}
+    {% include "pagination/pagination.html" %}
+    </section>
+    {%else%}
+        {% include "showtimes/no_showtimes.html" %}
+    {%endif%}
+{%endblock%}

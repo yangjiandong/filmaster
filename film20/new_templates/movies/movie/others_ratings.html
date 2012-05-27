@@ -1,0 +1,10 @@
+{% load movie %}
+{% load i18n %}
+<section class="others-ratings">
+        {% if film.average_score %}
+                <h1>{% trans "filmasters ratings" %}:</h1>
+                {% film_score film user %}
+                {% film_friends_ratings film %}
+        {% endif %}
+</section><!-- .others-ratings -->
+

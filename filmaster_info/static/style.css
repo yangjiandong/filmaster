@@ -1,0 +1,87 @@
+@charset "utf-8";
+* {
+	margin: 0;
+	padding: 0;}
+
+html, body { 
+	font-family: helvetica, arial, sans-serif;
+	font-size:12px;
+	color:white;
+	line-height: 130%;
+	background-color:#E94222;}
+
+a {
+    color:white;
+    text-decoration:underline; 
+}
+
+#wrapper {
+	margin-top:100px;
+	width:558px;
+	margin-left: auto;
+	margin-right: auto;
+	background:url(/static/img/logo.png) no-repeat #E94222;
+	padding-top:210px;}
+	
+#wrapper p {
+	font: normal 18px Georgia, palatino;
+	margin-left:6px;
+	margin-right:6px;
+	margin-bottom:46px;}
+	
+.form {
+	font: normal 12px helvetica, arial, sans-serif;
+	margin-left:6px;
+	margin-right:6px;}
+	
+.newsletter-submit {
+	border:0px solid white;
+	background-color:#E94222;
+	font: normal 22px Georgia, palatino;
+	color:white;
+	margin-left:5px;
+	margin-top:3px;
+	float:left;}
+	
+.newsletter-input {
+	border:1px solid #FF7044;
+	float:left;
+	margin-top:5px;
+	width:254px;
+	height:19px;
+	margin-left:6px;
+	background:url(/static/img/inputbg.png) repeat-x white;
+	padding-top:3px;
+	padding-left:6px;}
+	
+#wrapper ul {	
+	width:100%;
+	float:left;}
+	
+.submit-ok {
+	float:left;
+	width:100%;
+	background:url(/static/img/emailok.png) no-repeat;
+	padding-left:22px;
+	margin-left:9px;
+	margin-top:5px;}
+	
+.submit-failed {
+	float:left;
+	width:100%;
+	background:url(/static/img/emailwrong.png) no-repeat;
+	padding-left:22px;
+	margin-left:9px;
+	color:black;
+	margin-top:5px;}
+	
+ul {
+    list-style-type: none;}
+
+fieldset {
+    margin:5px;
+    padding:5px;
+}
+.register_link{
+    margin-top: 10px;
+}

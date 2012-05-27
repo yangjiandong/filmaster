@@ -1,0 +1,4 @@
+{% load i18n %}
+{% blocktrans %}
+{{user}} canceled check-in on {{film}}
+{% endblocktrans %}

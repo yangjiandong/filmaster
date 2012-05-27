@@ -1,0 +1,19 @@
+{% load i18n %}
+{% load movie %}
+{% load showtimes %}
+{% load utils %}
+
+{% if template.content %}
+    {{ template.content }}
+{% else %}
+    {% url showtimes_films as showtimes_url %}
+    <div><strong>{{ user.username }}</strong>,</div>
+
+    <p>{% trans "We've found some new movies that you are likely to enjoy."%}</p>
+
+    {% include "notification/showtimes_weekly_recommendations/recomendations.html" %}
+
+    <div style="margin-bottom: 1em;">{% trans "Remember to check-in when you're planning to watch them and rate the movies after seeing them." %} </div>
+
+    {% include "notification/showtimes_weekly_recommendations/regards.html" %}
+{% endif %}

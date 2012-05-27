@@ -1,0 +1,16 @@
+{% extends "usersettings/base.html" %}
+
+{% load i18n %}
+
+{% block title %}{% trans "Dashboard settings" %}{% endblock %}
+{% block content %}
+    <article class="settings dashboard-settings">
+        <h1>{%trans "Dashboard settings" %}</span></h1>
+
+        <form action="." method="POST">
+            {{ form.as_p }}
+            <input type="submit" value="{% trans "Save" %}" />
+        </form>
+
+    </article><!-- .settings -->
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+{% load account %}
+{% load map_url %}
+
+{% block title %}{% trans "Sign Up" %}{% endblock %}
+{% block body-class %}registration{% endblock %}
+{% block content %}
+	<section class="socialsignin">
+		<h1>{% trans "Sign Up" %}</h1>
+    <form id="signup_form" class="signupform register" method="post" action="">
+        <fieldset>
+		<p>
+        {% if 0 %} <img src="{{user_info.avatar_url}}" class="avatar" /> {% endif %}
+                        {{form.username.errors}}
+                         <label for="{{ form.username.id_for_label }}">{{form.username.label}}</label>
+                        {{form.username}}
+                        {{form.email.errors}}
+                        <label for="{{ form.email.id_for_label }}">{{form.email.label}}</label>
+                        {{form.email}}
+                        <label for="{{ form.inform_friends.id_for_label }}">{{ form.inform_friends.label }}</label>
+                        {{ form.inform_friends }}
+		</p>
+                    {% if not request.is_mobile %}
+                    
+                    <p>
+                    {%url associations as associations%}
+                    {%blocktrans with associations as associations%}
+                    <strong>Attention</strong> - By clicking <em>Sign Up</em> you will create <strong>New Filmaser Account</strong>. If you have Filmaster account already and you want to associate it with Facebook/Twitter/OpenID account, login by clicking <a href="{{associations}}">here</a>.
+                    {%endblocktrans%}
+                    </p>
+                    {%endif%}
+			<p>
+                        {{form.next}}
+                        <input type="submit" value='{% trans "Sign Up &raquo;" %}' class="button" />
+			</p>
+                    <p>{% trans "By clicking <em>Sign Up</em>, you are indicating that you have read and agree to the" %}
+                    <a href='{% map_url "TERMS" %}/?{%get_next request%}'>{% trans "Terms and conditions" %}</a>
+                    {% trans "and" %}
+                    <a href='{% map_url "PRIVACY" %}/?{%get_next request%}'>{% trans "Privacy" %}</a>.</p>
+        </fieldset>
+    </form>
+	</section>
+{% endblock %}

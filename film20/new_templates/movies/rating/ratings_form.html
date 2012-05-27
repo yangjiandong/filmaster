@@ -1,0 +1,163 @@
+{% load map_url %}
+{% load posters %}
+{% load i18n %}
+{% load debug %}
+{% load movie %}
+
+<form method="POST" action="{% url process_ratings %}">
+	<fieldset>
+		<figure>
+			<img width="240" height="340" src="{% poster 240 340 film %}" alt="{{ film.title }}" />
+			<figcaption>
+				{% if form.rating_1.value %}
+					<span title="{% trans "Remove my ratings" %}" class="x"></span>
+				{% endif %}
+				<p class="msg"></p>
+                <a class="movie" href="{{ film.get_absolute_url }}">{{ film.get_title }} {%if film.release_year %}<span>({{film.release_year}})</span>{%endif%}</a>
+			</figcaption>
+		</figure>
+		<div class="overlay"><span class="ajax-loader"></span></div>
+		<div class="rate">
+			<p class="rate">
+                {% if form.rating_1.value %}
+                    {% trans "Change your rating" %}:
+                {% else %}
+                    {% if film.is_tv_series %}
+                    {% trans "If you saw the tv series, rate it" %}:
+                    {% else %}
+                    {% trans "If you saw the movie, rate it" %}:
+                    {% endif %}
+                {% endif %}
+				{{form.rating_1.errors}} {# Film #}
+				<label for="{{form.rating_1.id_for_label}}">{{form.rating_1.label}}</label>
+				{{form.rating_1}}
+				 <span class="rating-1 r{{ form.rating_1.value }}"></span>
+				 <span class="rating-tooltip">{% rating_description form.rating_1.value %}</span>
+			</p>
+			<div class="checkbox">
+                {% if form.dying_for.value or form.not_interested.value %}
+                    <p>
+                    {% trans "You have this movie on your " %}
+                    {% if form.dying_for.value %}
+                        <a href="{% url wishlist %}">{% trans "wishlist. " %}</a>
+                    {% else %}
+                        <a href="{% url shitlist %}">{% trans "shitlist. " %}</a>
+                    {% endif %}
+                    </p>
+                {% else %}
+                    {% if not form.rating_1.value %}
+                        <p>{% trans "If you haven't seen it" %}:</p>
+                        {{form.dying_for.errors}}
+                        <label for="{{form.dying_for.id_for_label}}">{{form.dying_for.label}}{{form.dying_for}}</label>
+                        {{form.not_interested.errors}}
+                        <label for="{{form.not_interested.id_for_label}}">{{form.not_interested.label}}{{form.not_interested}}</label>
+                        <ul class="not-seen-yet-actions">
+                            <li><a class="whishlist" href="{% url wishlist %}">{% trans "I want to watch it (haven't seen, yet)!" %}</a></li>
+                            <li><a class="shitlist" href="{% url shitlist %}">{% trans "I don't want to see it, do not show me again!" %}</a></li>
+                        </ul><!-- .not-seen-yet-actions -->
+                    {% endif %}
+                {% endif %}
+			</div>
+		</div><!-- .rate -->
+		<div class="rate-more">
+			<p>{% trans "Rate in detail" %} {% trans "or" %} <a href="#">{% trans "write a short review" %}</a>:</p>
+			<ul>
+				<li>
+					{{form.rating_14.errors}} {# Directory #}
+					<label for="{{form.rating_14.id_for_label}}">{% trans "Direction" %}</label>
+					{{form.rating_14}}
+					{% trans "Direction" %} <span class="rating-3 r{{ form.rating_14.value }}"></span>
+					{% if form.rating_14.value %}
+						<span title="{% trans "Remove your rating" %}" class="x"></span>
+					{% endif %}
+				</li>
+				<li>
+					{{form.rating_6.errors}} {# Screenplay #}
+					<label for="{{form.rating_6.id_for_label}}">{% trans "Story" %}</label>
+					{{form.rating_6}}
+					{% trans "Story" %} <span class="rating-3 r{{ form.rating_6.value }}"></span>
+					{% if form.rating_6.value %}
+						<span title="{% trans "Remove your rating" %}" class="x"></span>
+					{% endif %}
+				</li>
+				<li>
+					{{form.rating_15.errors}} {# Acting #}
+					<label for="{{form.rating_15.id_for_label}}">{% trans "Acting" %}</label>
+					{{form.rating_15}}
+					{% trans "Acting" %} <span class="rating-3 r{{ form.rating_15.value }}"></span>
+					{% if form.rating_15.value %}
+						<span title="{% trans "Remove your rating" %}" class="x"></span>
+					{% endif %}
+				</li>
+				<li>
+					{{form.rating_7.errors}} {# Special Effects #}
+					<label for="{{form.rating_7.id_for_label}}">{% trans "Visual effects" %}</label>
+					{{form.rating_7}}
+					{% trans "Visual effects" %} <span class="rating-3 r{{ form.rating_7.value }}"></span>
+					{% if form.rating_7.value %}
+						<span title="{% trans "Remove your rating" %}" class="x"></span>
+					{% endif %}
+				</li>
+				<li>
+					{{form.rating_8.errors}} {# Editing #}
+					<label for="{{form.rating_8.id_for_label}}">{% trans "Editing" %}</label>
+					{{form.rating_8}}
+					{% trans "Editing" %} <span class="rating-3 r{{ form.rating_8.value }}"></span>
+					{% if form.rating_8.value %}
+						<span title="{% trans "Remove your rating" %}" class="x"></span>
+					{% endif %}
+				</li>
+				<li>
+					{{form.rating_9.errors}} {# Music #}
+					<label for="{{form.rating_9.id_for_label}}">{% trans "Music" %}</label>
+					{{form.rating_9}}
+					{% trans "Music" %} <span class="rating-3 r{{ form.rating_9.value }}"></span>
+					{% if form.rating_9.value %}
+						<span title="{% trans "Remove your rating" %}" class="x"></span>
+					{% endif %}
+				</li>
+				<li>
+					{{form.rating_10.errors}} {# Camera #}
+					<label for="{{form.rating_10.id_for_label}}">{% trans "Cinematography" %}</label>
+					{{form.rating_10}}
+					{% trans "Cinematography" %} <span class="rating-3 r{{ form.rating_10.value }}"></span>
+					{% if form.rating_10.value %}
+						<span title="{% trans "Remove your rating" %}" class="x"></span>
+					{% endif %}
+				</li>
+				<li>
+					{{form.rating_11.errors}} {# Novelity #}
+					<label for="{{form.rating_11.id_for_label}}">{% trans "Innovativeness" %}</label>
+					{{form.rating_11}}
+					{% trans "Innovativeness" %} <span class="rating-3 r{{ form.rating_11.value }}"></span>
+					{% if form.rating_11.value %}
+						<span title="{% trans "Remove your rating" %}" class="x"></span>
+					{% endif %}
+				</li>
+			</ul>
+		</div><!-- .rate-more -->
+
+		<div class="comment">
+			<p>{% trans "Write a short review" %} {% trans "or" %} <a href="#">{% trans "rate in details" %}</a>:</p>
+			<div class="movie-short-review">
+				{{form.short_review.errors}}
+				<label for="{{form.short_review.id_for_label}}">{{form.short_review.label}}</label>
+				{{form.short_review}}
+				<button>{% trans "Submit" %}</button>
+			</div><!-- #movie-short-review -->
+		</div><!-- .comment -->
+		<div class="final">
+		</div><!-- .final -->
+	</fieldset>
+    {% block rate_next_url %}
+	    <p class="rate-next"><a href="{% next_film_to_rate_url request.user %}">{% trans "Rate next movie" %}</a></p>{# TODO: link to a random, not yet rated movie #}
+    {% endblock rate_next_url %}
+    {{form.film_id}}
+	<input type="hidden" name="next" value="{{request.get_full_path}}" />
+	<input class="user-profile" type="hidden" value="{%  url_user_link request.user %}" />
+	{% csrf_token %}
+	<input type="submit" value="{% trans "Submit" %}" />
+</form>
+
+
+

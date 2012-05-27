@@ -1,0 +1,2 @@
+{% load posters %}
+<a href="{{ film.get_absolute_url }}"><img width="50" height="71" alt="{{ film.get_title }}" src="{% poster 50 71 film %}" />{{ film.get_title }} <span>{{ film.title }} {% if film.release_year %}({{ film.release_year }}){% endif %}</span></a>

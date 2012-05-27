@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{%load i18n%}
+{%load map_url%}
+{%load account%}
+
+{% block body-class %}registration{% endblock %}
+{% block content %}
+<div id="auth_token">
+    <section class="standard-log-in">
+        <h1>{%trans "Authorize Access"%}</h1>
+        <p>
+        {% blocktrans with token.consumer.name as app %}
+        Application <strong>{{app}}</strong> would like the ability to access and update your data on Filmaster.
+        {% endblocktrans %}
+        </p>
+        <form method="POST">
+            <fieldset>
+            {{ form.as_table }}
+            </fieldset>
+            <input type="submit" id="allow" value='{% trans "Allow" %}' />
+            <input type="submit" id="deny" value='{% trans "Deny" %}' />
+        </form>
+    </section>
+    <section id="logged-in-info">
+    	<p>
+    	{% blocktrans %}You are already logged in as {{ user }}.{%endblocktrans %}
+        <a class='logout-link' href='{% map_url "LOGOUT" %}/?{%get_next request%}' title="">{% trans "Log out" %}</a>
+        </p>
+    </section>
+</div>
+{% endblock %}
+
+{% block end-scripts %}
+<script type="text/javascript">
+	$("#deny").click(function(){
+		$("#id_authorize_access").attr("checked", false);
+	});
+</script>
+{% endblock %}

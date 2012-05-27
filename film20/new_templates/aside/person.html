@@ -1,0 +1,28 @@
+{% load person %}
+{% load posters %}
+{% load i18n %}
+{% load map_url %}
+
+<aside class="person">
+    <section class="photo">
+    <h1>{% trans "Photo" %}: {{ person.localized_name|safe }} {{ person.localized_surname|safe }}</h1>
+    <img src="{%poster 180 258 person%}" width="180" height="258" />
+    {% comment %}
+    <div class="gallery">
+    {% for poster in person.posters %}
+        <p>
+            <img src="{% poster 60 60 poster %}" />
+        </p>
+    {% endfor %}
+    </div>
+    {% endcomment %}
+
+    {% if user.is_authenticated %}
+    <p>
+        <a id="add_photo" href="{% url add-person-photo person.permalink %}">
+            {% if person.image %}{% trans "Replace photo" %}{% else %}{% trans "Add photo" %}{% endif %}
+        </a>
+    </p>
+    {% endif %}
+    </section><!-- .photo -->
+</aside><!-- .person -->

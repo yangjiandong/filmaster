@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% load map_url %}
+{% load i18n %}
+{% load show_film_tags %}
+{% load pagination_tags %}
+
+{% block title %}
+    {% trans "Request a movie to be added" %}
+{% endblock %}
+
+{% block primary-content-aside %}
+    {% include 'aside/movies/base.html' %}
+{% endblock primary-content-aside %}
+
+{% block content %}
+    {% if user.is_authenticated %}
+
+        <section class="add-movie">
+            <h1>{% trans "Request a movie to be added" %}</h1>
+    
+            <div>
+                <h2>{% trans "Is this movie on <a href='http://imdb.com'>IMDB.com</a>? Request it and we'll add it automatically." %}</h2>
+                <p>{% trans "If you haven't found the movie on Filmaster, try to find it on IMDB. This drastically speeds up the process of adding it to our database." %}</p>
+
+                <form action="." method="post">
+                    <fieldset>            
+                        <div>
+                            {% if form.title.errors %}<div class="error">{{ form.title.errors }}</div>{% endif %}
+                            <label for="id_title">{% trans "Movie title" %}</label>
+                                {{ form.title }}
+                        </div>
+                        <div>
+                            {% if form.imdb_url.errors %}<div class="error">{{ form.imdb_url.errors }}</div>{% endif %}
+                            <label for="id_imdb_url">{% trans "Movie url on IMDB.com" %}</label>
+                                {{ form.imdb_url }}
+                        </div>
+                    </fieldset>
+                
+                    <a href="{% url add-film-manual %}">{% trans "I've searched IMDB and haven't found it. I want add it manually." %}</a>
+
+                    <input type="submit" value="{% trans "Request this movie" %}">
+                </form>
+
+            </div>
+        </section>
+
+    {%endif%}
+{% endblock %}

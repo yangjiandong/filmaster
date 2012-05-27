@@ -1,0 +1,17 @@
+{% load i18n %}
+{% load map_url %}
+{% load useractivity_tags %}
+{% if activity.object_title and activity.object_slug %}
+    {% trans "wrote about" %} <a href="{{activity.get_object_url}}">{{ activity.object_title }}</a>
+{% else %} 
+    {% if activity.film_title and activity.film_permalink %}
+        {% trans "wrote about" %} <a href="{{ activity.film_absolute_url }}">{{ activity.film_title }}</a>
+    {% else %} 
+        {# TODO: add caching in useractivity field: FLM-1205 #}
+        {% if activity.person %}
+           {% trans "wrote about" %} <a href="{% url show_person activity.person.permalink %}">{{ activity.person.name }} {{ activity.person.surname }}</a>
+        {% else %}
+           {% trans "published a wall post" %}
+        {% endif %}
+    {% endif %}
+{% endif %}

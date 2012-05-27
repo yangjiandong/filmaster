@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+{% load map_url %}
+
+{% block title %}{% trans "Logout" %}{% endblock %}
+
+{% block content %}
+<div id="content-section" class="logout">
+<p><strong>{% trans "Thanks for stopping by; when you come back, don't forget to" %}
+<a href="{% url main_page %}">{% trans "log in" %}</a> {% trans "again" %}.</strong></p>
+
+</div>
+{% endblock %}

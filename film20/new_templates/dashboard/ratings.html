@@ -1,0 +1,14 @@
+{% extends 'dashboard/base.html' %}
+{% load i18n %}
+
+{% block title %}
+    {% trans "Your movie ratings" %}: {{ rating_type_str }}
+{% endblock title %}
+
+{% block content %}
+    {% include 'dashboard/rated_films.html' %}
+{% endblock content %}
+
+{% block end-scripts %}
+    {% include 'userprofile/rating_scripts.html' %}
+{% endblock end-scripts %}

@@ -1,0 +1,14 @@
+{% extends "moderation/rss.xml" %}
+{% load pyif %}
+
+{% block item_link %}{{ item.content_object.get_absolute_url }}{% endblock %}
+{% block item_title %}{{ item.film.title }}
+	{% pyif item.content_type.name == 'Film' %}
+		{{ item.content_object.title }}
+	{% endif %}
+	
+	{% pyif item.content_type.name == 'Person' %}
+		{{ item.content_object.name }} {{ item.content_object.surname }}
+	{% endif %}
+{% endblock %}
+{% block item_pub_date %}{{ item.created_at }}{% endblock %}

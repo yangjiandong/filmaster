@@ -1,0 +1,17 @@
+{% load i18n %}
+{% load utils %}
+<aside>
+<section>
+<h1>{% trans "Your TV channels" %}</h1>
+<nav>
+<ul>
+{% for channel in menu_channels %}
+    <li>{% a showtimes_tvchannel channel.id %}{{ channel.name }}{% enda %}</li>
+{% endfor %}
+</ul>
+<ul>
+    <li>{% a user_tvchannels %}{% trans "Select your channels" %}{% enda %}</li>
+</ul>
+</nav>
+</section>
+</aside>

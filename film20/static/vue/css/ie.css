@@ -1,0 +1,76 @@
+header h1 {
+	background-color: none;
+    -ms-filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#7fffffff,endColorstr=#7fffffff);
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#7fffffff,endColorstr=#7fffffff);
+    zoom: 1;
+}
+
+p.msg {
+    background: #000;
+}
+
+section.info {
+    background: #000;
+    filter: alpha(opacity=90);
+}
+
+p.rate {
+    background: #000;
+    filter: alpha(opacity=90);
+}
+
+#film-toplayer {
+    background: #000;
+}
+
+
+ul.mood-selector {
+    border: 1px solid #000;
+    border-width: 1px 0;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#FF3F3F3F, endColorstr=#FF000000);
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#FF3F3F3F, endColorstr=#FF000000)";
+}
+ul.mood-selector li.pressed {
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#FF000000, endColorstr=#FF3F3F3F);
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#FF000000, endColorstr=#FF3F3F3F)";
+}
+ul.mood-selector li:first-child {
+    border-left: 1px solid #000;
+}
+
+section.rate-films ul.rate-movies-simple {
+    margin-left: -15px;
+}
+section.rate-films ul.rate-movies-simple li figcaption a {
+    zoom: 1;
+    position: relative;
+}
+section.rate-films ul.rate-movies-simple > li:first-child + li + li + li {
+    clear: left;
+}
+
+.recommended-films h2 a {
+    zoom: 1;
+    position: relative;
+}
+
+a.main-button {
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#FFDEDEDE, endColorstr=#FFC1C1C1);
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#FFDEDEDE, endColorstr=#FFC1C1C1)";
+}
+
+
+ul.recommended-films .even {
+    padding-right: 0 !important;
+}
+.detailed-recommendations ul.movies .even {
+    padding-left: 20px;
+}
+ul.recommended-films .odd,
+.detailed-recommendations ul.movies .odd {
+    clear: left;
+}
+
+.wrapper + p.rate-movies-more a.main-button {
+    margin-top: 20px;
+}

@@ -1,0 +1,28 @@
+{% load i18n %}
+{% load utils %}
+{% if cinema_films %}
+    <div style="font-weight: bold;">{% trans "Those are screened in cinemas near you:" %}</div>
+    {% with films=cinema_films channels=cinemas %}
+        <p>{% include "showtimes/notification/recommended_films.html" %}</p>
+    {% endwith %}
+
+    <p>{% trans "More cinema recommendations at" %} <a href="{% url recommendations_theaters %}">{% url recommendations_theaters %}</a></p>
+    <br />
+{%endif%}
+
+{% if tv_films %}
+    <div style="font-weight: bold;">
+    {% if cinema_films %}
+        {% trans "And those are being shown on TV:" %}
+    {% else %}
+        {% trans "Those are being shown on TV:" %}
+    {% endif %}
+    </div>
+
+    {% with films=tv_films channels=tv_channels %}
+        <p>{% include "showtimes/notification/recommended_films.html" %}</p>
+    {% endwith %}
+
+    <p>{% trans "More TV recommendations at" %} <a href="{% url recommendations_tv %}">{% url recommendations_tv %}</a></p>
+    <br />
+{% endif %}

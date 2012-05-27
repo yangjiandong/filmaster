@@ -1,0 +1,84 @@
+{% load map_url %}
+{% load i18n %}
+{% load debug %}
+{% load movie %}
+{% load posters %}
+
+<form method="POST" action="{% url process_ratings %}">
+	<fieldset>
+		<span class="ajax-loader"></span>
+		<p class="msg"></p>
+        <a class="t" href="{{ film.get_absolute_url }}">
+			<img width="60" height="85" src="{% poster 60 85 film %}" alt="{{ film.get_title }}" />
+			{{ film.get_title }}
+		</a>
+        <p>
+            {{ film.title|safe }}, {{ film.release_year }}, {% film_directors film %}
+        </p>
+	<p class="ratings-in-movie">
+        {% if request.user.is_authenticated %}
+            {% set_guess_score film request.user %}
+                {% if guess_score %}
+                    {% trans "Your likely rating" %}: {{ guess_score|floatformat:'1' }}
+                    <meter class="rating-1-avg" value="{{ guess_score|floatformat:'0' }}" max="10">{{ guess_score }}</meter>
+                {% endif %}
+            {% endset_guess_score %}
+        {% else %}
+            {% if film.average_score %}
+                {% trans "Average rating" %}: {{ film.average_score|floatformat:'1' }}
+                <meter class="rating-2" value="{{ film.average_score }}" max="10">{{ film.average_score }}</meter>
+            {% endif %}
+        {% endif %}
+    </p>
+		<p class="r ratings-in-movie">
+			{% if form.rating_1.value %}
+			    {% trans "Change your rating" %}:
+            {% else %}
+                {% if film.is_tv_series %}
+                {% trans "If you saw the tv series, rate it" %}:
+                {% else %}
+                {% trans "If you saw the movie, rate it" %}:
+                {% endif %}
+			{% endif %}
+			{{form.rating_1.errors}} {# Film #}
+			<label for="{{form.rating_1.id_for_label}}">{{form.rating_1.label}}</label>
+			{{form.rating_1}}
+			 <span class="rating-1 r{{ form.rating_1.value }}"></span>
+			{% if form.rating_1.value %}
+				<span title="{% trans "Remove your rating" %}" class="x"></span>
+			{% endif %}
+		</p>
+		<div class="checkbox">
+            {% if not collection_view %}
+                {% if form.dying_for.value or form.not_interested.value %}
+                    <p>
+                    {% trans "You have this movie on your " %}
+                    {% if form.dying_for.value %}
+                        <a href="{% url wishlist %}">{% trans "wishlist. " %}</a>
+                    {% else %}
+                        <a href="{% url shitlist %}">{% trans "shitlist. " %}</a>
+                    {% endif %}
+                    </p>
+                {% else %}
+                    {% if not form.rating_1.value %}
+                        <p>{% trans "If you haven't seen it" %}:</p>
+                        {{form.dying_for.errors}}
+                        <label for="{{form.dying_for.id_for_label}}">{{form.dying_for.label}}{{form.dying_for}}</label>
+                        {{form.not_interested.errors}}
+                        <label for="{{form.not_interested.id_for_label}}">{{form.not_interested.label}}{{form.not_interested}}</label>
+                
+                        <ul class="not-seen-yet-actions">
+                            <li><a class="whishlist" href="{% url wishlist %}">{% trans "I want to watch it (haven't seen, yet)!" %}</a></li>
+                            <li><a class="shitlist" href="{% url shitlist %}">{% trans "I don't want to see it, do not show me again!" %}</a></li>
+                        </ul><!-- .not-seen-yet-actions -->
+                    {% endif %}
+                {% endif %}
+            {% else %}
+			    <p><button class="remove">{% trans "Remove from the list" %}</button></p>
+            {% endif %}
+        </div>
+	</fieldset>
+	<input class="user-profile" type="hidden" value="{%  url_user_link request.user %}" />
+	{% csrf_token %}
+	<input type="submit" value="{% trans "Submit" %}" />
+</form>

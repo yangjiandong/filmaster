@@ -1,0 +1,1 @@
+{% load escapelinks %}{% load i18n %}<span class="embedded-link"><a href="{{ url }}">{{ url|escapeurls }}</a></span>{% autoescape off %}<blockquote class="embedded-quote">{{ response.html }}</blockquote>{% endautoescape %}

@@ -1,0 +1,12 @@
+{% extends "wall/useractivity/base.html" %}
+{% load i18n %}
+{% load format_date %}
+{% load useractivity_tags %}
+
+{% block activity-header %}
+    {% trans "added a demot" %} <a href="{% url show_demot activity.user activity.pk %}">{{ activity.object_title }}</a>
+{% endblock %}
+
+{% block activity-content %}
+    <a href="{{ activity.get_absolute_url }}"><img src="{{ activity.content }}" alt="[{{ activity.object_title }}]"/></a>
+{% endblock %}

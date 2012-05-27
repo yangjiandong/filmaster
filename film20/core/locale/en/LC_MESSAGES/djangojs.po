@@ -1,0 +1,59 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-10-28 16:13+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: .\javascript\jquery.textareacount.js.py:42
+msgid "Only "
+msgstr ""
+
+#: .\javascript\jquery.textareacount.js.py:42
+msgid " chars left."
+msgstr ""
+
+#: .\javascript\jquery.textareacount.js.py:44
+msgid "Max review length!"
+msgstr ""
+
+#: .\javascript\jquery.textareacount.js.py:46
+msgid "Max length exteeded by "
+msgstr ""
+
+#: .\javascript\jquery.textareacount.js.py:46
+msgid " chars."
+msgstr ""
+
+#: .\javascript\rating.js.py:18
+msgid "You forgot to write a review!"
+msgstr ""
+
+#: .\javascript\rating.js.py:23
+msgid "Review is too short (at least 10 characters)!"
+msgstr ""
+
+#: .\javascript\rating.js.py:28
+msgid "Review is too long (max 500 chars). You entered"
+msgstr ""
+
+#: .\javascript\rating.js.py:91
+msgid "Please log in to vote"
+msgstr ""
+
+#: .\javascript\rating.js.py:98
+msgid "Epic fail... Reason being: "
+msgstr ""
+
+#: .\javascript\rating.js.py:110 .\javascript\rating.js.py:115
+msgid "You have not rated the movie."
+msgstr ""
+
+#: .\javascript\rating.js.py:256
+msgid "Cancel rating"
+msgstr ""

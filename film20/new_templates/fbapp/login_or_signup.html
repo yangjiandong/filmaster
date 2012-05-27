@@ -1,0 +1,87 @@
+{% extends "fbapp/base.html" %}
+
+{% load account %}
+{% load i18n %}
+{% load map_url %}
+
+{% block content %}
+<h1>Zaloguj się do Filmastera</h1>
+<p>By zakończyć zabawę i wziąć udział w losowaniu biletów, oraz w grze o główną nagrodę musisz zalogować się do swojego konta w Filmasterze.</p>
+
+<div class="login-or-signup">
+    <div class="col">
+        <div>
+        <h2>Zaloguj się</h2>
+        {% with form=login_form %}
+        <form class="log-in" id="signup_form" method="post" action="{% relurl fbapp_login_or_signup %}">
+            <fieldset>
+                <div class="loginstandard">
+                    {% if reason %}
+                        <div id="login-reason">
+                        {% ifequal reason "vote" %}
+                            {% trans "In order to vote you need to sign in." %}
+                        {% endifequal %}
+                        </div>
+                    {% endif %}
+                    <div>{{ form.non_field_errors }}</div>
+
+                    {% for field in form %}
+
+                        {% if field.errors %}
+                            {{ field.errors }}
+                        {% endif %}
+                    
+                        {% if field.name == "remember" %}
+                        <div class="check">
+                            <label for="{{ field.id_for_label }}">{{ field }} {{ field.label }}</label>
+                        {% else %}
+                            {% if field.is_hidden %}
+                            <!-- hidden -->
+                            {% else %}
+                                {{ field.label_tag }}
+                            {% endif %}
+
+                            {{ field }}
+                        {% endif %}
+
+                        {% if field.help_text %}
+                            <p>{{ field.help_text }}!</p>
+                        {% endif %}
+
+                        {% if field.name == "remember" %}
+                            </div><!-- .check -->
+                        {% endif %}
+                                             
+                    {% endfor %}
+                    <input type="submit" name="login" value="{% trans "Log in" %}" />
+                </div>
+            </fieldset>
+            {% csrf_token %}
+            <p class="forgotten-pass"><a href='{% map_url "RESET_PASSWORD" %}/?{%get_next request%}'>{% trans "Forgot password?" %}</a></p>
+        </form>
+        {% endwith %}
+        </div>
+    </div>
+
+    <div class="col">
+        <div>
+        <h2>Nie masz konta?</h2>
+        <p>Nic nie szkodzi! Załóż konto w 10 sekund!</p>
+        {% with form=signup_form %}
+        <form id="signup_form" class="signupform register" method="post" action="{% relurl fbapp_login_or_signup %}">
+            <fieldset>
+                {{form.username.errors}}
+                 <label for="{{ form.username.id_for_label }}">{{form.username.label}}</label>
+                {{form.username}}
+                {{form.email.errors}}
+                <label for="{{ form.email.id_for_label }}">{{form.email.label}}</label>
+                {{form.email}}
+                <input type="submit" name="signup" value="{% trans "Register" %}">
+            </fieldset>
+        </form>
+        {% endwith %}
+        </div>
+    </div>
+    <div style="clear: both;"></div>
+</div>
+{% endblock %}

@@ -1,0 +1,122 @@
+{% load i18n %}
+<style>
+    /** TODO: move to style.css **/
+    .edit-film-features .body input[type="checkbox"] {
+        vertical-align: middle;
+        margin-right: 10px;
+    }
+    .edit-film-features .body {
+        padding: 10px;
+    }
+    .edit-film-features .body form p {
+        margin-top: 1px;
+    }
+    
+    .edit-film-features .body ul{
+        list-style:none;
+        margin: 0px;
+        padding: 0px;
+    }
+
+    .edit-film-features .body .col {
+        min-height: 200px;
+    }
+    .edit-film-features .body .col:first-child {
+        float: right;
+        width: 350px;
+        margin-left: 5px;
+        padding-left: 5px;
+        border-left: 2px solid #ccc;
+        min-height: 100px;
+    }
+
+    .edit-film-features .body ul li {
+        margin-top: 2px;
+    }
+    /*
+    .edit-film-features .body ul li strong {
+        font-weight: bold;
+        background: #229698;
+        color: #ffffff;
+        padding: 0 3px;
+        float:right;
+        border-radius: 2px;
+        -moz-border-radius: 2px;
+        -webkit-border-radius: 2px;
+        -moz-border-radius: 2px;
+    }*/
+    
+    .buttons {
+        clear: both;
+        padding: 0 10px;
+        padding-top: 10px;
+    }
+
+    .buttons #next_film{
+        float: right;
+    }
+
+    .edit-film-features form div.row-film {
+        margin: 5px;
+        clear: both;
+    }
+
+    .edit-film-features form div.row-film:hover {
+        background: #eee;
+    }
+
+
+    .edit-film-features form a.remove_row {
+        float: right;
+        padding: 6px;
+    }
+
+    .edit-film-features form a#add_film {
+        padding: 5px 10px;
+    }
+</style>
+
+<div class="content edit-film-features">
+    <div id="main">
+    {% if object %}
+        <div class="body">
+        {% if preview or voted and not edit %}
+        <div class="col">
+            <h1>{% trans "Similar Films" %}</h1>
+            <ul>
+                {% for similar_film in similar_films %}
+                <li><a href="{{ similar_film.film_b.get_absolute_url }}">{{ similar_film.film_b }}</a> (<strong>{{ similar_film.number_of_votes }}</strong>)</li>   
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="col">
+            <h1>{% trans "Film Features" %}</h1>
+            <ul>
+                {% for feature in features %}
+                <li>{{ feature.type_name }} (<strong>{{ feature.number_of_votes }}</strong>)</li>   
+                {% endfor %}
+            </ul>
+        </div>
+
+        {% else %}
+        <div class="ajax-loader"></div>
+        <form action="{% url edit-film-features object.pk %}" method="POST">
+            {{ form.as_div }}
+        </form>
+        {% endif %}
+        </div>
+        <div class="buttons">
+        {% if preview or voted and not edit %}
+            <a id="edit" href="{% url edit-film-features object.pk %}?edit">{% trans "edit" %}</a>
+        {% else %}
+            <input id="save" type="button" value="{% trans "Save" %}"/>
+        {% endif %}
+
+            <a  id="next_film" href="{% url moderate-item "film-features" %}">{% trans "next movie" %}</a>
+        </div>
+    {% else %}
+        <p>{% trans "All rated movies voted. Rate more movies." %}</p>
+    {% endif %}
+    </div>
+</div>
+<script src='/static/js/plugins/jquery.autocomplete.min.js'></script>

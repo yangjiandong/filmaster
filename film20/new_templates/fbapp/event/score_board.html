@@ -1,0 +1,23 @@
+{% extends "fbapp/event/base.html" %}
+{% load i18n %}
+
+{% block menu %}
+<ul>
+    <li><a href='javascript:history.back()'>{% trans "back" %}</a></li>
+</ul>
+{% endblock %}
+
+{% block content %}
+    <h1>{{ event.title }}: {% trans "Score Board" %}</h1>
+    <div class="score-board">
+    {% if score_board %}
+    <ol>
+        {% for f in score_board %}
+        <li><a href="{{ f.link}}" title="{{ f.name }}"><img src="{{f.picture_url}}" />{{ f.name }}</a> <span class="your-points">{{ f.score }}</span> {% trans "points" %}</li>
+        {% endfor %}
+    </ol>
+    {% else %}
+        <div class="empty">{% trans "No participants" %}</div>
+    {% endif %}
+    </div>
+{% endblock %}

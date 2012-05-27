@@ -1,0 +1,89 @@
+{% extends 'fbapp/canvas.html' %}
+{% load i18n %}
+
+{% block content %}
+{% if contest.state == 0 %}
+    {% if participant %}
+        <p>Grasz o podwójne zaproszenie w kinie</p>
+        <h3>{{ participant.ticket.theater }}</h3>
+        <p>Zdobyłeś <b>{{participant.score}}</b> punktów!</p>
+
+        {% load posters %}
+        {% load recommended %}
+        {% get_fbapp_recommended 8 as all_films %}
+        {% if all_films %}
+        <section class="top-movies" style="margin-top: 20px;">
+            <h3>Nasze rekomendacje dla Ciebie:</h3>
+            <ul>
+            {% for film in all_films %}
+            <li>
+                <a href="{{ film.get_absolute_url }}" title="{{ film.get_title }}" target="_blank">
+                    <figure>
+                        <img width="156" height="225" src="{% poster 156 225 film %}" alt="{{ film.get_title }}" />
+                        <figcaption>{{ film.get_title }}{%if film.release_year %} <span>({{film.release_year}})</span>{%endif%}</figcaption>
+                    </figure>
+                </a>
+            </li>
+            {% endfor %}
+            <ul>
+        </section>
+        {% endif %}
+
+    {% else %}
+    <p class="days-to-final">Do finału zostało jeszcze:
+    <b>
+        {% with d=contest.time_to_final %}
+        {% if d.days %}
+            {% blocktrans count count=d.days %}
+                {{count}} day
+            {% plural %}
+                {{count}} days
+            {% endblocktrans %}
+        {% endif %}
+        {% if not d.days and d.hours %}
+            {% blocktrans count count=d.hours %}
+                {{count}} hour
+            {% plural %}
+                {{count}} hours
+            {% endblocktrans %}
+        {% endif %}
+        {% if not d.days and not d.hours %}
+            {% blocktrans count count=d.minutes %}
+                {{count}} minute
+            {% plural %}
+                {{count}} minutes
+            {% endblocktrans %}
+            {% endif %}
+        {% endwith %}
+
+    </b>
+    </p>
+        {% if tickets %}
+        <div class="tickets">
+            {% if theaters %}
+            <p>Wygrałeś/aś już bilet do kina w ciągu ostatniego miesiąca. Możesz nadal brać udział w konkursie, ale preferowane będą osoby, które w ciągu ostatniego miesiąca nie wygrały biltetu w tym samym kinie</p>
+            {% endif %}
+            <form action="{% url fbapp_choose_ticket %}" method="post">
+            <select name="ticket">
+                <option value="0">Wybierz kino w którym odbierzesz bilety</option>
+            {% for ticket in tickets %}
+                <option value="{{ ticket.id }}">
+                    {% if ticket.descr %}
+                        {{ ticket.descr }}: {% endif %}
+                    {{ ticket.theater }}
+                </option>
+            {% endfor %}
+            </select>
+            
+            <div class="play"><input type="submit" value="Zagraj o zaproszenia!" /></div>
+            </form>
+        </div>
+        {% endif %}
+    {% endif %}
+{% else %}
+    <p>
+    Konkurs skończył się <b>{{ contest.final_date|date:"Y-m-d" }}</b>. Na razie nie ma 
+    żadnych aktywnych konkursów. Wróć później.
+    </p>
+{% endif %}
+{% endblock content %}

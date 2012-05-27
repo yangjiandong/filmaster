@@ -1,0 +1,14 @@
+{% load notification %}
+{% load i18n %}
+{% with using="Filmaster" %}
+{% if platform_name %}
+{% blocktrans %}
+I've just started using {{using}} to instantly get top movie recommendations on my #{{platform_name}}
+{% endblocktrans %}
+{% else %}
+{% blocktrans %}
+I've just started using {{using}} to know what to watch tonight based on my unique taste!
+{% endblocktrans %}
+{% endif %}
+{% endwith %}
+

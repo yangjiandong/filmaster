@@ -1,0 +1,47 @@
+{% extends "movies/base.html" %}
+{% load i18n %}
+{% load expr %}
+{% load map_url %}
+{% load posters %}
+{% load object %}
+{% load movie %}
+{% load utils %}
+
+{% block primary-content-aside %}
+	{% include 'aside/movies/ranking.html' %}
+{% endblock primary-content-aside %}
+
+{% block primary-content-wrapper-start %}{% endblock %}
+
+{% block secondary-content-aside %}{% endblock %}
+
+{% block title %}{% trans "Ranking" %}: {% include "recommendations/film_filter_criteria_title.html" %}{% include "recommendations/film_filter_criteria_subtitle.html" %}{% endblock %}
+{% block description %}{% trans "Movie database and film featured reviews by Filmaster authors." %}{% endblock %}
+
+{% block films_widget %}{% endblock films_widget %}
+
+{% block primary-content-wrapper-end %}{% endblock %}
+
+{% block content %}
+	<section class="ranking">
+	<h1>{% trans "Ranking" %}: {% include "recommendations/film_filter_criteria_title.html" %}</h1>
+    <h2>{% include "recommendations/film_filter_criteria_subtitle.html" %}</h2>
+	<div class="rating-options">
+		<p>{% trans "Display ranking for" %}:</p>
+		<ul>
+        {% for type_as_str, value in rating_types %}
+			<li>
+                <a {% ifequal value rating_type_str %}class='selected'{% endifequal %} href="{% url rankings type_as_str %}">{{ value }}</a>
+			</li>
+		{% endfor %}
+		</ul>
+	</div><!-- .rating-options -->
+
+	{% include "movies/filters/movies_filter.html" %}
+
+    {% include "movies/ranking_list.html" %}
+
+</section><!-- .ranking -->
+{% endblock content %}
+
+{% block page_title %}<h1>{% trans "Ranking" %}: {{ rating_type_str }}</h1>{% endblock page_title %}

@@ -1,0 +1,52 @@
+{% extends "profile/base.html" %}
+{% load i18n %}
+{% load fbconnect %}
+{% load format_date %}
+{% load useractivity_tags %}
+{% load threadedcommentstags %}
+
+{% block title %}{% trans "Demot: " %}{{ activity.demot.line1 }}{% endblock %}
+{% block description %}{{ activity.demot.line2 }}{% endblock %}
+
+{% block head_extra %}
+<meta property="og:title" content="{{ activity.demot.line1 }}" />
+<meta property="og:description" content="{{ activity.demot.line2 }}" />
+<meta property="og:type" content="{{ activity.get_type_name }}" />
+<meta property="og:image" content="{{ settings.FULL_DOMAIN }}{{ activity.demot.final_image.url }}" />
+{% endblock %}
+
+{% block content %}
+<div id="wall" class="content wall stream show-comment-form {{activity.get_type_name}}">
+    <article class="review demot">
+        <h1><span class="prefix">{% trans "Demot" %}:</span> {{ activity.demot.line1 }}</h1>
+        <p><img src="{{ activity.demot.final_image.url }}" alt="" /></p>
+	<footer>
+		<p>
+			<time class="timeago" datetime="{{ activity.created_at|date:"c" }}">{% human_readable_date activity.created_at %}</time>
+		</p>
+	</footer>
+	<div class="actions">
+		<a href="{% url add-demot %}?demot={{ activity.demot.pk }}">{% trans "Create your own demot with this picture" %}</a>
+		<a href="{% url add-demot %}">{% trans "Create a new demot" %}</a>
+		{% ifequal activity.user.pk request.user.pk %}
+			<a class="edit remove-demot" href="{% url remove-demot activity.demot.pk %}">{% trans "Delete this demot" %}</a>
+		{% endifequal %}
+	</div>
+    </article>
+
+    {% fb_like activity.demot %}
+
+    <section>
+        <footer>
+            <p>
+            {% if activity.is_commentable %}
+                {% if user.is_authenticated %}
+                    <a class="comment" href="{{ activity.get_absolute_url }}" rel="{{activity.api_resource_uri}}">{% trans "Leave a comment" %}</a>
+                {% endif %}
+            {% endif %}
+            </p>
+        </footer>
+    </section>
+    {% include "comments/activity_comments.html" %}
+</div>
+{% endblock %}

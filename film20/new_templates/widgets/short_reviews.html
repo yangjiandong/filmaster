@@ -1,0 +1,30 @@
+{% load format_date %}
+{% load show_film_tags %}
+{% load useractivity_tags %}
+{% load map_url %}
+{% load i18n %}
+
+<h1>{% if params %}{% trans "Filmasters about these movies" %}{% else %}{% trans "Recently on Filmaster" %}{% endif %}</h1>
+{% for activity in activities %}
+<ul>
+    <li><a href="{% url_username_link activity.username %}">{{ activity.user.get_profile.get_current_display_name }}<img width="45" height="45" src="{% avatars 45 activity.username %}" alt="{{ activity.user.get_profile.get_current_display_name }}" /></a>
+        <a href="{{ activity.film.get_absolute_url }}">{{ activity.get_title }}</a>, {% human_readable_date activity.created_at %}</br>
+	<span id="review-{{ review.id }}-less">
+            {{ activity.content|truncatewords:10|safe }} | <a href="{{ activity.get_absolute_url }}">{% trans "read more" %}</a>
+        </span>
+    </li>
+{% endfor %}
+</ul>
+<script type="text/javascript">
+function showHide(shID) {
+	if (document.getElementById(shID)) {
+		if (document.getElementById(shID+'-show').style.display != 'none') {
+			document.getElementById(shID+'-show').style.display = 'none';
+			document.getElementById(shID).style.display = 'block';
+		}
+		else {
+			document.getElementById(shID+'-show').style.display = 'inline';
+			document.getElementById(shID).style.display = 'none';
+		}
+	}
+}</script>

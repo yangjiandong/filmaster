@@ -1,0 +1,96 @@
+{% extends "demots/base.html" %}
+
+{% load i18n %}
+
+{% block title %}
+    {% trans "Add demot" %}
+{% endblock %}
+
+{% block extrajs %}
+    {# if javascript is enabled, hide standard form #}
+    <script>document.write("<style>#form-wrapper{ display:none; }#demot-loading{ display: block; }</style>")</script>
+{% endblock %}
+
+{% block content %}
+    <section class="demots">
+        <div id="form-wrapper">
+            <form method="POST" accept-charset="utf-8" enctype="multipart/form-data">
+                {% include "form_fieldset.html" %}
+                <input type="submit" value="{% trans "Submit" %}">
+            </form>
+        </div>
+        <div id="demot-loading">{% trans "Loading, please wait..." %}</div>
+    </section>
+{% endblock %}
+
+{% block end-scripts %}
+    <script>
+        var upload_demot_image_callback = function( json ) {
+            $( '#form__upload_demot_image #id_image' ).val( json['image_id'] );
+        };
+
+        var createDemotAjaxForm = function() {
+            $( '#demot-loading' ).show();
+
+            // load ajax form
+            $( '#form-wrapper' ).load( '{% url add-demot %}{% if based_on %}?demot={{ based_on.pk }}{% endif %}',function() {
+                var $this = $( this ),
+                    $form = $( '#form__upload_demot_image', $this ),
+                    $submit = $( 'input[type="submit"]', $form ),
+                    $loader = $( '.loader', $this );
+                
+                // bind submit
+                $form.bind( 'submit', function() {
+
+                    $submit.attr( 'disabled', 'true' );
+
+                    $loader.show();
+
+                    $( '.form-errors', $this ).remove();
+                
+                    $.post( $form.attr( 'action' ), $form.serialize(), function( json ) {
+                        if ( json.success ) {
+                            $this.hide();
+                            $( '#demot-loading' ).html( '{% trans "Redirecting to demot page: " %}<a href="' + json.url + '">' + json.url +'</a>' ).show();
+                            window.location = json.url;
+                        } else {
+                            for ( var key in json.errors ) {
+                                var $errorlist = $( '<ul class="form-errors errorlist"><ul>' )
+                                for ( var i = 0; i < json.errors[key].length; i++ ) {
+                                    $errorlist.append( '<li>' + json.errors[key][i] + '</li>' )
+                                }
+
+                                if ( key == '__all__' ) {
+                                    $errorlist.prependTo( $form )
+                                } else {
+                                    if ( key == 'image' ) key = 'url';
+                                    $errorlist.prependTo( $( '#id_' + key ).prev() )
+                                }
+                            }
+                        }
+
+                        $loader.hide();
+                        $submit.removeAttr( 'disabled' );
+                    }, "json" );
+
+                    return false;
+                });
+
+                $( '#upload_demot_image label:last').text( ' ' );
+                $( 'label[for="id_image"]', $form ).hide();
+                for( var i = 1; i <= 2; i++ ) {
+                    $( '#id_line' + i, $form ).attr( 'placeholder', $( 'label[for="id_line' + i + '"]', $form ).text() );
+                    $( 'label[for="id_line' + i + '"]', $form ).text( '' );
+                }
+
+                $( '#demot-loading' ).hide();
+                $this.show();
+            }); 
+        };
+
+        $( function() {
+            createDemotAjaxForm();
+        });
+
+    </script>
+{% endblock %}

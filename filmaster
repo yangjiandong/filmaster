@@ -1,0 +1,24 @@
+#! /bin/sh
+
+HOME=`python -c "import os;print os.path.dirname(os.path.abspath('$0'));"`
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+
+cd $HOME
+
+test -f ./filmaster.cfg && . ./filmaster.cfg
+
+set -e
+
+case "$1" in
+  start|stop|restart|force-reload|status)
+        ./filmaster-fcgi $1
+	test -z "$SKIP_CELERY" && ./filmaster-celery $1
+	;;
+  *)
+	N=filmaster
+	echo "Usage: $N {start|stop|restart|force-reload|status}" >&2
+	exit 1
+	;;
+esac
+
+exit 0

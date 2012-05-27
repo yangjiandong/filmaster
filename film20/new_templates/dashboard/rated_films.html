@@ -1,0 +1,13 @@
+{% extends "userprofile/ratings.html" %}
+{% load i18n %}
+{% load map_url %}
+
+{% block username %}
+    {% trans "Your movie ratings" %}: {{ rating_type_str }}
+{% endblock username %}
+
+{% block user_rated %}{% trans "You rated" %}{% endblock user_rated %}
+
+{% block download %}
+    {% trans "Download your ratings as" %}: <a href="{% url export_ratings 'xml' %}">XML</a>
+{% endblock download %}

@@ -1,0 +1,19 @@
+{% load map_url %}
+{% load object %}
+{% load movie %}
+{% load posters %}
+{% load i18n %}
+{% load debug %}
+
+<ul>
+{% for film in films %}
+<li>
+	<a href="{{ film.get_absolute_url }}" title="{{ film.get_title }}">
+		<figure>
+			<img width="156" height="225" src="{% poster 156 225 film %}" alt="{{ film.get_title }}" />
+			<figcaption>{{ film.get_title }}{%if film.release_year %} <span>({{film.release_year}})</span>{%endif%}</figcaption>
+		</figure>
+	</a>
+</li>
+{% endfor %}
+</ul>

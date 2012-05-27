@@ -1,0 +1,6 @@
+{% load i18n %}
+{% if accepted %}
+{% blocktrans with item as film %} Film {{ film }} has been accepted{% endblocktrans %}
+{% else %}
+{% blocktrans with item as film %} Film {{ film }} has been rejected{% endblocktrans %}
+{% endif %}

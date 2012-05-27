@@ -1,0 +1,145 @@
+{% load i18n %}
+{% load map_url %}
+{% load posters %}
+{% load pyif %}
+{% load useractivity_tags %}
+{% load escapelinks %}
+{% load show_film_tags %}
+{% load object %}
+{% load movie %}
+{% load highlight %}
+
+<!-- TODO remove after tests -->
+<div style="display:none">{{ h_item.score }}</div>
+
+{% ifequal item_type 'FILM' %}
+<li>
+    <a href="{{ item.get_absolute_url }}">
+        <img width="100" height="140" src="{% poster 100 140 item %}" alt="{{ item.get_title }}" />
+            {% if item.is_tv_series %}{% trans "TV Series" %}{% else %}{% trans "Film" %}{% endif %}: {{ item.get_title }} ({{ item.release_year }})
+    </a>
+    {% object_tags item %}
+    <p>{% film_directors item %}</p>
+
+    <p class="description">
+    {% if item.description %}
+        {% with item.description|striptags as description %}
+            {% if h_item.highlighted.text %}
+                {% highlight description with h_item.highlighted.text %}
+            {% else %}
+                {{ description|striptags|truncatewords:50 }}
+            {% endif %}
+        {% endwith %}
+    {% else %}
+        {% if item.get_localized_film.fetched_description %}
+            {% with item.get_localized_film.fetched_description|striptags|cut:"[opis dystrybutora]"|cut:"[dystrybutor]" as description %}
+                {% if h_item.highlighted.text %}
+                    {% highlight description with h_item.highlighted.text %}
+                {% else %}
+                    {{ description|striptags|truncatewords:50 }}
+                {% endif %}
+            {% endwith %}
+        {% else %}
+            {% trans "This film does not have a description, yet." %}
+        {% endif %}
+    {% endif %}
+    </p>
+
+    {% film_guess_score item request.user %}
+    {% film_average_score item request.user %}
+</li>
+{% endifequal %}
+
+{% ifequal item_type 'PERSON' %}
+<li class="small">
+    <a href="{% url show_person item.permalink %}">
+        <img width="50" height="71" src="{% poster 50 71 item %}" alt="{{ item.name|safe }} {{ item.surname|safe }}" />
+            {{ item.name|safe }} {{ item.surname|safe }}
+    </a>
+
+    {% object_tags item %}
+
+    {% if item.year_of_birth %}
+        <p>{% trans "Born in " %} {{ item.year_of_birth }}</p>
+    {% endif %}
+</li>
+{% endifequal %}
+
+{% ifequal item_type 'USER' %}
+<li class="small">
+    <a href="{% url_user_link item %}">
+        <img width="45" height="45" alt="{{ item }}" src="{% avatars 45 item %}"/>
+            {{ item.username }}
+    </a>
+    {% if item.description %}
+    <p class="description">
+        {% if h_item.highlighted.text %}
+            <p>{% highlight item.description with h_item.highlighted.text %}</p>
+        {% else %}
+            <p>{{ item.description|striptags|truncatewords:50 }}</p>
+        {% endif %}
+    </p>
+    {% endif %}
+</li>
+{% endifequal %}
+
+{% ifequal item_type 'POST' %}
+<li class="small">
+    <a href="{{ item.get_absolute_url }}">
+        <img width="45" height="45" alt="{{ item }}" src="{% avatars 45 item.user %}"/>
+            {{ item.title }}
+    </a>
+    <p class="description">
+    {% with item.body|striptags as body %}
+        {% if h_item.highlighted.text %}
+            {% highlight body with h_item.highlighted.text %}
+        {% else %}
+            {{ body|truncatewords:50 }}
+        {% endif %}
+    {% endwith %}
+    </p>
+</li>
+{% endifequal %}
+
+{% ifequal item_type 'SHORT_REVIEW' %} 
+<li class="small">
+    <a href="{{ item.get_absolute_url }}">
+        <img width="45" height="45" alt="{{ item.user }}" src="{% avatars 45 item.user %}"/>
+        {% with title=item.get_title %}
+        {% if title %}
+        {{ item.get_title }}
+        {% else %}
+        {% trans "wall post" %}
+        {% endif %}
+        {% endwith %}
+    </a>
+    <p class="description">
+    {% with item.review_text|striptags as body %}
+        {% if h_item.highlighted.text %}
+            {% highlight body with h_item.highlighted.text %}
+        {% else %}
+            {{ body|truncatewords:50 }}
+        {% endif %}
+    {% endwith %}
+    </p>
+</li>
+{% endifequal %}
+
+{% ifequal item_type 'COMMENT' %}
+<li class="small">
+    <a href="{{ item.get_absolute_url }}">
+        <img width="45" height="45" alt="{{ item }}" src="{% avatars 45 item.user %}"/>
+            {{ item.get_title }}
+    </a>
+    <p class="description">
+    {% with item.comment|striptags as body %}
+        {% if h_item.highlighted.text %}
+            {% highlight body with h_item.highlighted.text %}
+        {% else %}
+            {{ body|truncatewords:50 }}
+        {% endif %}
+    {% endwith %}
+    </p>
+</li>
+{% endifequal %}
+

@@ -1,0 +1,13 @@
+{% load i18n %}
+{% load map_url %}
+
+{# <li><a href="#">{% trans "Events" %}</a></li> #}
+{# <li><a href="#">{% trans "Achievements" %}</a></li> #}
+<li>{% a articles %}{% trans "Articles" %}{% enda %}</li>
+<li>{% a ratings %}{% trans "Rated movies" %}{% enda %}</li>
+<li>{% a collection %}{% trans "My home collection" %}{% enda %}</li>
+<li>{% a wishlist %}{% trans "My wishlist" %}{% enda %}</li>
+<li>{% a shitlist %}{% trans "My shitlist" %}{% enda %}</li>
+{% if request.user.get_profile.is_moderator %}
+    <li><a href="{% url moderation %}">{% trans "Moderation panel" %}</a></li>
+{% endif %}

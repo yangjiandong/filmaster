@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load map_url %}
+{% load i18n %}
+{% block title %}{%trans "Edit comment"%}{%endblock%}
+{% block content %}
+<div id="main-first-column">
+<div class="widget" id="forum">
+<h2>{%trans "Edit comment"%}</h2>
+<form action="." method="post">
+{{form.comment.errors}}
+{{form.comment}}<br/>
+<li><input value="" class="button-wyslij" type="submit"></li>
+<input type="hidden" name="next" value="{{ next }}" />
+</form>
+</div>
+</div>
+{% endblock %}

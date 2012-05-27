@@ -1,0 +1,148 @@
+body.registration {
+	background: #bf240e;
+	color: #fff;
+	font-family: "Helvetica Neue", Arial, sans-serif;
+	margin: 0;
+	padding: 10pt 0 0;
+	font-size: 10pt;
+	font-weight: bold;
+}
+
+body.registration a {
+	color: #fff;
+}
+
+body.registration #container > header,
+body.registration #container > footer,
+body.registration div.eu,
+body.registration h1,
+body.registration div.check,
+body.registration p.no-mobile,
+body.registration .quick-registration ul#dis {
+	display: none;
+}
+section.standard-log-in > h1 {
+        display: block;
+        text-align: center;
+        text-shadow: 0 -1px 0 rgba(0, 0, 0, .5);
+}
+
+body.registration ul {
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+    text-align: center;
+}
+body.registration .quick-registration li {
+        display: inline-block;
+        padding: 5px;
+        vertical-align: middle;
+}
+
+body.registration fieldset {
+	border: 0;
+	margin: 0 auto;
+	padding: 0;
+	width: 80%;
+}
+
+body.registration label {
+	float: left;
+	clear: left;
+	width: 32%;
+	padding: 5pt 2%;
+	margin: 0 0 1em 0;
+	color: #000;
+	background: #fff;
+	border-radius: 5pt 0 0 5pt;
+	height: 20pt;
+	line-height: 20pt;
+	font-size: 12pt;
+}
+body.registration label span {
+    font-size: 70%;
+    display: block;
+    clear: left;
+    margin-top: -1.2em;
+}
+body.registration input[type="text"],
+body.registration input[type="password"] {
+    -webkit-appearance: none;
+	float: left;
+	width: 64%;
+	border: 0;
+    margin: 0;
+	padding: 5pt 0;
+	font-size: 12pt;
+	background: #fff;
+	border-radius: 0 5pt 5pt 0;
+    -webkit-box-shadow: -1px 0 0 #fff;
+    box-shadow: -1px 0 0 #fff;
+	height: 20pt;
+	line-height: 20pt;
+	font-family: "Helvetica Neue", Arial, sans-serif;
+}
+body.registration input[type="submit"] {
+	clear: both;
+	display: block;
+	margin: auto;
+	background: -moz-linear-gradient(center top, #f78a60, #ee4909);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #f78a60), color-stop(1, #ee4909));
+	border: 0;
+	color: #fff;
+	font-size: 12pt;
+	border-radius: 5pt;
+	font-family: "Helvetica Neue", Arial, sans-serif;
+	font-weight: bold;
+	padding: 5pt 10pt;
+	text-shadow: 0 -1px 1px rgba(0, 0, 0, .3);
+	font-family: "Helvetica Neue", Arial, sans-serif;
+	border: 1px solid rgba(255, 255, 255, .1);
+    -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, .5);
+}
+
+body.registration #auth_token {
+    padding: 0 10pt;
+}
+body.registration #auth_token form {
+    text-align: center;
+}
+body.registration #auth_token form fieldset {
+    display: none;
+}
+body.registration #auth_token form > input {
+    display: inline;
+    margin: 0 10pt;
+}
+
+body.registration .forgotten-pass {
+	clear: both;
+}
+body.registration p {
+	text-align: center;
+    clear: both;
+}
+
+body.registration a.fb-button {
+	background: transparent url(../layout/facebook.png) no-repeat;
+	display: block;
+	overflow: hidden;
+	width: 154px;
+	height: 23px;
+	text-indent: -9999em;
+	margin: auto;
+}
+body.registration a.twitter {
+	background: transparent url(../layout/twitter.png) no-repeat;
+	display: block;
+	overflow: hidden;
+	width: 107px;
+	height: 24px;
+	text-indent: -9999em;
+	margin: auto;
+}
+
+body.registration label[for=id_inform_friends], body.registration #id_inform_friends {
+    display:none;
+}
+

@@ -1,0 +1,50 @@
+{% extends "wall/useractivity/base.html" %}
+{% load i18n %}
+{% load map_url %}
+{% load useractivity_tags %}
+{% load format_date %}
+{% load threadedcommentstags %}
+{% load sanitize %}
+{% load truncatechars %}
+{% load oembed_tags %}
+
+{% block activity-header %}
+    {% trans "added a trailer of" %} <a href="{% url show_film activity.film_permalink %}">{{ activity.film_title }}</a>
+
+    {% if not show_single and activity.hidden_activities > 0 %}
+        {% trans "and" %}
+         <a href="{% url_username_link activity.user %}?f=video">
+        {% blocktrans count count=activity.hidden_activities %}
+            1 other
+        {% plural %}
+            {{ count }} others
+        {% endblocktrans %}
+        </a>
+    {% endif %}
+{% endblock %}
+
+{% block activity-content %}
+    {% if activity.video_thumb %}
+        <section class="trailers {% if activity_view %}bigger{% endif %}">
+        <a title="{% trans "Watch trailer" %}" href="#">
+            <img width="180" height="135" src="{{ activity.video_thumb }}" alt="{% trans 'Trailer' %}: {{ film.get_title }}" />
+            <span></span>
+        </a>
+        <div class="v">{% oembed 560x345 %}{{ activity.url }}{% endoembed %}</div>
+        </section>
+    {% else %}
+        {{ activity.url|urlizetrunc:55 }}
+    {% endif %}
+
+    {% if not show_single and activity.hidden_activities > 0 %}
+    <div class="other-activities">
+        <h2>{% trans "Other" %}:</h2>
+	        <ul>
+            {% for link in activity.get_json_content|slice:"1:" %}
+            <li><a href="{% if link.is_tv_series %}{%url show_series link.film_permalink %}{% else %}{% url show_film link.film_permalink %}{% endif %}">{{ link.film_title }}</a> - {{ link.url|urlizetrunc:35 }}</li>
+            {% endfor %}
+	        </ul>
+	</div>
+    {% endif %}
+{% endblock %}
+

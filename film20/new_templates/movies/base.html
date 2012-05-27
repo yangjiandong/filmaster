@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load map_url %}
+{% load show_film_tags %}
+{% load expr %}
+{% load pagination_tags %}
+{% load object %}
+{% load movie %}
+{% load debug %}
+{% load widgets %}
+
+{% block title %}{% trans "Movie database, featured film reviews" %}{% endblock %}
+{% block description %}{% trans "Movie database and film featured reviews by Filmaster authors." %}{% endblock %}
+
+{% block primary-content-aside %}
+	{% include 'aside/movies/base.html' %}
+{% endblock primary-content-aside %}
+
+{% block secondary-content-aside %}
+    <aside class="filmaster">
+        <section class="stream">
+            {% short_reviews 10 'films' films %}
+        </section><!-- .stream -->
+    </aside>
+{% endblock secondary-content-aside %}
+
+{% block content %}
+    {% block films_widget %}
+        {% show_movies_slider_widget %}
+    {% endblock films_widget %}
+    {% include 'widgets/recent_reviews.html' %}
+{% endblock %}
+
+{% block end-scripts %}
+	<script src="/static/js/plugins/jquery.autocomplete.min.js"></script>
+	<script>
+		(function() {
+			FM.toggleFilter({});
+				$("#id_tags").autocomplete("{% map_url "AJAX" %}/search_tag_autocomplete/",{multiple:true});
+				$("#id_related_director").autocomplete('{% map_url "AJAX" %}{% map_url_part "SEARCH_PERSON" %}/',{multiple:false});
+				$("#id_related_actor").autocomplete('{% map_url "AJAX" %}{% map_url_part "SEARCH_PERSON" %}/',{multiple:false});
+
+			// this sucks TODO: limit selector number
+			FM.carouselGenreMovies({
+				genre_carousel: ".carousel-genres",
+				movie_carousel: ".carousel-movies",
+				seeall_carousel: ".carousel-see-all",
+				genre_container: ".carousel-genres ul",
+				movie_container: ".carousel-movies ul.movies-short",
+				seeall_container: ".carousel-see-all ul",
+				prev_msg: "{% trans "Previous" %}",
+				next_msg: "{% trans "Next" %}",
+				delay: 4000
+			});
+		}());
+    </script>
+{% endblock %}

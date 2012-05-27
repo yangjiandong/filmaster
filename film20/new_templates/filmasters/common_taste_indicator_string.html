@@ -1,0 +1,11 @@
+{% load i18n %}
+{% if score_str %}
+<p class="common-taste-indicator">
+	{% blocktrans %}
+        <span title="Common taste indicator">{{ score_str }}&#37;</span> similar to you
+	{% endblocktrans %}
+</p>
+    {% if common_films %}
+        <span class="number-of-common-films" title="{% trans "Number of common films" %}">({{ common_films }})</span>
+    {% endif %}
+{% endif %}

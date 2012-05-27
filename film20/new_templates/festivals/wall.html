@@ -1,0 +1,25 @@
+{% extends "wall/wall.html" %}
+{% load wall %}
+{% load i18n %}
+
+{% block wallfilter %}
+{%if user.is_authenticated%}
+<ul id="user_filters">
+	<li>{% filterlink "u=all" "default" %}{% trans "all" %}{% endfilterlink %}</li>
+	<li>{% filterlink "u=followed" %}{% trans "followed" %}{% endfilterlink %}</li>
+</ul>
+{%endif%}
+<ul id="activity_filters">
+    {% if custom_filter %}
+        <li>{% filterlink "f=custom" "default" %}{% trans "custom" %}{%endfilterlink%}</li>
+        <li>{% filterlink "f=all" %}{% trans "all" %}{%endfilterlink%}</li>
+    {% else %}
+        <li>{% filterlink "f=all" "default" %}{% trans "all" %}{%endfilterlink%}</li>
+    {% endif %}
+	<li>{% filterlink "f=reviews" %}{% trans "reviews" %}{% endfilterlink %}</li>
+	<li>{% filterlink "f=posts" %}{% trans "posts" %}{% endfilterlink %}</li>
+	<li>{% filterlink "f=ratings" %}{% trans "film ratings" %}{% endfilterlink %}</li>
+	<li>{% filterlink "f=video" %}{% trans "video" %}{% endfilterlink %}</li>
+	<li>{% filterlink "f=images" %}{% trans "images" %}{% endfilterlink %}</li>
+</ul>
+{% endblock %}

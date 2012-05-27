@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load widgets %}
+{% load movie %}
+{% load utils %}
+{% load fragments %}
+{% load account %}
+{% load fbconnect %}
+
+{% block title %}{% trans "Discover new movies!" %}{% endblock %}
+
+{% block body-class %}home{% endblock %}
+
+{% block primary-content-wrapper-start %}{%endblock%}
+
+{% block content %}
+	<article class="join-us">
+	<section class="call-to-action">
+	{% if request.user.is_authenticated %}
+		<h1>{% trans "Your movie recommendations for tonight:" %}</h1>
+	{% else %}
+		<h1>{% trans "Find out what you should watch tonight!" %}</h1>
+		<h2>
+			{% a rate_films match_prefix %}{% trans "Rate 15 movies" %}{% enda %} {% trans "and get your personal recommendations for theaters and TV instantly!" %}
+		</h2>
+        <ul class="rate-movies-simple"></ul>
+		<p class="rate-movies-more">
+			<a href="{% url rate_films %}" class="main-button">{% trans "Show other movies" %}</a>
+			<span class="ajax-loader"></span>
+		</p>
+		<p class="action">
+		        <a href="{%url fb_begin%}?next=/" class="fb-button">{% trans "Sign up with Facebook" %}</a>
+                {% connected_users %}
+		</p>
+	{% endif %}
+	</section>
+
+    {% top_on_main_page %}
+
+    {% if request.user.is_authenticated and request.user.get_profile.has_recommendations %}
+    <p class="share-recommendations"><a href="{% url user_recommendations request.user %}?share">{% trans "Share your recommendations!" %}</a></p>
+    {% endif %}
+
+    {% if not request.user.is_authenticated %}
+
+		{% include 'home/references.html' %}
+		<p class="join"><a href="{% url account.views.signup %}">{% trans "Join Filmaster" %}</a></p>
+
+    {% endif %}
+	</article><!-- .join-us -->
+{% endblock content %}
+
+{% block primary-content-wrapper-end %}{%endblock%}
+
+{% block secondary-content-aside %}
+	<aside class="filmaster">
+<!--
+        {% if not request.user.is_authenticated %}
+	        <a href="#" class="fb-button">{% trans "Connect with Facebook" %}</a>
+        {% endif %}
+-->
+        <section id="_location_err" style="display:none">
+	        <p class="msg"></p>
+		{% blocktrans %}
+			You have denied access to your location. <a href="#">How to enable</a>.
+		{% endblocktrans %}
+        </section>
+	<section id="location_hint" style="display:none">
+		{% blocktrans %}
+			<a href="#" class="enable">Share your location</a> - this will help us provide you movie recommendations relevant to where you are.
+		{% endblocktrans %}
+	</section>
+    	{% fragment filmaster-recommends %}
+        <section class="stream">
+            <h1>{% trans "Recently on Filmaster" %}</h1>
+            {% main_page_activity_list %}
+        </section><!-- .stream -->
+	</aside>
+{% endblock %}
+
+{% block end-scripts %}
+<script>
+/*	FM.ratatingTeaser({
+		selector: "#teaser",
+		delay_sec: 8
+	});
+*/
+</script>
+{% if request.user.is_authenticated and request.user.get_profile.has_recommendations %}
+<!-- Google Code for rejestracja Conversion Page -->
+<script type="text/javascript">
+/* <![CDATA[ */
+var google_conversion_id = 1010818467;
+var google_conversion_language = "en";
+var google_conversion_format = "3";
+var google_conversion_color = "ffffff";
+var google_conversion_label = "TGWrCJWLwQIQo7v_4QM";
+var google_conversion_value = 0;
+/* ]]> */
+</script>
+<script type="text/javascript" src="http://www.googleadservices.com/pagead/conversion.js">
+</script>
+<noscript>
+<div style="display:inline;">
+<img height="1" width="1" style="border-style:none;" alt="" src="http://www.googleadservices.com/pagead/conversion/1010818467/?label=TGWrCJWLwQIQo7v_4QM&amp;guid=ON&amp;script=0"/>
+</div>
+</noscript>
+{% endif %}
+{% endblock %}

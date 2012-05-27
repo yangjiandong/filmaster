@@ -1,0 +1,10 @@
+{% load i18n %}
+{% load widgets %}
+<section class="description">
+	<h1>{% trans "Find out" %}</h1>
+	<p>{% trans "What your friends watch and how they rate movies" %}</p>
+	<p class="join"><a href="{{ signup_url }}">{% trans "Join Filmaster" %}</a></p>
+</section><!-- .description -->
+<section class="friends-cinema-movies">
+    {% latest_ratings %}
+</section><!-- .friends-cinema-movies -->

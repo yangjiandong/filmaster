@@ -1,0 +1,13 @@
+{% load i18n %}
+{% load map_url %}
+{% load escapelinks %}
+
+{% if words %}
+    <span id="review-{{ review.id }}-less">
+        {{ review.review_text|truncatewords:words|safe }} | <a href="{{ review.get_absolute_url }}">{% trans "read more" %}</a>
+    </span>
+{% else %}
+    <span>
+        {{ review.review_text }}
+    </span>
+{% endif %}

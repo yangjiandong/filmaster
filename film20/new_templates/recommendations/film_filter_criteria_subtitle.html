@@ -1,0 +1,28 @@
+{% load i18n %}
+
+{# director #}
+{% if fake_film_specs_form.related_director_as_string %}
+    {% trans "directed by" %} {{ fake_film_specs_form.related_director_as_string }}
+{% endif %}
+
+{# actor #}
+{% if fake_film_specs_form.related_actor_as_string %}
+    {% trans "starring" %} {{ fake_film_specs_form.related_actor_as_string }}
+{% endif %}
+
+{# dates #}
+{% if fake_film_specs_form.year_from %}
+    {% if fake_film_specs_form.year_to %}
+        ({{ fake_film_specs_form.year_from }} - {{ fake_film_specs_form.year_to }})
+    {% else %}
+        ({% trans "after" %} {{ fake_film_specs_form.year_from }})
+    {% endif %}
+{% else %}
+    {% if fake_film_specs_form.year_to %}
+        ({% trans "until" %} {{ fake_film_specs_form.year_to }})
+    {% endif %}
+{% endif %}
+
+{% if not rating_type_str == 'Film' %}
+    {% trans "in category: " %} {{ rating_type_str }}
+{% endif %}

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<recentrankings>{% for film in data_set %}
+ <film>
+  <filmid>{{ film.filmid }}</filmid>
+  <filmname>{{ film.filmname }}</filmname>
+  <filmlink>{{ film.filmlink }}</filmlink>
+  <img>{{ film.img }}</img>
+  <score>{{ film.score }}</score>
+  <quote>{{ film.quote }}</quote>
+  <reviewdate>{{ film.reviewdate }}</reviewdate>
+  <tier>{{ film.tier }}</tier>
+ </film> {% endfor %}
+</recentrankings>

@@ -1,0 +1,4 @@
+{% load i18n %}
+{% blocktrans with fbname=fb_user.name %}
+Your friend {{fbname}} has just joined Filmaster.
+{% endblocktrans %}

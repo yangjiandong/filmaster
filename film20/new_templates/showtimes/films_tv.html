@@ -1,0 +1,41 @@
+{% extends "showtimes/base.html" %}
+{% load i18n %}
+{% load showtimes %}
+
+{% block title %}{% trans "Recommended" %}: {% trans "on TV" %}{% endblock %}
+{% block description %}{% trans "These are your top recommendations for movies currently broadcast on TV." %}{% endblock %}
+{% block showtimes-title %}{% trans "on TV" %}{% endblock %}
+{% block showtimes-id %}tv{% endblock %}
+
+{% block showtimescontent %}
+	{% if days %}
+		<ul class="list">
+		{% for day in days %}
+            <li>
+            {% with date=day.date films=day.films %}
+            {% include "showtimes/films_tv_single_day_ajax.html" %}
+            {% endwith %}
+            {% if day.has_more %}
+                <a class="more" href="{% url recommendations_tv day.date|date:'Y-m-d' %}">{% trans "show more"%}</a>
+            {% endif %}
+			</li>
+		{% endfor %}
+		</ul><!-- .list -->
+	{% else %}
+        {% include "showtimes/no_showtimes.html" %}
+    {% endif %}
+{%endblock%}
+{% block end-scripts %}
+{{block.super}}
+<script>
+    $(document).ready(function() {
+        $('.showtimes-tv a.more').click(function() {
+            var url = $(this).attr('href');
+            var li = $(this).parents('li');
+            $('<span class="ajax-loader">').appendTo(li).show()
+            li.load(url + '?ajax');
+            return false;
+        });
+    });
+</script>
+{% endblock %}

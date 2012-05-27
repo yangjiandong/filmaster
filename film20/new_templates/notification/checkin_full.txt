@@ -1,0 +1,3 @@
+{% load i18n %}
+{{user}} {% trans "checked-in on" %} {{film}}{% if channel %} {% trans "at" %} {{channel}}, {{time|date:TIME_FORMAT}}{% endif %}.
+{% blocktrans %}Visit {{url}} to see who is planning to watch it.{% endblocktrans %}

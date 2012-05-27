@@ -1,0 +1,44 @@
+{% extends "usersettings/base.html" %}
+{% load i18n %}
+{% load useractivity_tags %}
+
+{% block title %}{% trans "Change my avatar" %}{% endblock %}
+
+{% block content %}
+    <form method="POST" id="edit_avatar_form" class="settings" accept-charset="utf-8" enctype="multipart/form-data">
+        <h1>{% trans "Settings" %}: <span>{% trans "Avatar" %}</span></h1>
+        
+        <img width="180" height="180" src="{% avatars 180 request.user %}" alt="{{ request.user.get_profile.get_current_display_name }}" />
+        {% if user.get_profile.has_avatar %}
+            <p id="avatardelete"><a href="{% url delete_avatar %}" class="delete_avatar">{% trans "delete" %}</a></p>
+        {% endif %}
+        
+        {% include "form_fieldset.html" %}
+        
+        <input type="submit" value="{%trans 'Change my avatar'%}" />
+        {% csrf_token %}
+    </form>
+{% endblock %}
+
+{% block end-scripts %}
+    <script type="text/javascript">
+        $(function() {
+            var input = $( "#edit_avatar_form #id_url" )
+            var label = $( "#edit_avatar_form label[for='id_url']" )
+            if ( input.val() != '' ) {
+                input.css( 'display', 'inline-block' )
+            }
+
+            label.html( '<a href="#">' + label.html() + '</a>' )
+            $( "#edit_avatar_form label[for='id_url']" ).click( function( e ) {
+                if ( input.css( 'display' ) != 'none' ) {
+                    input.val( '' )
+                } else {
+                    $( '#id_photo' ).val( '' )
+                }
+                input.slideToggle();
+                e.preventDefault()
+            })
+        });
+    </script>
+{% endblock %}

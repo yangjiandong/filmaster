@@ -1,0 +1,78 @@
+<!doctype html>
+{% load i18n %}
+{% load map_url %}
+<!--[if lt IE 7 ]> <html lang="{% trans "LANGUAGE_CODE" %}" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]> <html lang="{% trans "LANGUAGE_CODE" %}" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]> <html lang="{% trans "LANGUAGE_CODE" %}" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]> <html lang="{% trans "LANGUAGE_CODE" %}" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="{% trans "LANGUAGE_CODE" %}" class="no-js"> <!--<![endif]-->
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+	<title>{% block title %}{% trans "Film buffs community" %}{% endblock %} — {% trans "filmaster.com" %}</title>
+	<meta name="description" content="{% block description %}{% trans "Film buffs community" %} — {% trans "filmaster.com" %}{% endblock %}">
+	<meta name="author" content="Filmaster sp. z o.o.">
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="shortcut icon" href="/static/favicon.ico">
+	<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+{% if not request.is_mobile or not request.is_oauth %}
+	<link rel="stylesheet" media="screen,projection" href="/static/css/style.css?v=2.24" />
+	<link rel="stylesheet" media="screen,projection" href="/static/css/{{ settings.LANGUAGE_CODE }}.css?v=2.02" />
+{% endif %}
+{% if request.is_mobile %}
+  {% if request.is_oauth %}
+  <link href="/static/css/style-oauth-{{request.platform}}.css?v=5" rel="stylesheet" type="text/css" media="screen,projection" />
+  <style>
+     </style>
+  {% endif %}
+{% endif %}
+	<link type="text/css" href="/static/css/ui-lightness/jquery-ui-1.8.16.custom.css" rel="stylesheet" />	
+{% if not request.is_mobile or not request.is_oauth %}
+	<script src="/static/js/libs/modernizr-2.0.6.min.js"></script>
+{% endif %}
+	<script>{% include "js/static.js" %}</script>
+	{% block head %}
+	{% include 'head.html' %}  
+	{% endblock %}
+    <meta property="og:site_name" content="Filmaster"/>
+    {% ifequal request.lang 'pl' %}<meta property="fb:app_id" content="134155386943" />{% else %}<meta property="fb:app_id" content="143577900131" />{% endifequal %}
+    <meta property="fb:admins" content="729009220,1650740466" />
+	{% block head_extra %}
+	{% endblock %}
+	{% block extrajs %}
+	{% endblock %}
+</head>
+<body class="{% if user.is_authenticated %}authenticated {% else %}anonymous {% endif %}{%if request.goal.is_visible and not request.subdomain %}has-goal {% endif %}{% block body-class %}{% endblock %}">
+	{% include "facebook_connect/facebook_script_async.html" %}
+{% block body %}
+{% endblock %}
+
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+	<script>window.jQuery || document.write("<script src='/static/js/libs/jquery-1.6.2.min.js'>\x3C/script>")</script>
+
+    {#% load compress %#}
+    {#% compress js %#}
+        <script src="/static/js/libs/jquery-ui-1.8.16.custom.min.js"></script>
+        <script src="/static/js/plugins/jquery.form-2.11.js"></script>
+        <script src="/static/js/plugins/jquery.autogrow.min.js"></script>
+        <script src="/static/js/plugins/jquery.filmaster.js"></script>
+        <script src="/static/js/plugins/jquery.timeago.js"></script>
+        <script src="/static/js/plugins/jquery.truncator.js"></script>
+        <script src="/static/js/plugins/jquery.ajaxmanager.js"></script>
+        <script src="/static/js/script.js?v=8"></script>
+    {#% endcompress %#}
+{%if user.is_authenticated%}
+{%comment%}
+    <script src="/static/js/channel.js"></script>
+    <script>
+        init_channel("{{user.username}}");
+    </script>
+{%endcomment%}
+{%endif%}
+    {% block end-scripts %}{% endblock %}
+    {% block body-end %}{% endblock %}
+</body>
+</html>

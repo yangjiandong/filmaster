@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+{% load map_url %}
+{% load account %}
+{% block title %}{{ flatpage.title }}{% endblock %}
+
+{% block content %}
+<section class="flatpage">
+{% if request.is_mobile %}
+	{%load account%}
+		<a href='javascript:history.back()'>{% trans "back to sign up" %}</a>
+	{% endif %}
+	<h1>{{ flatpage.title }}</h1>
+	{{ flatpage.content }}
+</section>
+{% endblock%}

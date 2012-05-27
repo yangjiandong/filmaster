@@ -1,0 +1,19 @@
+{% load i18n %}
+{% load account %}
+{% load badges %}
+{% load utils %}
+
+<div class="global-progress">
+	<section class="status">
+		<h1>{% trans "Your Filmaster status" %}</h1>
+		{% user_progress %}
+	</section>
+	<!--section class="badges">
+		<h1>{% trans "Your Filmaster Rewards" %}</h1>
+	</section-->
+	<div class="registration">
+		<a href="" class="fb-button">{% trans "Sign up with Facebook" %}</a> {% trans "or" %} <a href="">{% trans "Register now!" %}</a>
+		<form action="">
+		</form>
+	</div>
+</div>

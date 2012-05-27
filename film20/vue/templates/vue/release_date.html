@@ -1,0 +1,11 @@
+{% load movie %}
+{% with release_date=film|release_date:"GB" now=now %}
+    {% if release_date %}
+        {% if release_date.year == now.year %}
+            <span>({{release_date|date:"F"}})</span>
+        {% else %}
+            <span>({{release_date|date:"F Y"}})</span>
+        {% endif %}
+    {% endif %}
+{% endwith %}
+

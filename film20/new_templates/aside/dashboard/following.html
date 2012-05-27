@@ -1,0 +1,7 @@
+{% extends 'aside/follow.html' %}
+{% load i18n %}
+
+{% block class_name %}watches{% endblock %}
+{% block title %}{% trans "You follow" %}{% endblock %}
+{% block show_all_link %}{% url dashboard_followed %}{% endblock %}
+{% block empty_text %}{% trans "You're not following anyone, yet. Perhaps it's time to start making some friends?" %}{% endblock %}

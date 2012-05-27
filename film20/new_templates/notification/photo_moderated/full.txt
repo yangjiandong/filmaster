@@ -1,0 +1,28 @@
+{% load i18n %}
+{% load pyif %}
+{% pyif item.content_type.name == 'Film' %}
+{% pyif status == 0 %}
+{% blocktrans with item.content_object as film and item.rejection_reason as reason %} Poster for film {{ film }} has been rejected.
+
+{{ reason }}
+{% endblocktrans %}
+{% else %}
+{% blocktrans with item.content_object as film and item.content_object.get_absolute_url as url %} Poster for film {{ film }} has been accepted.
+
+{{ url }}
+{% endblocktrans %}
+{% endif %}
+{% endif %}
+{% pyif item.content_type.name == 'Person' %}
+{% pyif status == 0 %}
+{% blocktrans with item.content_object as person and item.rejection_reason as reason %} Photo for person {{ person }} has been rejected.
+
+{{ reason }}
+{% endblocktrans %}
+{% else %}
+{% blocktrans with item.content_object as person and item.content_object.get_absolute_url as url %} Photo for person {{ person }} has been accepted.
+
+{{ url }}
+{% endblocktrans %}
+{% endif %}
+{% endif %}

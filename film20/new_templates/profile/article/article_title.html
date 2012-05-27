@@ -1,0 +1,6 @@
+{% load i18n %}
+{% if activity.film %}
+    {% trans "Movie review: " %} {% if activity.film_title %}{{ activity.film_title }}{% else %}{{ activity.film.get_title }}{% endif %} ({{activity.user.get_profile.get_current_display_name}}) |  {{ activity.get_title }}
+{% else %}
+    {{ activity.get_title }}
+{% endif %}

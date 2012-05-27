@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% load map_url %}
+{% load i18n %}
+{% load pagination_tags %}
+{% block title %}
+{% if followed_page %}
+    {% trans "Followed Filmasters" %}
+{% else %}    
+    {% trans "Your top users" %}
+{% endif %}
+{% endblock %}
+
+{% block content %}
+<div id="content-section-filmasters">
+<h1>{% if followed_page %}
+    {% trans "Followed Filmasters" %}
+{% else %}
+    {% trans "Your top users" %}
+{% endif %}</h1>
+<div id="feature-info">
+{% if user.is_authenticated %}
+    {% if followed_page %}        
+        {% trans "This is a list of users you follow. " %}
+    {% else %}    
+        {% trans "This is a list of users with similar movie taste to yours. " %}
+    {% endif %}
+    {% trans "The percentage pictures the common taste factor. " %}
+    
+    <div class="filter-form">
+    <form method="post" action="">
+    <fieldset>
+     <div>
+        {% if form.filmaster_type.errors %}
+	        <div class="error">{{ form.filmaster_type.errors }}</div>
+	    {% endif %}
+	    <label for="id_filmaster_type">{{ form.filmaster_type.label }}</label>
+	    {{ form.filmaster_type }}
+     </div>
+     <div>
+        {% if form.min_common_films.errors %}
+            <div class="error">{{ form.min_common_films.errors }}</div>
+        {% endif %}
+        <label for="id_min_common_films">{{ form.min_common_films.label }}</label>
+        {{ form.min_common_films }}
+     </div>
+     <div>
+        {% if form.sort_by.errors %}
+            <div class="error">{{ form.sort_by.errors }}</div>
+        {% endif %}
+        <label for="id_sort_by">{{ form.sort_by.label }}</label> 
+        {{ form.sort_by }}
+      </div> 
+    </fieldset>
+    <input type="submit" value="{% trans "Apply filter" %}" /> 
+    </form>
+    </div>
+{% else %}
+   {% trans "This is a list of recently registered users. " %}
+   {% trans "As soon as you log in, you'll see here the users with the movie taste matching yours. " %}
+{% endif %}
+</div>
+{% autopaginate_new object_list 21 %}
+{% if object_list %}
+    
+    <div id="top-users">
+    {% for current_user in object_list %}  
+        {% include "widgets/single_user.html" %}    
+    {% endfor %}
+    </div>
+    
+    {% paginate_new %}
+{% else %}
+    <p>{% trans "Rate a few movies to see your top users here." %}</p>
+{% endif %}
+</div>
+{% endblock %}

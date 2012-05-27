@@ -1,0 +1,29 @@
+{% extends "moderation/record.html" %}
+
+{% load i18n %}
+
+{% block title %}
+    <p>
+    {% trans "Person" %} <a href="{{ item.person.get_absolute_url }}">{{ item.person }}</a> 
+    <strong>
+    {% if item.name %}
+        {% trans "name" %}
+    {% endif %}
+
+    {% if item.biography %}
+        {% trans "biography" %}
+    {% endif %}
+    </strong>:
+    </p>
+    
+    <ul>
+        {% with on=item.get_old_and_new %}
+            <li><strong>{% trans "old" %}</strong>: {{ on|first }}</li>
+            <li><strong>{% trans "new" %}</strong>: {{ on|last }}</li>
+            
+            {% if on|first %}
+            <li><strong>{% trans "difference" %}</strong>: {{ item.html_diff|safe }}</li>
+            {% endif %}
+        {% endwith %}
+    </ul>
+{% endblock %}

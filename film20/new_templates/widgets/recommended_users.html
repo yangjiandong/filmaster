@@ -1,0 +1,25 @@
+{% load i18n %}
+{% load map_url %}
+
+<p> 
+    {% trans "This is a page with latest activities of the people you follow." %}
+    {% trans "You are not yet following anyone.You can follow someone from the list" %} 
+    {% trans "of recommended users below or check out" %}
+    <a href="{% url similar_users_url %}"> {% trans "Filmasters like you" %} </a>
+    {% trans "to find interesting people to follow." %}
+</p>
+{% load display_user %}
+
+{% block content %}
+<div class="wall">
+<section class="similar-filmasters">
+<ul>
+    {% for user in users %}
+	<li>
+        {% display_user_with_similarity loggeduser user %}
+	</li>
+    {% endfor %}
+</ul>
+</section>
+</div>
+{% endblock content %}

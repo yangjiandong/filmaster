@@ -1,0 +1,12 @@
+{% load i18n %}
+
+{% if related_posts %}
+<section class="recommendations">
+    <h1>{% trans "See also (articles)" %}</h1>
+    <ul>
+        {% for post in related_posts %}
+            <li><a href="{{ post.get_absolute_url }}"> {{ post.title }} </a></li>
+        {% endfor %}
+    </ul>
+</section>
+{% endif %}

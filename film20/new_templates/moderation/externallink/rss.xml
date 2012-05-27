@@ -1,0 +1,5 @@
+{% extends "moderation/rss.xml" %}
+
+{% block item_link %}{{ item.url }}{% endblock %}
+{% block item_title %}{{ item.film }} | {{ item.url }}{% endblock %}
+{% block item_pub_date %}{{ item.created_at }}{% endblock %}

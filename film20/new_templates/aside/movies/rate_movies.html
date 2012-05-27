@@ -1,0 +1,10 @@
+{% extends "aside/movies/base.html" %}
+{% load i18n %}
+{% load utils %}
+
+{% block tag_url %}
+{% a rate_films tag.name %}{{tag}}{% enda %}
+{% endblock %}
+
+{% block footer %}
+{% endblock %}

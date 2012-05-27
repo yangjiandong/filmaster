@@ -1,0 +1,1 @@
+{{ object.review_text|striptags }}

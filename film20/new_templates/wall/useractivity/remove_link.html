@@ -1,0 +1,4 @@
+{% if can_remove %}
+{% load i18n %}
+<a class="remove-activity" href="{% url activity-remove activity.pk %}" title="Remove this activity">{% trans "remove"%}</a>
+{% endif %}

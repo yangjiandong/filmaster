@@ -1,0 +1,35 @@
+{% extends "festivals/base.html" %}
+{% load i18n %}
+{% load pagination_tags %}
+{% load showtimes %}
+{% load map_url %}
+{% load qs %}
+
+{% block title %}{{ festival.name }} &laquo; {{date|date:"d N"}} {% endblock %}
+
+{% block content %}
+    <section class="showtimes-theaters rate-movies-simple">
+        <h1>{{festival.name}} - {{date|date:"d N"}}</h1>
+    {% if object_list %}
+    {% for screening in object_list %}
+    {% with film=screening.film.film %}
+			<section class="rate-movie-simple">
+				{% include "showtimes/film.html" %}
+				<ul class="in-cinemas">
+						<li>
+                        <a href="{%channelurl screening.channel%}">{{screening.channel}}</a>
+							<ul>
+							{% include "festivals/screening.html" %}
+							</ul>
+						</li>
+				</ul><!-- .in-cinemas -->
+			</section>
+        
+    {%endwith%}        
+    {% endfor %}
+    {% include "pagination/pagination.html" %}
+    </section>
+    {%else%}
+        {% include "showtimes/no_showtimes.html" %}
+    {%endif%}
+{%endblock%}

@@ -1,0 +1,2 @@
+{% load i18n %}
+{% blocktrans with film.film as film and film.film.get_absolute_url as url %}Film {{ film }} has been imported. Go to the film page at: <a href="{{ url }}">{{ url }}</a>{% endblocktrans %}

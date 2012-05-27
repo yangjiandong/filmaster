@@ -1,0 +1,22 @@
+{% load i18n %}
+{% load sanitize %}
+{% load oembed_tags %}
+{% load urlimagize %}
+{% load smartlinebreaks %}
+
+<div class="description">
+    <div class="text">{{ description|safe|smartlinebreaks }}</div>
+    {% if short %}
+    <span class="more"><a href="{{ film.get_absolute_url }}">{% trans "read more" %} &raquo;</a></span>
+    {% endif %}
+ 
+    {% if edit and can_edit %}
+    <a id="edit_description" class="edit" href="#">
+        {% if film.description %}
+           {% trans "Edit Description" %}
+        {% else %}
+           {% trans "Add Description" %}
+        {% endif %}
+    </a>
+    {% endif %}
+</div>

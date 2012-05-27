@@ -1,0 +1,17 @@
+{% load display_user %}
+
+{% block content %}
+{% include "pagination/pagination.html" %}
+<div class="wall">
+<section class="similar-filmasters">
+<ul>
+    {% for user in users %}
+	<li>
+        {% display_user_with_similarity request.user user %}
+	</li>
+    {% endfor %}
+</ul>
+</section>
+</div>
+{% include "pagination/pagination.html" %}
+{% endblock content %}

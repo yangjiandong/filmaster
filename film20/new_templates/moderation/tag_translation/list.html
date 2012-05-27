@@ -1,0 +1,96 @@
+{% extends "moderation/index.html" %}
+
+{% load i18n %}
+{% load pagination_tags %}
+
+{% block title %}
+    {% trans "Moderator tools - list tags to translate" %}
+{% endblock %}
+
+{% block head_extra %}
+ <style>
+    .ajax-loader {
+        width: 20px;
+        height: 16px;
+        display: none;
+        float: right;
+        background: url( /static/layout/ajax-loader-wall.gif) left center no-repeat;
+    }
+
+    .moderation-table th,
+    .moderation-table td {
+        text-align: left;
+    }
+</style>
+{% endblock %}
+
+{% block content-section %}
+    <h1>{% trans "Moderator tools - list tags to translate" %}</h1>
+
+{% autopaginate_new items %}
+
+{% if items %}
+    <div class="moderation-content notification-setting">
+    <table class="moderation-table">
+        <thead>
+            <tr>
+                <th>{{ lang }}</th>
+                <th>{{ to_lang }}</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for item in items %}
+            <tr>
+                <td>{{ item.name }}</td>
+                <td>
+                    <form class="single-form" action="{{ moderated_item.get_absolute_url }}" method="POST">
+                        <input type="text" name="{{ item.name }}" value="" />
+                        <div class="ajax-loader"></div>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    </div>
+    {% paginate_new %}
+{% else %}
+    <div class="empty">{% trans "No tags to translate..." %}</div>
+{% endif %}
+
+
+{% endblock %}
+
+{% block end-scripts %}
+<script>
+    // submit form on change ...
+    $( '.single-form input[type="text"]' ).change( function() {
+        $( this ).parent().submit();
+    });
+    
+    // create ajax request on submit ...
+    $( '.single-form' ).submit( function() {
+        var $form = $( this ),
+            $loader = $( ".ajax-loader", this );
+            $tr = $( this ).parent().parent();
+    
+        $loader.show();
+
+        $.post( $form.attr( 'action' ), $form.serialize(), function( json ) {
+
+            $loader.hide();
+
+            if ( json.success ) {
+                $tr.slideUp( "slow" )
+            } else {
+                alert( json.errors )
+            }
+        }, "json" ).error( function() {
+            $loader.hide();
+            alert( '{% trans "Something goes wrong, please try again later" %}' );
+        })
+
+        return false;
+    });
+</script>
+{% endblock %}

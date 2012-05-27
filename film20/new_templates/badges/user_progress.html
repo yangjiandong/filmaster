@@ -1,0 +1,22 @@
+{% load i18n %}
+{% load account %}
+{% if goal.is_visible %}
+<div class="global-progress">
+    <section class="status">
+        <h1>{% trans "Your Filmaster status" %}</h1>
+        <div class="progress-bar" id="rate-movies-progress"{% if goal.reload_delay %} data-reload-delay="{{goal.reload_delay}}"{% endif %}>
+            {% if goal.progress %}
+            <progress value="{{percent}}" max="100">{{goal.progress.percent}}%</progress>
+            <span class="progress"><span id="rate-movie-progress" style="width: {{goal.progress.percent}}%;"></span></span>
+            {% endif %}
+            <p id="progress-info" data-goal-state="{{goal.state}}"><span class="ajax-loader"></span>
+            {{goal.info|safe}}
+            </p>
+        </div>
+    </section>
+    <!--section class="badges">
+        <h1>{% trans "Your Filmaster Rewards" %}</h1>
+    </section-->
+</div>
+{% endif %}
+

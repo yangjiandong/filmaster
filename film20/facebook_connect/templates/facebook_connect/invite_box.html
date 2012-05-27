@@ -1,0 +1,47 @@
+{% load i18n %}
+<section id="invite_box">
+<h1>{% trans "Compare your taste with" %}:</h1>
+{% if association %}
+    <ul class="friends" style="max-height:250px; overflow:hidden">
+    {% for friend in friends %}
+    <li style="height: 50px;">
+        <img src="{{friend.picture_url}}" /> {{friend.name}}
+        <a href="#" class='invite' data-id="{{friend.id}}">{% trans "invite" %}</a></li>
+    {% endfor %}
+    </ul>
+    <a href="#" class="all_friends">{% trans "All friends" %}</a>
+<script>
+    function _request_sent_cb(response) {
+        for(var i=0; i<response.to.length; i++) {
+            $("a.invite[data-id=" + response.to[i] + "]").parent().hide();
+        }
+        console.log(response)
+        $.post('/fb/store-request/', {data:'invite', id:response.request});
+    }
+    FM.addPostInitCallback(function() {
+        $('#invite_box').delegate('a.all_friends', 'click', function() {
+            FB.ui({
+                method: 'apprequests',
+                message: '{% trans "Join Filmaster!" %}',
+                data: 'invite',
+                filters: ['app_non_users', 'app_users']
+                }, _request_sent_cb
+            );
+        })
+        $('#invite_box').delegate('ul.friends a.invite', 'click', function() {
+           FB.ui({
+                method: 'apprequests',
+                message: '{% trans "Join Filmaster!" %}',
+                data: 'invite',
+                to: $(this).attr('data-id')
+            }, _request_sent_cb
+            );
+            
+        })
+    })
+</script>
+{% else %}
+<p><a href="{% url associations %}">{% trans "Connect your account with Facebook" %}</a></p>
+{% endif %}
+</section>
+

@@ -1,0 +1,11 @@
+{% extends "userprofile/ratings.html" %}
+{% load i18n %}
+
+{% block username %}
+    {% trans "Movies rated by " %} {{ ratings_user }}
+    {% if rating_type_str != "Film" %}
+        {% trans "in category" %} {{ rating_type_str }}
+    {% endif %}
+{% endblock username %}
+
+{% block user_rated %}{% trans "This user has rated" %}{% endblock user_rated %}

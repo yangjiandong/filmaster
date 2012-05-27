@@ -1,0 +1,26 @@
+{% load map_url %}
+{% load object %}
+{% load movie %}
+{% load posters %}
+{% load i18n %}
+{% load debug %}
+
+
+{% load i18n %}
+{% if all_films %}
+    <section class="top-movies">
+        <h1><a href="{% url my_recommendations %}" target='_blank'>{% trans "Your all time top recommendations" %}</a></h1>
+        <ul>
+        {% for film in all_films %}
+        <li>
+            <a href="{{ film.get_absolute_url }}" title="{{ film.get_title }}" target="_blank">
+                <figure>
+                    <img width="150" height="220" src="{% poster 150 220 film %}" alt="{{ film.get_title }}" />
+                    <figcaption>{{ film.get_title }}{%if film.release_year %} <span>({{film.release_year}})</span>{%endif%}</figcaption>
+                </figure>
+            </a>
+        </li>
+        {% endfor %}
+        </ul>
+    </section><!-- .top-movies -->
+{% endif %}

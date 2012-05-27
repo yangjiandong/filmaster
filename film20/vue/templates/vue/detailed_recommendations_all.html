@@ -1,0 +1,44 @@
+{% extends "vue/base.html" %}
+{% load i18n %}
+{% load posters %}
+{% load object %}
+{% load movie %}
+
+{% block body-class %}recommendations{% endblock %}
+
+{% block info %}
+<a href="{% url detailed_recommendations_vue %}" style="float:right">{% trans "Check recommendations in Vue Theaters" %}</a>
+<h1><a href="{% url vue_main %}">{% trans "Rate more movies" %}</a> {% trans "to get even better recommendations!" %}</a></h1>
+{% endblock %}
+
+{% block content %}
+    <section class="detailed-recommendations">
+        <h1>Your Personalized Recommendations {% block recommendations_subtitle %}{% trans "of all times" %}{% endblock %}</h1>
+        {% include "vue/mood_selector.html" %}
+        {% include "vue/detailed_recommendations_ajax.html" %}
+        {% include "pagination/pagination.html" %}
+    </section>
+{% endblock %}
+
+{% block end-scripts %}
+<script>
+    (function() {
+        var params={};
+        $((document.location.href.split('?')[1] || '').split('&').map(function(i){
+            return i.split('=');
+        })).each(function(k, v) {
+            params[v[0]]=v[1];
+        });
+        var selector = params.mood && ('.mood-' + params.mood) || ':first';
+        $('.mood-selector li' + selector).addClass('pressed');
+    })()
+    function reload_recommendations() {
+        var url = document.location.href.split('#')[0]
+        url = url + (url.indexOf('?')>0 ? '&' : '?') + 'ajax'
+        $.get(url, function(data) {
+            $('ul.movies').replaceWith(data);
+        })
+    }
+
+</script>
+{% endblock %}

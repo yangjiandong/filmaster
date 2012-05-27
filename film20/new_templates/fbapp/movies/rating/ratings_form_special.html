@@ -1,0 +1,47 @@
+{% load map_url %}
+{% load i18n %}
+{% load debug %}
+{% load movie %}
+{% load posters %}
+
+<form method="POST" action="{% url process_ratings %}">
+	<fieldset>
+		<figure>
+			<img width="240" height="340" src="{% poster 240 340 film %}" alt="{{ film.title }}" />
+			<figcaption>
+				<p class="msg"></p>
+                <a class="movie" href="{{ film.get_absolute_url }}" target='_blank'>{{ film.get_title }} {%if film.release_year %}<span>({{film.release_year}})</span>{%endif%}</a>
+			</figcaption>
+			<p class="rate">
+				{{form.rating_1.errors}} {# Film #}
+				<label for="{{form.rating_1.id_for_label}}">{{form.rating_1.label}}</label>
+				{{form.rating_1}}
+				 <span class="rating-1 r{{ form.rating_1.value }}"></span>
+			</p>
+		</figure>
+		<div class="overlay"><span class="ajax-loader"></span></div>
+		<div class="rate">
+			<div class="checkbox">
+			<p>{% trans "If you haven't seen it" %}:</p>
+				{{form.dying_for.errors}}
+				<label for="{{form.dying_for.id_for_label}}">{{form.dying_for.label}}{{form.dying_for}}</label>
+				{{form.not_interested.errors}}
+				<label for="{{form.not_interested.id_for_label}}">{{form.not_interested.label}}{{form.not_interested}}</label>
+				<ul class="not-seen-yet-actions">
+					<li><a class="whishlist" href="{% url wishlist %}">{% trans "I want to watch it (haven't seen, yet)!" %}</a></li>
+					<li><a class="shitlist" href="{% url shitlist %}">{% trans "I don't want to see it, do not show me again!" %}</a></li>
+				</ul><!-- .not-seen-yet-actions -->
+			</div>
+		</div><!-- .rate -->
+		<div class="final">
+		</div><!-- .final -->
+	</fieldset>
+	<input type="hidden" name="next" value="{{request.get_full_path}}" />
+    <input class="user-profile" type="hidden" value="{%  url_user_link request.user %}" />
+    {{form.film_id}}
+	{% csrf_token %}
+	<input type="submit" value="{% trans "Submit" %}" />
+</form>
+<a href="#" class="skip-movie">{% trans "SKIP MOVIE" %}</a>
+
+

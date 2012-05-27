@@ -1,0 +1,23 @@
+{% extends "messages/base.html" %}
+{% load i18n %}
+{% block head_extra %}
+<!-- TEST CSS -->
+<style>
+article {margin: 1em;}
+article.hidden .body { display:none;}
+article.hidden:target .body {display:block;}
+article header { background-color:#eee;}
+</style>
+{% endblock %}
+
+{% block title %}{% trans "Conversation" %}{% endblock %}
+
+{% block content %}
+{% for message in conversation_messages %}
+  {% include "messages/single_message.html" %}
+{% endfor %}
+<form method="post" action="{% url messages_delete_conversation conversation.id %}">
+<input type="submit" value="{%trans 'Delete Thread' %}"/>
+{% csrf_token %}
+</form>
+{% endblock %}

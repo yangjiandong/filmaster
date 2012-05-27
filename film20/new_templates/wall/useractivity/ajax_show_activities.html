@@ -1,0 +1,28 @@
+{% load i18n %}
+{% load switchcase %}
+
+{% if activities %}
+    {% for activity in activities %}
+    {% with activity.activity_type as type %}
+    {% switch type %}   
+        {% case 1 %}{% include 'wall/useractivity/article.html' %}{% endcase %}
+        {% case 2 %}
+            {% if activity.short_review_id %}
+                {% include 'wall/useractivity/wall_post.html' %}
+            {% endif %}
+        {% endcase %}
+        {% case 3 %}{% include 'wall/useractivity/comment.html' %}{% endcase %}
+        {% case 4 %}{% include 'wall/useractivity/rating.html' %}{% endcase %}
+    {% case 5 %}{% include 'wall/useractivity/link.html' %}{%endcase %}
+    {% case 6 %}{% include 'wall/useractivity/follow.html' %}{%endcase %}
+    {% case 7 %}{% include 'wall/useractivity/checkin.html' %}{% endcase %}
+    {% case 8 %}{% include 'wall/useractivity/poster.html' %}{% endcase %}
+    {% case 9 %}{% include 'wall/useractivity/demot.html' %}{% endcase %}
+    {% case 10 %}{% include 'wall/useractivity/trailer.html' %}{% endcase %}
+    {% endswitch %}
+    {% endwith %}
+    {% endfor %}
+{% else %}
+{% trans "There are no activities here, yet. Sorry for that!" %}
+{% endif %}
+{% if page_obj.has_next %}<p class="more"><a href="#">{% trans "show more" %}</a></p>{% endif %}

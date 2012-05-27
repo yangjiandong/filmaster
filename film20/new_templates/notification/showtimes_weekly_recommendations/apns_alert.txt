@@ -1,0 +1,1 @@
+{%load notification%}{% filter autocut:ctx %}{% include "notification/showtimes_weekly_recommendations/sms.txt" %}{% endfilter %}

@@ -1,0 +1,57 @@
+{% extends "usersettings/base.html" %}
+{% load i18n %}
+{% load account %}
+{% block title %}{% trans "Associated services" %}{% endblock %}
+{% block content %}
+<section class="settings">
+<h1>{% trans "Facebook/Twitter" %}</h1>
+<ul>
+<li class="facebook-assoc{%if fc%} logged-in{%endif%}">
+Facebook
+{% if fb_association %} 
+ {%if not fc%}
+   {% actionform facebook_unassign class="confirm" %}{%trans "Remove Association"%}{% endactionform %}
+ {%else%}
+ - {%trans "logged in"%}
+ {%endif%}
+{% else %} 
+    <a href="{% url fb_assign %}" class="associate">{%trans "Associate"%}</a>
+{%endif%}
+</li>
+{% for assoc in oauth_associations %}
+<li class="{{assoc.service.normalized_name}}-assoc{%if assoc.is_logged_in%} logged-in{%endif%}">
+  {{assoc.service.name}}
+  {%if assoc.is_associated%}
+    {%if not assoc.is_logged_in%}
+	{% actionform oauth_cancel assoc.service.normalized_name class="confirm" %}{%trans "Remove Association"%}{% endactionform %}
+    {%else%}
+      - {%trans "logged in"%}
+    {%endif%}
+  {%else%}
+    <a href="{{assoc.service.associate_url}}" class="associate">{%trans "Associate"%}</a>
+  {%endif%}
+</li>
+{% endfor%}
+{%for openid in openids%}
+  <li class="openid-assoc{%if openid.is_used%} logged-in{%endif%}">
+  	{{openid.openid}}
+  	{%if not openid.is_used%}
+		{% actionform associations input_remove_openid=openid.openid class="confirm" %}{%trans "Remove Association"%}{% endactionform %}
+        {%else%}
+        - {%trans "logged in"%}
+  	{%endif%} 
+  </li>
+{%endfor%}
+<li class="openid-assoc">
+    <form action="" method="post">
+        <p>
+            {%if openid_message%}<div>{{openid_message}}</div>{%endif%}
+            <input type="text" class="text openid" name="openid_url" value="" />
+            <input type="submit" value='{% trans "Associate with existing OpenID account" %}' />
+        </p>
+    </form>
+
+</li>
+</ul>
+</section>
+{% endblock %}

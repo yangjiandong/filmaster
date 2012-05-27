@@ -1,0 +1,5 @@
+{%load showtimes%}
+{%load debug%}
+{# TODO: set real datetime attribut for time tag #}
+{#<a title="{{screening.get_checked_in_users_str}}" class="{%if screening.checkin_cnt%}has_checkins{%endif%}" href="{% url showtimes_screening screening.pk %}?next={{request.META.PATH_INFO}}"><time datetime="20:00">{{ screening|local_time_txt:request.timezone}}</time></a>#}
+<time datetime="20:00">{{ screening|local_time:request.timezone|date:"d N H:i"}}</time>

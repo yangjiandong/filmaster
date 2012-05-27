@@ -1,0 +1,32 @@
+{%extends "usersettings/base.html"%}
+{% load i18n %}
+
+{% block title %}{% blocktrans %}{{ user }}'s Dashboard{% endblocktrans %}{% endblock %}
+
+{% block content %}
+<section class="settings">
+<h1>{% trans "Your settings" %}</h1>
+<dl>
+	<dt>{% trans 'Username' %}</dt><dd>{{ user.username }}</dd>
+	<dt>{% trans "Name" %}</dt><dd>{{ user.first_name }}</dd>
+	<dt>{% trans "Surname" %}</dt><dd>{{ user.last_name }}</dd>
+	{% if profile.display_name %}<dt>{% trans "Display name" %}</dt><dd>{{ profile.display_name }}</dd>{% endif %}
+	<dt>{% trans "Email" %}</dt><dd>{{ user.email }}</dd>
+	<dt>{% trans "Gender" %}</dt><dd>{% if profile.gender == 'M' %}{% trans 'Male' %}{% endif %}{% if profile.gender == 'F' %}{% trans 'Female' %}{% endif %}</dd>
+	<dt>{% trans "Joined" %}</dt><dd>{{ user.date_joined }}</dd>
+	<dt>{% trans "Last seen" %}</dt><dd>{{ user.last_login }}</dd>
+	<dt>{% trans "About you" %}</dt><dd>{{ localized.description }}</dd>
+	<dt>{% trans "Blog title" %}</dt><dd>{{ localized.blog_title }}</dd>
+	<dt>{% trans "Website" %}</dt><dd>{{ profile.website }}</dd>
+	<dt>{% trans "Jabber_ID" %}</dt><dd>{{ profile.jabber_id }}</dd>
+	<dt>{% trans "GG" %}</dt><dd>{{ profile.gg }}</dd>
+	<dt>{% trans "MSN" %}</dt><dd>{{ profile.msn }}</dd>
+	<dt>{% trans "icq" %}</dt><dd>{{ profile.icq }}</dd>
+	<dt>{% trans "AOL" %}</dt><dd>{{ profile.aol }}</dd>
+	<dt>{% trans "Criticker" %}</dt><dd>{{ profile.criticker_name }}</dd>
+	<dt>{% trans "IMDB" %}</dt><dd>{{ profile.imbd_name }}</dd>
+	<dt>{% trans "Metacritic" %}</dt><dd>{{ profile.metacritic_name }}</dd>
+	<dt>{% trans "Location" %}</dt><dd>{{ profile.location }}</dd>
+</dl>
+</section>
+{%endblock%}

@@ -1,0 +1,15 @@
+{% load map_url %}
+{% load badges %}
+<header>
+	<hgroup>
+		<h1><a href="{% map_url "MAIN" %}">Filmaster</a></h1>
+		<h2>your movie guide</h2>
+	</hgroup>
+	{% block header %}
+		{% include 'base/user_toolbox.html' %}
+		{% include 'search/simple_search_form.html' %}
+	{% endblock %}
+	{% include 'base/menu.html' %}
+</header>
+{% user_progress %}
+

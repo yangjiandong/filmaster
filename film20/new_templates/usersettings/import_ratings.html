@@ -1,0 +1,122 @@
+{% extends "usersettings/base.html" %}
+{% load i18n %}
+{% load map_url %}
+{% load switchcase %}
+{% load format_date %}
+
+{% block title %}{%trans "Import ratings" %}{% endblock %}
+{% block content %}
+	<article class="settings">
+    <h1>{%trans "Settings"%}: <span>{%trans "Import movie ratings" %}</span></h1>
+    <p>{% trans "You can import your ratings from other web sites, like IMDB, Criticker or Filmweb." %}</p>
+
+    <h2>Filmweb</h2>
+    <p>
+    {% trans "You can import your ratings from Filmweb by entering your user name and password for Filmweb account." %}
+    </p>
+    {%if filmweb_form %}
+    <form id="filmweb_form" action="" method="post">
+            {{filmweb_form }}
+            <input type="submit" value="{% trans "Import from Filmweb" %}" name="filmweb">
+    </form>
+    {% endif %}
+    
+    <h2>Criticker</h2>
+    <p>
+    {% trans "You can import your ratings from Criticker by uploading the XML file with all your ratings on Criticker." %}
+    {% trans "You can obtain the file by browsing to You->All your ratings->Export Lists->Ordered By Score(XML)." %}
+    {%if criticker_form %}
+    </p>
+        <form action="" id="criticker_form" enctype="multipart/form-data" method="post">
+            {{criticker_form}}            
+            <p><input type="submit" value="{% trans "Import from Criticker" %}" name="criticker"></p>
+        </form>
+    {%endif%}
+    <h2>IMDB</h2>
+    <p>
+    {% trans "Go to <a href='http://www.imdb.com/list/ratings'>your ratings</a> page and look for 'Export this list' link at the bottom." %}
+    {% trans "Then save the ratings.csv file and upload it using the below form" %}
+    {%if imdb_form %}
+    </p>
+        <form action="" id="imdb_form" enctype="multipart/form-data" method="post">
+          {{imdb_form}}
+          <p><input type="submit" value="{% trans "Import from IMDB" %}" name="imdb"></p>
+        
+        </form>
+    {%endif%}
+    
+    {%if previous_imports %}
+    <h2>{%trans "previous_imports" %}</h2>
+    <table id="previous_imports">
+    <tr>
+    <th>{% trans "Imported at" %}</th>
+    <th>{% trans "View report" %}</th>
+    </tr>
+    {%for previous_import in previous_imports%}
+    <tr>
+        <td>{% format_date previous_import.created_at %}</td>
+        <td><a href="{% url import_summary previous_import.id %}">{% trans "View report" %}</a></td>
+    </tr>
+    {%endfor%}
+    </table>
+    {%endif%}
+	</article><!-- .settings -->
+{% endblock %}
+
+{% block end-scripts %}
+<script>
+    jQuery.fn.showForms = function(){
+        var $film_form = $(this);
+        $(this).each(function(){
+           $(this)
+                .hide()
+                .eq(0)
+                .after(
+                    $("<a href='#'>{% trans 'Show form' %}</a>").click(function(event){
+                        event.preventDefault();
+                        $(this).remove()
+                        $film_form.toggle()
+                    })
+                )
+                ;
+        });
+        return $(this);
+    }
+    
+    jQuery.fn.showReports = function(){
+        var $report = $(this),
+            min_rows = 5,
+            length = $report.length;
+            
+        if(length > min_rows){
+            $report
+                .slice(min_rows, length)
+                .hide()
+                .eq(min_rows)
+                .after($("<tr><td>{% trans 'Show more' %}</tr></td>").click(function(){
+                    $(this)
+                        .remove()
+                        $report.show()
+                        ;
+                }));
+        }
+        
+    }
+    
+    $(document).ready(function(){
+        var $filmweb = $("#filmweb_form"),
+            $criticker = $("#criticker_form"),
+            $imdb = $("#imdb_form"),
+            $report = $("#previous_imports tr"),
+            min_rows = 5,
+            length = $report.length;
+                        
+        $filmweb.showForms();
+        $criticker.showForms();
+        $imdb.showForms();
+        
+        $report.showReports();
+        
+    });    
+</script>
+{% endblock end-scripts %}

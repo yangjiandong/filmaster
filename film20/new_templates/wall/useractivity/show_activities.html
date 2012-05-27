@@ -1,0 +1,10 @@
+{% load i18n %}
+{% load switchcase %}
+{% load pagination_tags %}
+
+<div id="wall" class="stream">
+    {#% autopaginate activities settings.NUMBER_OF_ACTIVITIES %#}
+    {% include "wall/useractivity/ajax_show_activities.html" %}
+	<!-- TODO: show conditionally + url + ajax: http://jira.filmaster.org/browse/FLM-738 -->
+    {# paginator #}
+</div><!-- .stream -->

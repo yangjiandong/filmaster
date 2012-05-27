@@ -1,0 +1,8 @@
+{% load i18n %}{% blocktrans %}I've rated film "{{film}}" giving it {{rating}}/10{% endblocktrans %}
+{% if extra_cnt %}
+{% blocktrans count extra_cnt=extra_cnt %}
+(+{{extra_cnt}} more)
+{% plural %}
+(+{{extra_cnt}} more)
+{% endblocktrans %}
+{% endif %}

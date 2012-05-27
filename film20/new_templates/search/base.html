@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+    {% include "dashboard/wall.html" %}
+{% endblock content %}
+
+{% block primary-content-aside %}
+<aside>
+    <section class="search-options">
+        <h1>{% trans "Show:"%}</h1>
+        <nav>
+            <ul>
+                <li><a {% if not model %}class="selected"{% endif %} href="?q={{ query }}">{% trans "all" %}</a></li>
+                <li><a {% if model == 'film' %}class="selected"{% endif %} href="?q={{ query }}&t=film">{% trans "movies" %}</a></li>
+                <li><a {% if model == 'person' %}class="selected"{% endif %} href="?q={{ query }}&t=person">{% trans "persons" %}</a></li>
+                <li><a {% if model == 'user' %}class="selected"{% endif %} href="?q={{ query }}&t=user">{% trans "users" %}</a></li>
+                <li><a {% if model == 'post' %}class="selected"{% endif %} href="?q={{ query }}&t=post">{% trans "articles" %}</a></li> {# TODO: inconsistency in naming #}
+                <li><a {% if model == 'review' %}class="selected"{% endif %} href="?q={{ query }}&t=review">{% trans "posts" %}</a></li> {# TODO: inconsistency in naming #}
+                <li><a {% if model == 'comment' %}class="selected"{% endif %} href="?q={{ query }}&t=comment">{% trans "comments" %}</a></li>
+            </ul>
+        </nav>
+    </section>
+    {% include "aside/movies/missing_movie.html" %}
+</aside>
+{% endblock primary-content-aside %}

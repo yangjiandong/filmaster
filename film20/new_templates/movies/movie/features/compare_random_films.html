@@ -1,0 +1,36 @@
+{% load i18n %}
+{% load posters %}
+
+{% with cv=to_vote %}
+{% if to_vote %}
+<div class="compare-film-features" data-url="{% url compare-films cv.pk %}">
+    <div class="header">{% trans "which movie is more" %} <strong>{{ cv.feature_name }}</strong>?</div>
+    <div class="body">
+        <a class="selected" id="a" href="{{ cv.film_a.get_absolute_url }}">
+            <img width="120" height="170" src="{% poster 120 170 cv.film_a %}" alt="{{ cv.film_a }}" />
+            <div class="caption">
+                <div><span>{{ cv.film_a.get_title }}</span> <strong>{{ cv.film_a.release_year }}</strong></div>
+            </div>
+        </a>
+        <a class="selected" id="b" href="{{ cv.film_b.get_absolute_url }}">
+            <img width="120" height="170" src="{% poster 120 170 cv.film_b %}" alt="{{ cv.film_b }}" />
+            <div class="caption">
+                <div><span>{{ cv.film_b.get_title }}</span> <strong>{{ cv.film_b.release_year }}</strong></div>
+            </div>
+        </a>
+    </div>
+
+    <div style="clear: both;"></div>
+    <div class="slider-content">
+        <div id="slider-description">{% trans "equally" %} {{ cv.feature_name }}</div>
+        <div id="slider"></div>
+    </div>
+    <div class="buttons">
+        <a class="action" id="vote" href="#">{% trans "Save vote" %}</a> {% trans "or" %} <a class="action" id="skip" href="#">{% trans "skip this comparison" %}</a>
+    </div>
+</div>
+<script>
+    $( ".compare-film-features" ).filmComparisionWidget();
+</script>
+{% endif %}
+{% endwith %}

@@ -1,0 +1,38 @@
+{% extends "fbapp/quiz_questions.html" %}
+{% load i18n %}
+
+{% block menu %}{% endblock %}
+
+{% block content %}
+    <div id="my-timer">
+        <b id="show-time">15</b> {% trans "seconds left" %}.
+    </div>
+
+    <form action="{% relurl event_quiz contest.slug %}" name="quizForm" id="quizForm" method="post" class="ajax">
+        <div style="text-align: center;"><h1>{{ question.question }}</h1></div>
+        <ul>
+        {% for choice in question.choices %}
+        <li>
+            <input id="{% if choice.id %}{{choice.id}}{% else %}{{choice}}{% endif %}"
+                 type="radio" name="choice" value="{% if choice.id %}{{choice.id}}{% else %}{{choice}}{% endif %}"
+                  onclick="this.form.submit();">
+                <label for="{% if choice.id %}{{choice.id}}{% else %}{{choice}}{% endif %}">{{ choice }}</label>
+        </li>
+        {% endfor %}
+        </ul>
+        <input type="hidden" name="tstamp" value="{{ tstamp }}">
+    </form>
+{% endblock content %}
+
+{% block footer %}
+<div class="global-progress">
+    <section class="status">
+        <h1>{% trans "Your progress" %}</h1>
+        <div class="progress-bar" id="rate-movies-progress">
+            <progress value="{{ progress }}" max="100">{{ progress }}%</progress>
+            <span class="progress"><span id="rate-movie-progress" style="width: {{ progress }}%;"></span></span>
+            <p id="progress-info">{% trans "You answered" %} <b>{{ answered }}</b> {% trans "out of" %} <b>10 {% trans "questions" %}</b></p>
+        </div>
+    </section>
+</div>
+{% endblock %}

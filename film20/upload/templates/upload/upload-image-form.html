@@ -1,0 +1,139 @@
+{% load i18n %}
+<form id="{{ id }}" class="upload-image-form" action="{% url upload-image %}" method="post" enctype="multipart/form-data" accept-charset="utf-8">
+    {% csrf_token %}
+    <p>
+        <label for="id_url">{% trans "Provide image URL" %}:</label>
+        <input id="id_url" type="text" name="url">
+        <input id="get_from_url" type="button" value="{% trans "Upload" %}"/>
+    </p>
+    <p>
+        <label for="id_image">{% trans "or upload from your hard drive" %}:</label>
+        <input id="id_image" type="file" name="image">
+    </p>
+    <p>
+        <label>{% trans "Preview" %}</label>
+        <div id="image-preview"></div>
+    </p>
+</form>
+
+<script type="text/javascript" charset="utf-8">
+    (function($) {
+        $.fn.uploadImage = function( options ) {
+            options = $.extend({
+                error  : function() {},
+                success: function() {}
+            }, options );
+
+            return this.each( function(){
+                var $this = $( this ),
+                    $preview = $( '#image-preview', this ),
+                    $image_field = $( "#id_image", this ),
+                    $url_field = $( "#id_url", this ),
+                    $url_fetch = $( "#get_from_url", this ),
+                    $master_form = $( "#form__" + $this.attr( 'id' ) ),
+                    callback = $this.attr( 'id' ) + '_callback';
+
+                // iframe id
+                var iframe_id = $this.attr( 'id' ) + "__iframe";
+
+                // append iframe
+                var $iframe = $( '<iframe></iframe>')
+                    .attr({
+                        'id'  : iframe_id,
+                        'name': iframe_id,
+                    })
+                    .hide()
+                    .appendTo( $this );
+
+                // set form target to iframe
+                $this.attr( 'target', iframe_id );
+
+                // on submit action
+                $this.bind( 'submit', function() {
+                    $preview.html( '' );
+                    $preview.addClass( 'loading' );
+
+                    $iframe.load( function() {
+                        // reset errors
+                        $( '.upload-errors' ).remove();
+                        
+                        // read response
+                        response = $iframe.contents().find( '#response' );
+                        try {
+                            var json = $.parseJSON( response.html() );
+                            
+                            if ( json.success ) {
+                                var $img = $( '<img/>' )
+                                    .attr({
+                                        'src': json.image
+                                    })
+                                    .hide()
+                                    .appendTo( $preview );
+
+                                // show image after load
+                                $img.load( function() {
+                                    $preview.removeClass( 'loading' );
+                                    $img.fadeIn();
+                                    
+                                    // set values
+                                    $( "#id_uploaded_image", $master_form ).val( json['image_id'] );
+                                    $( "#url_uploaded_image", $master_form ).val( json['image'] );
+                                    
+                                    // and fire callback ..
+                                    if( window[ callback ] ) {
+                                        window[ callback ] ( json );
+                                    }
+                                });
+
+                            } else {
+                                $preview.removeClass( 'loading' );
+                                
+                                $( "#id_uploaded_image", $master_form ).val( '' )
+                                $( "#url_uploaded_image", $master_form ).val( '' )
+
+                                for ( var key in json.errors ) {
+                                    var $errorlist = $( '<ul class="upload-errors errorlist"><ul>' )
+                                    for ( var i = 0; i < json.errors[key].length; i++ ) {
+                                        $errorlist.append( '<li>' + json.errors[key][i] + '</li>' )
+                                    }
+
+                                    if ( key == '__all__' ) {
+                                        $errorlist.prependTo( $this )
+                                    } else {
+                                        $errorlist.prependTo( '#id_' + key )
+                                    }
+                                }
+                            }
+                        } catch ( err ) {
+                            $preview.removeClass( 'loading' );
+                                
+                            $( "#id_uploaded_image", $master_form ).val( '' );
+                            $( "#url_uploaded_image", $master_form ).val( '' );
+                            var $errorlist = $( '<ul class="upload-errors errorlist"><ul>' );
+                            $errorlist.append( gettext('<li>Server error, please try again</li>') );
+                            $errorlist.prependTo( $this );
+                        }
+                        $iframe.unbind( 'load' );
+                    });
+
+                });
+                
+                // bind events
+                $image_field.change( function() {
+                    $url_field.val( '' )
+                    $this.submit();
+                });
+
+                $url_fetch.click( function() {
+                    $image_field.val( '' )
+                    $this.submit();
+                });
+
+            });
+        };
+    })( jQuery );
+
+    $( function() {
+        $( '#{{ id }}' ).uploadImage();
+    });
+</script>

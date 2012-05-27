@@ -1,0 +1,49 @@
+{% load i18n %}
+{% load map_url %}
+{% load useractivity_tags %}
+{% load format_date %}
+{% load threadedcommentstags %}
+{% load sanitize %}
+{% load truncatechars %}
+{% load showtimes %}
+{% load fbconnect %}
+
+<section id="activity-{{ activity.pk }}">
+    <header>
+        {% block activity-header-begin %}{% endblock %}
+        <p>
+            <a href="{% url_username_link activity.user %}">{{ activity.user.get_profile.get_current_display_name }}
+            <img width="45" height="45" src="{% avatars 45 activity.user %}" alt="{{ activity.user.get_profile.get_current_display_name }}" /></a>
+            {% block activity-header %}{% endblock %}
+        </p>
+        {% block activity-header-end %}{% endblock %}
+    </header>
+    <p>
+    {% block activity-content %}
+    {% endblock %}
+    </p>
+    {% block activity-content-end %}
+    {% endblock %}
+    <footer>
+    <p><a class="timeago" href="{{activity.get_absolute_url}}"><time class="timeago" datetime="{{ activity.created_at|date:"c" }}">{% human_readable_date activity.created_at %}</time></a>
+        {% remove_link activity %}
+        {% if activity.is_commentable %}
+            {% if activity.number_of_comments > 0 %}
+            <a class="comment has-comments" href="{{ activity.get_absolute_url }}" rel="{{activity.api_resource_uri}}">
+                {% blocktrans count counter=activity.number_of_comments %}
+                {{counter}} comment
+                {% plural %}
+                {{counter}} comments
+                {% endblocktrans %}
+            </a>
+            {% endif %}
+
+            {% if user.is_authenticated %}
+                <a class="comment" href="{{ activity.get_absolute_url }}" rel="{{activity.api_resource_uri}}">{% trans "Leave a comment" %}</a>
+            {% endif %}
+        {% endif %}
+        {% block activity-footer %}{% endblock %}
+        </p>
+        {% block activity-footer-end %}{% endblock %}
+    </footer>
+</section>

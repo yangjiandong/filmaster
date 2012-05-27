@@ -1,0 +1,34 @@
+{% load threadedcommentstags %}
+{% load map_url %}
+{% load format_date %}
+{% load useractivity_tags %}
+{% load nofollow %}
+{% load i18n %}
+{% load sanitize %}
+{% load urlimagize %}
+{% load parse_nicknames %}
+{% load smartlinebreaks %}
+{% load debug %}
+
+<section class="depth-{% if comment.depth > 3 %}3{% else %}{{ comment.depth }}{% endif %}" id="activity-{{ comment.pk }}">
+	<header>
+        {# I know it's uncool but added it for http://jira.filmaster.org/browse/FLM-1680 - comment urls in database have no "#activity-id" suffix but "#id" #}
+		<p id="{{ comment.pk }}">
+			<a href="{% url_user_link comment.user %}">{{ comment.user.get_profile.get_current_display_name }}
+				<img width="45" height="45" src="{% avatars 45 comment.user %}" alt="{{ comment.user.get_profile.get_current_display_name }}" />
+			</a>
+		</p>
+	</header>
+	<div class="c">{{ comment.comment|sanitize:"b i em strong ol li ul blockquote a:href img:src h2 spoiler del"|spoiler|safe|urlimagize|parse_nicknames|nofollow|smartlinebreaks }}</div>
+	<footer>
+		<p>
+ 			<time class="timeago" datetime="{{ comment.date_submitted|date:"c" }}">{% human_readable_date comment.date_submitted %}</time>.
+			{% if user.is_authenticated %}
+				{% if comment.user.username == user.username %}
+					<a href="#" class="edit-comment" rel="/1.1/comment/{{ comment.id }}/">{% trans "Edit" %}</a>
+				{% endif %}
+				<a href="#" class="reply-comment" rel="/1.1/comment/{{ comment.id }}/">{% trans "Reply" %}</a>
+			{% endif %}
+		</p>
+	</footer>
+</section>

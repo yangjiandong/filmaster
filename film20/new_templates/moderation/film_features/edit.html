@@ -1,0 +1,39 @@
+{% extends "moderation/index.html" %}
+
+{% load i18n %}
+
+{% block title %}
+    {% trans "Moderator tools - film features" %}
+{% endblock %}
+
+{% block content-section %}
+    <script type="text/javascript" src="/static/js/libs/jquery-1.6.2.min.js"></script>
+    <h1>{% trans "Moderator tools - film features" %}</h1>
+
+    <div class="filter-form">
+    <form method="GET" action=".">
+        <fieldset>
+            <label>{% trans "all movies" %}</label>
+            <input type="checkbox" name="all" value="true" style="vertical-align: middle;" {% if all %}checked="true"{% endif %} />
+        </fieldset>
+        <fieldset>
+            <label>{% trans "tag" %}</label>
+            <input type="text" id="id_tag" name="tag" value="{{ tag }}"/>
+        </fieldset>
+
+        <input type="submit" value="{% trans "Apply" %}"/>
+    </form>
+    </div>
+
+    <h2><a href="{{ object.get_absolute_url }}">{{ object }}</a></h2>
+    {% include "movies/movie/features/edit.html" %}
+{% endblock %}
+
+{% block end-scripts %}
+    <script>document.write("<script src='/static/js/plugins/jquery.autocomplete.min.js'>\x3C/script>")</script>
+    <script>
+        $( '#main' ).delegate("#next_film", "click", function() { window.location.reload(); return false; });
+        $( '#id_tag' ).autocomplete( "/ajax/search_tag_autocomplete/", { 'mustMatch': true } );
+        $( '.edit-film-features' ).filmFeaturesForm();
+    </script>
+{% endblock %}

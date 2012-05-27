@@ -1,0 +1,32 @@
+{% load i18n %}
+{% load pagination_tags %}
+
+{% with moderated_item.get_item_template as item_template %}
+{% with moderated_item.get_not_moderated as items %}
+
+{% autopaginate_new items %}
+
+{% if items %}
+    <table class="moderation-table">
+        <thead>
+            <tr>
+                <th>&nbsp;</th>
+                <th>{% trans "User" %}</th>
+                <th>{% trans "Actions" %}</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for item in items %}
+            {% include item_template %}
+        {% endfor %}
+        </tbody>
+    </table>
+    {% paginate_new %}
+{% else %}
+    <div class="empty">{% trans "No items to moderate..." %}</div>
+{% endif %}
+
+
+{% endwith %}
+{% endwith %}
+

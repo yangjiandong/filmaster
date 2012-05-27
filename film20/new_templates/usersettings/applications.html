@@ -1,0 +1,27 @@
+{% extends "usersettings/base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Your Applications" %}{% endblock %}
+
+{% block content %}
+	<article class="settings">
+		<h1>{%trans "Settings"%}: <span>{%trans "Authorized apps"%}</span></h1>
+		<h2>{%trans "OAuth Access Tokens"%}</h2>
+		<ul>
+		{%for token in tokens%}
+		<li>{{token}} <a href="{%url remove_access_token token.pk%}"
+						onclick="return confirm('{%trans 'Are you sure?'%}')">{%trans "delete"%}</a></li>
+		{%endfor%}
+		</ul>
+		<h2>{%trans "Your Applications"%}</h2>
+		<ul>
+		{%for consumer in consumers%}
+		<li>
+		  <a href="{%url view_application consumer.pk%}">{{consumer.name}}</a>
+		  <a href="{%url remove_application consumer.pk%}"
+						onclick="return confirm('{%trans 'Are you sure?'%}')">{%trans "delete"%}</a></li>
+		{%endfor%}
+		</ul>
+		<a href="{% url add_application%}">{%trans "New Application"%}</a>
+	</article><!-- .settings -->
+{%endblock%}

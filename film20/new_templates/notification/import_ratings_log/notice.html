@@ -1,0 +1,5 @@
+{% load i18n %}
+{% url ratings as link_to_ratings %}
+{% url import_summary summary_id as link_to_summary %}
+{% blocktrans %}Your movie ratings have been imported.{% endblocktrans %} {% blocktrans %}Check them here: {{link_to_ratings}}{% endblocktrans %}
+{% blocktrans %}You can also check your import status here: {{link_to_summary}}{% endblocktrans %}

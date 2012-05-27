@@ -1,0 +1,12 @@
+{% extends "wall/useractivity/base.html" %}
+{% load i18n %}
+{% load followers %}
+
+{% block activity-header %}
+			{% trans "started following a user" %}
+{% endblock %}
+
+{% block activity-content %}
+		{% follow_html activity.content %}
+{% endblock %}
+

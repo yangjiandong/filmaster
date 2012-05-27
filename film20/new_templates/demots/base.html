@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+{% load utils %}
+{% load demots %}
+
+{% block primary-content-wrapper-start %}{% endblock %}
+{% block primary-content-wrapper-end %}{% endblock %}
+
+{% block primary-content-aside %}
+    <aside class="demots">
+        <nav class="global">
+            <ul>
+                <li>{% a add-demot %}{% trans "Add demot" %}{% enda %}</li>
+                <li>{% a demots %}{% trans "All demots" %}{% enda %}</li>
+            </ul>
+        </nav>
+        {% comment %}
+        <section>
+            <h1>{% trans "Latest demots" %}</h1>
+            {% get_latest_demots 5 as demots %}
+            <div class="demot-list">
+            {% for demot in demots %}
+                {% include "demots/demot.html" %}
+            {% endfor %}
+            </div>
+        </section>
+        {% endcomment %}
+    </aside>
+{% endblock primary-content-aside %}

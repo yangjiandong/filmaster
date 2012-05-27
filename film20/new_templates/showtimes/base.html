@@ -1,0 +1,61 @@
+{%extends "base.html"%}
+{%load qs%}
+{% load i18n %}
+{%load showtimes%}
+{% load movie %}
+{%load map_url%}
+{%load debug%}
+{% load fragments %}
+
+{% block primary-content-aside %}
+{% if city_form %}
+
+<aside class="cinemas">
+	{%url recommendations_theaters as films_url %}
+	<section>
+		<h1>{% trans "Theaters" %}</h1>
+		<form id="select-city" method="GET" action="{{city_form_action|default:films_url}}">
+			<fieldset>
+				<label for="id_city">{% trans "Choose city" %}</label>
+				{{city_form.city}}
+			</fieldset>
+			{% csrf_token %}
+			<input type="submit" />
+		</form><!-- #select-city -->
+		<nav>
+			<ul>
+				{%for theater in theaters%}
+				<li>
+					<a class="{%if channel.id == theater.id %}selected{%endif%}" href="{%url showtimes_theater theater.id %}?{% qs_copy 'page' 1 %}">
+						{{theater.name}}
+					</a>
+				</li>
+				{%endfor%}
+			</ul>
+		</nav>
+	</section>
+    </aside>
+{% else %}
+    {% showtimes_menu %}
+{% endif %}
+{% endblock %}
+
+{%block content%}
+<section class="showtimes-{% block showtimes-id %}{% endblock %} rate-movies-simple">
+
+<h1>{% block showtimes-header %}{% trans "Recommended" %}: {% block showtimes-title %}{% endblock %}{% endblock %}</h1>
+
+{%block showtimestop%}{%endblock%}
+
+{% block showtimescontent %}{% endblock %}
+
+</section><!-- .showtimes -->
+{%endblock%}
+
+{% block secondary-content-aside %}
+    <aside class="filmaster">
+        <section class="stream">
+            {% short_reviews 10 'films' films %}
+        </section><!-- .stream -->
+    </aside>
+{% endblock secondary-content-aside %}

@@ -1,0 +1,40 @@
+{% load i18n %}
+{% load map_url %}
+{% load debug %}
+{% load posters %}
+
+<section class="movie-db">
+	<h1>{% trans "Movies database" %}</h1>
+	<div class="carousel-genres">
+		<ul>
+		{% for tag in tags %}
+			<li>{{ tag }}</li>
+		{% endfor %}
+		</ul>
+	</div><!-- .carousel-genres -->
+
+	<div class="carousel-movies">
+		{% if films %}
+			<ul class="movies-short">
+			{% for film in films  %}
+				<li>
+					<a href="{{film.get_absolute_url}}">
+						<img width="100" height="141" alt="{{ film.get_title }}" src="{% poster 100 141 film %}" />
+						{{ film.get_title }}
+					</a>
+				</li>
+			{% endfor %}
+			</ul><!-- .movies-short -->
+		{% else %}
+			<p>{% trans "No films for tag" %}</p>
+		{% endif %}
+	</div><!-- .carousel-movies -->
+
+	<div class="carousel-see-all">
+		<ul class="see-all">
+		{% for link in links %}
+			<li><a href="{{ link }}">{% trans "Show all" %}</a></li>
+		{% endfor %}
+		</ul><!-- .see-all -->
+	</div><!-- .carousel-see-all -->
+</section><!-- .movie-db -->

@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+{% load map_url %}
+{% load captureas_tag %}
+{% load account %}
+{% block title %}{% trans "Sign up" %}{% endblock %}
+
+{% block body-class %}registration{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
+  <div>
+  <p>
+	<strong>
+	<span class="warning">{% trans "Note" %}</span>:
+    {% blocktrans %}You are already logged in as {{ user }}.{% endblocktrans %}
+    <a class='logout-link' href='{% map_url "LOGOUT" %}/?{%get_next request%}' title="">{% trans "Log out"%}</a>
+    </strong>
+  </p>
+  </div>
+{% else %}
+	{% block primary-content-wrapper-start %}{% endblock %}
+	{% block content-start %}{% endblock %}
+
+    <div id="signup">
+    <section class="quick-registration">
+        <h1>{% trans "Quick registration" %}</h1>
+        <p>{% trans "Already have an account or using Facebook or Twitter?" %} <a href="{% url acct_login %}?{%get_next request%}">{% trans "Log In" %}</a>!</p>
+        <p class="no-mobile">{% trans "Use Your Facebook, Twitter or OpenID. One click instead of another password." %}</p>
+        {%include "account/sso_buttons.html"%}
+    </section><!-- .quick-registration -->
+
+    <section class="full-registration">
+        <h1>{% trans "Standard registration" %}</h1>
+        <form class="register {{form_class}}" id="signup_form" method="post">
+            <fieldset>
+                {{form.email.errors}}
+                <label for="id_email">{{form.email.label}}</label>
+                {{form.email}}
+                {{form.username.errors}}
+                 <label for="id_username">{{form.username.label}}</label>
+                {{form.username}}
+                {{form.password1.errors}}
+                <label for="id_password1">{{form.password1.label}}</label>
+                {{form.password1}}                    
+                {{form.password2.errors}}
+                <label for="id_password2">{{form.password1.label}} <span>({% trans "repeat" %})</span></label>
+                {{form.password2}}
+                {% if not request.is_mobile %}
+                <p class="human">{{form.recaptcha}}</p>
+                {% endif %}
+                {{form.recaptcha.errors}}
+                <label for="{{ form.inform_friends.id_for_label }}">{{ form.inform_friends.label }}</label>
+                {{ form.inform_friends }}
+                {{ form.inform_friends.errors}}
+                <p>{% trans "By clicking <em>Sign Up</em>, you are indicating that you have read and agree to the" %}
+                <a href='{% map_url "TERMS" %}/?{%get_next request%}'>{% trans "Terms and conditions" %}</a> {% trans "and" %}
+                <a href='{% map_url "PRIVACY" %}/?{%get_next request%}'>{% trans "Privacy" %}</a>.</p>
+                <input type="submit" value="{% trans "Sign Up &raquo;" %}" />
+            </fieldset>
+        </form><!-- #register -->
+        </section><!-- .full-registration -->
+    </div>
+
+	{% block content-end %}{% endblock %}
+	{% block primary-content-wrapper-end %}{% endblock %}
+
+{% endif %}
+{% endblock %}
+
+{% block end-scripts %}
+<script>
+    $(document).ready(function() {
+        $("#id_email").focus();
+    });
+</script>
+{% endblock %}

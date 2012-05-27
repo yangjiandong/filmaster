@@ -1,0 +1,24 @@
+{% extends "profile/base.html" %}
+{% load i18n %}
+
+{% block title %}
+    {% trans "Similar Users" %}
+{% endblock title %}
+
+{% block content %}
+	<section>
+    <h1>{%  trans "Filmasters similar to " %}{{ user_profile.get_profile.get_current_display_name }}</h1>
+    {% if users %}
+	<div class="filters">
+		<p>{% trans "Show:" %}</p>
+		<ul>
+            <li>{% a profile_similar_users_url user_profile %}{% trans "all" %}{% enda %}</li>
+            <li>{% a profile_similar_users_following user_profile %}{% trans "followed" %}{% enda %}</li>
+		</ul>
+	</div>
+    {% include 'filmasters/filmasters.html' %}
+    {% else %}
+        <p>{% trans "This user doesn't have similar users." %}</p>
+    {% endif %}
+	</section>
+{% endblock content %}

@@ -1,0 +1,30 @@
+{% extends "fbapp/base.html" %}
+
+{% block content %}
+<h1>Gratulacje. Zdobyłeś {{ participant.score }} pkt!</h1>
+<h2>Jeśli chcesz zwiększyć swój dorobek, możesz zaprosić do zabawy znajomych
+    i opublikować informację na Facebooku.</h2>
+<p class="wallpost">
+    {% if participant.wallpost_published %}
+        Wiadomość opublikowana.
+    {% else %}
+        Otrzymasz dodatkowe {{ wallpost }} punktów.
+        <a href='#' id='wallpost'>Opublikuj informację</a>
+    {% endif %}
+</p>
+<p class="invite">
+    {% if participant.sent_invite_count %}
+        Zaproszenia wysłane.
+    {% else %}
+        {{ invited_friend }} punktów za każde zaakceptowane zaproszenie.
+        <a href="#" id="invite">Zaproś znajomych</a>
+    {% endif %}
+</p>
+<div class="play">
+    {% if user.is_authenticated %}
+        <a href="{% url fbapp_the_end %}">Dalej!</a>
+    {% else %}
+        <a href="{% url fbapp_login_or_signup %}">Dalej!</a>
+    {% endif %}
+</p>
+{% endblock %}

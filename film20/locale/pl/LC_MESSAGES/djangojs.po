@@ -1,0 +1,428 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-05-22 12:23+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Borys Musielak <borys@musielak.eu>\n"
+"Language-Team: Borys Musielak <borys@musielak.eu>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
+"|| n%100>=20) ? 1 : 2)\n"
+
+#: static/grappelli/js/SelectFilter2.js:63
+msgid "Clear all"
+msgstr "Wyczyść wszystko"
+
+#: static/grappelli/js/actions.min.js:26
+msgid "%(sel)s of %(cnt)s selected"
+msgid_plural "%(sel)s of %(cnt)s selected"
+msgstr[0] "wybrano %(sel)s z %(cnt)s"
+msgstr[1] "wybrano %(sel)s z %(cnt)s"
+msgstr[2] "wybrano %(sel)s z %(cnt)s"
+
+#: static/js/script.js:335
+msgid "Show all screenings"
+msgstr "Pokaż wszystkie seanse"
+
+#: static/js/script.js:336
+msgid "Hide screenings"
+msgstr "Ukryj seanse"
+
+#: static/js/script.js:509 static/js/script.js.py:1035
+#: static/js/script.js:1069
+msgid "Good job! "
+msgstr "Dobra robota! "
+
+#: static/js/script.js:509 static/js/script.js.py:1035
+#: static/js/script.js:1069
+msgid " rated"
+msgstr " oceniono"
+
+#: static/js/script.js:562 static/js/script.js.py:1188
+msgid "Review cannot be shorter than 10 characters!"
+msgstr "Recenzja nie powinna być krótsza niż 10 znaków!"
+
+#: static/js/script.js:575 static/js/script.js.py:1204
+msgid "<p>Thanks for rating <strong>"
+msgstr "<p>Dzięki za ocenienie <strong>"
+
+#: static/js/script.js:576 static/js/script.js.py:1205
+msgid "<p>Your short review has appeared at "
+msgstr "<p>Twoja opinie pojawiła się na "
+
+#: static/js/script.js:576 static/js/script.js.py:1205
+msgid "your profile page</a>'"
+msgstr "stronie Twojego profilu</a>"
+
+#: static/js/script.js:632 static/js/script.js.py:643 static/js/script.js:1277
+#: static/js/script.js.py:1288 static/js/script.js:1330
+msgid "<p>You've added <strong>"
+msgstr "<p>Dodałeś film <strong>"
+
+#: static/js/script.js:633 static/js/script.js.py:1278
+msgid "to_your_wishlist"
+msgstr "do swojej"
+
+#: static/js/script.js:633 static/js/script.js.py:775 static/js/script.js:1278
+msgid "wishlist</a>"
+msgstr "listy życzeń</a>"
+
+#: static/js/script.js:634 static/js/script.js.py:1279
+msgid ""
+"</p><p>You can send your wishlist to your friends so that they know what to "
+"get you or what to bring to your place for a movies night.</p>"
+msgstr ""
+"</p><p>Możesz wysłać listę życzeń do swoich znajomych, żeby wiedzieli co Ci "
+"kupić na gwiazdkę lub co przynieść na wieczorek filmowy.</p>"
+
+#: static/js/script.js:644 static/js/script.js.py:1289
+msgid "to_your_shitlist"
+msgstr "do swojego"
+
+#: static/js/script.js:644 static/js/script.js.py:801 static/js/script.js:1289
+msgid "shitlist</a>"
+msgstr "śmietnika</a>"
+
+#: static/js/script.js:645 static/js/script.js.py:1290
+msgid "</p><p>We won't be showing you this movie again.</p>"
+msgstr "</p><p>Nie będziemy Ci więcej pokazywac tego filmu.</p>"
+
+#: static/js/script.js:661
+msgid "Remove your rating"
+msgstr "Usuń ocenę"
+
+#: static/js/script.js:695 static/js/script.js.py:719
+msgid "Good job! Movie rated"
+msgstr "Dobra robota! Film oceniony"
+
+#: static/js/script.js:751
+msgid "Movie rating removed"
+msgstr "Ocena usunięta"
+
+#: static/js/script.js:773 static/js/script.js.py:799
+msgid "Movie added to your "
+msgstr "Film został dodany do "
+
+#: static/js/script.js:1117
+msgid " rating removed"
+msgstr " ocena usunięta"
+
+#: static/js/script.js:1129
+msgid "remove my ratings"
+msgstr "usuń moje oceny"
+
+#: static/js/script.js:1188
+msgid "Review cannot be longer than 1000 characters!"
+msgstr "Recenzja nie może być dłuższa niż 1000 znaków!"
+
+#: static/js/script.js:1220
+msgid "Something goes wrong, please try again later"
+msgstr "Coś poszło nie tak, spróbuj ponownie"
+
+#: static/js/script.js:1330
+msgid "to your"
+msgstr "do swojej"
+
+#: static/js/script.js:1330
+msgid "collection</a>"
+msgstr "kolekcja</a>"
+
+#: static/js/script.js:1330
+msgid "</p>"
+msgstr "</p>"
+
+#: static/js/script.js:1493
+msgid "Close"
+msgstr "Zamknij"
+
+#: static/js/script.js:1505
+msgid "Movie filtering options"
+msgstr "Opcje wyboru filmów"
+
+#: static/js/script.js:1639 static/js/plugins/jquery.filmaster.js:407
+msgid "or"
+msgstr "lub"
+
+#: static/js/script.js:1640 static/js/plugins/jquery.filmaster.js:387
+msgid "Cancel"
+msgstr "Anuluj"
+
+#: static/js/script.js:1721 static/js/script.js.py:1826
+msgid "Oops... something went wrong :( Please accept our apologies."
+msgstr "Ups... coś poszło nie tak :( Przepraszamy i obiecujemy poprawę."
+
+#: static/js/script.js:1739
+msgid "show all"
+msgstr "pokaż wszystko"
+
+#: static/js/script.js:1766
+msgid "profile"
+msgstr "profil"
+
+#: static/js/script.js:1791
+msgid "Edit"
+msgstr "Edytuj"
+
+#: static/js/script.js:1799 static/js/script.js.py:2124
+msgid "Reply"
+msgstr "Odpowiedz"
+
+#: static/js/script.js:1859
+msgid "0 min ago."
+msgstr "Teraz"
+
+#: static/js/script.js:1859
+#, fuzzy
+msgid "Leave a comment"
+msgstr "komentarz"
+
+#: static/js/script.js:1907
+msgid "comment"
+msgid_plural "comments"
+msgstr[0] "komentarz"
+msgstr[1] "komentarzy"
+msgstr[2] "komentarze"
+
+#: static/js/script.js:2185
+msgid "Removing activity"
+msgstr "Usuwam wpis"
+
+#: static/js/script.js:2186
+msgid "Do you want to remove this activity?"
+msgstr "Na pewno chcesz usunąć ten wpis?"
+
+#: static/js/script.js:2187
+msgid "Remove activity"
+msgstr "Usuń wpis"
+
+#: static/js/script.js:2261
+msgid "Are you sure?"
+msgstr "Jesteś pewien?"
+
+#: static/js/usersettings_location.js:38
+msgid "New location detected. Should we use it as your new default?"
+msgstr "Wykryto nową lokalizację. Czy ustawić ją jako domyślną?"
+
+#: static/js/usersettings_location.js:125
+msgid "Autodetected location"
+msgstr "Wykryto lokalizację"
+
+#: static/js/usersettings_location.js:144
+msgid "Autodetected location. <a href='#' class='sl'>Click to change</a>."
+msgstr "Wykryto lokalizację. <a href='#' class='sl'>Kliknij aby zmienić</a>."
+
+#: static/js/plugins/jquery.filmaster.js:386
+msgid "Ok"
+msgstr "Ok"
+
+#: static/js/plugins/jquery.filmaster.js:436
+msgid "Removing entry"
+msgstr "Usuwam wpis"
+
+#: static/js/plugins/jquery.filmaster.js:437
+msgid "Do you want to remove this entry?"
+msgstr "Na pewno chcesz usunąć ten wpis?"
+
+#: static/js/plugins/jquery.filmaster.js:438
+msgid "Remove entry"
+msgstr "Usuń wpis"
+
+#: static/js/plugins/jquery.filmaster.js:480
+msgid "Removing demot"
+msgstr "Usuwam demota"
+
+#: static/js/plugins/jquery.filmaster.js:481
+msgid "Do you want to remove this demot?"
+msgstr "Na pewno chcesz usunąć tego demota?"
+
+#: static/js/plugins/jquery.filmaster.js:482
+msgid "Remove demot"
+msgstr "Usuń demota"
+
+#: static/js/plugins/jquery.filmaster.js:640
+#: static/js/plugins/jquery.filmaster.js:644
+msgid "is more"
+msgstr "jest bardziej"
+
+#: static/js/plugins/jquery.filmaster.js:648
+msgid "equally"
+msgstr "równie"
+
+#: static/js/plugins/jquery.timeago.js:31
+msgid "in"
+msgstr "w"
+
+#: static/js/plugins/jquery.timeago.js:32
+msgid "ago"
+msgstr "temu"
+
+#: static/js/plugins/jquery.timeago.js:34
+msgid "now"
+msgstr "teraz"
+
+#: static/js/plugins/jquery.timeago.js:35
+msgid "a minute"
+msgstr "minutę"
+
+#: static/js/plugins/jquery.timeago.js:36
+msgid "an hour"
+msgstr "godzinę"
+
+#: static/js/plugins/jquery.timeago.js:37
+msgid "today"
+msgstr "dziś"
+
+#: static/js/plugins/jquery.timeago.js:38
+msgid "yesterday"
+msgstr "wczoraj"
+
+#: static/js/plugins/jquery.timeago.js:39
+msgid "day before"
+msgstr "dzień wcześniej"
+
+#: static/js/plugins/jquery.timeago.js:40
+msgid "last week"
+msgstr "w zeszłym tygodniu"
+
+#: static/js/plugins/jquery.timeago.js:41
+msgid "last month"
+msgstr "w zeszłym miesiącu"
+
+#: static/js/plugins/jquery.timeago.js:42
+msgid "last year"
+msgstr "w zeszłym roku"
+
+#: static/js/plugins/jquery.timeago.js:83
+msgid "seconds"
+msgid_plural "seconds"
+msgstr[0] "sekundę"
+msgstr[1] "sekundy"
+msgstr[2] "sekund"
+
+#: static/js/plugins/jquery.timeago.js:91
+msgid "minutes"
+msgid_plural "minutes"
+msgstr[0] "minutę"
+msgstr[1] "minuty"
+msgstr[2] "minut"
+
+#: static/js/plugins/jquery.timeago.js:99
+msgid "hours"
+msgid_plural "hours"
+msgstr[0] "godzinę"
+msgstr[1] "godziny"
+msgstr[2] "godzin"
+
+#: static/js/plugins/jquery.timeago.js:113
+msgid "days"
+msgid_plural "days"
+msgstr[0] "dzień"
+msgstr[1] "dni"
+msgstr[2] "dni"
+
+#: static/js/plugins/jquery.timeago.js:129
+msgid "months"
+msgid_plural "months"
+msgstr[0] "miesiąc"
+msgstr[1] "miesiące"
+msgstr[2] "miesięcy"
+
+#: static/js/plugins/jquery.timeago.js:136
+msgid "years"
+msgid_plural "years"
+msgstr[0] "rok"
+msgstr[1] "lata"
+msgstr[2] "lat"
+
+#: static/js/plugins/jquery.truncator.js:42
+msgid "show more"
+msgstr "pokaż więcej"
+
+#~ msgid "Available %s"
+#~ msgstr "Dostępne %s"
+
+#~ msgid "Choose all"
+#~ msgstr "Wybierz wszystko"
+
+#~ msgid "Add"
+#~ msgstr "Dodaj"
+
+#~ msgid "Remove"
+#~ msgstr "Usuń"
+
+#~ msgid "Chosen %s"
+#~ msgstr "Wybrano %s"
+
+#~ msgid "Select your choice(s) and click "
+#~ msgstr "Dokonaj wyboru i kliknij"
+
+#~ msgid "Original title"
+#~ msgstr "Tytuł oryginalny"
+
+#~ msgid "disaster"
+#~ msgstr "dno"
+
+#~ msgid "very bad"
+#~ msgstr "beznadziejny"
+
+#~ msgid "poor"
+#~ msgstr "słaby"
+
+#~ msgid "below average"
+#~ msgstr "poniżej średniej"
+
+#~ msgid "average"
+#~ msgstr "przeciętny"
+
+#~ msgid "above average"
+#~ msgstr "niezły"
+
+#~ msgid "good"
+#~ msgstr "dobry"
+
+#~ msgid "very good"
+#~ msgstr "bardzo dobry"
+
+#~ msgid "exceptional"
+#~ msgstr "rewelacyjny"
+
+#~ msgid "masterpiece"
+#~ msgstr "wybitny"
+
+#~ msgid "Unfollow"
+#~ msgstr "Nie obserwuj"
+
+#~ msgid "Follow"
+#~ msgstr "Obserwuj"
+
+#~ msgid ""
+#~ "Your recommendations are getting computed right now. They should be ready "
+#~ "in a few seconds"
+#~ msgstr ""
+#~ "Twoje rekomendacje właśnie się wyliczają. Powinny być gotowe za kilka "
+#~ "sekund"
+
+#~ msgid "We've prepared personalized movie recommendations for you"
+#~ msgstr "Przygotowaliśmy dla Ciebie spersonalizowane rekomendacje"
+
+#~ msgid "check them out!"
+#~ msgstr "sprawdź je!"
+
+#~ msgid "I'm watching now"
+#~ msgstr "Oglądam teraz"
+
+#~ msgid "weeks"
+#~ msgid_plural "weeks"
+#~ msgstr[0] "tydzień"
+#~ msgstr[1] "tygodnie"
+#~ msgstr[2] "tygodni"
+
+#~ msgid "very poor"
+#~ msgstr "bardzo kiepski"
+
+#~ msgid "top in its genre"
+#~ msgstr "ociera się o wybitność"

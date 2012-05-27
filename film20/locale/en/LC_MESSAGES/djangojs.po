@@ -1,0 +1,335 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-05-22 12:23+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: static/grappelli/js/SelectFilter2.js:63
+msgid "Clear all"
+msgstr ""
+
+#: static/grappelli/js/actions.min.js:26
+msgid "%(sel)s of %(cnt)s selected"
+msgid_plural "%(sel)s of %(cnt)s selected"
+msgstr[0] ""
+msgstr[1] ""
+
+#: static/js/script.js:335
+msgid "Show all screenings"
+msgstr ""
+
+#: static/js/script.js:336
+msgid "Hide screenings"
+msgstr ""
+
+#: static/js/script.js:509 static/js/script.js.py:1035
+#: static/js/script.js:1069
+msgid "Good job! "
+msgstr ""
+
+#: static/js/script.js:509 static/js/script.js.py:1035
+#: static/js/script.js:1069
+msgid " rated"
+msgstr ""
+
+#: static/js/script.js:562 static/js/script.js.py:1188
+msgid "Review cannot be shorter than 10 characters!"
+msgstr ""
+
+#: static/js/script.js:575 static/js/script.js.py:1204
+msgid "<p>Thanks for rating <strong>"
+msgstr ""
+
+#: static/js/script.js:576 static/js/script.js.py:1205
+msgid "<p>Your short review has appeared at "
+msgstr ""
+
+#: static/js/script.js:576 static/js/script.js.py:1205
+msgid "your profile page</a>'"
+msgstr ""
+
+#: static/js/script.js:632 static/js/script.js.py:643 static/js/script.js:1277
+#: static/js/script.js.py:1288 static/js/script.js:1330
+msgid "<p>You've added <strong>"
+msgstr ""
+
+#: static/js/script.js:633 static/js/script.js.py:1278
+msgid "to_your_wishlist"
+msgstr "to your"
+
+#: static/js/script.js:633 static/js/script.js.py:775 static/js/script.js:1278
+msgid "wishlist</a>"
+msgstr ""
+
+#: static/js/script.js:634 static/js/script.js.py:1279
+msgid ""
+"</p><p>You can send your wishlist to your friends so that they know what to "
+"get you or what to bring to your place for a movies night.</p>"
+msgstr ""
+
+#: static/js/script.js:644 static/js/script.js.py:1289
+msgid "to_your_shitlist"
+msgstr "to your"
+
+#: static/js/script.js:644 static/js/script.js.py:801 static/js/script.js:1289
+msgid "shitlist</a>"
+msgstr ""
+
+#: static/js/script.js:645 static/js/script.js.py:1290
+msgid "</p><p>We won't be showing you this movie again.</p>"
+msgstr ""
+
+#: static/js/script.js:661
+msgid "Remove your rating"
+msgstr ""
+
+#: static/js/script.js:695 static/js/script.js.py:719
+msgid "Good job! Movie rated"
+msgstr ""
+
+#: static/js/script.js:751
+msgid "Movie rating removed"
+msgstr ""
+
+#: static/js/script.js:773 static/js/script.js.py:799
+msgid "Movie added to your "
+msgstr ""
+
+#: static/js/script.js:1117
+msgid " rating removed"
+msgstr ""
+
+#: static/js/script.js:1129
+msgid "remove my ratings"
+msgstr ""
+
+#: static/js/script.js:1188
+msgid "Review cannot be longer than 1000 characters!"
+msgstr ""
+
+#: static/js/script.js:1220
+msgid "Something goes wrong, please try again later"
+msgstr ""
+
+#: static/js/script.js:1330
+msgid "to your"
+msgstr ""
+
+#: static/js/script.js:1330
+msgid "collection</a>"
+msgstr ""
+
+#: static/js/script.js:1330
+msgid "</p>"
+msgstr ""
+
+#: static/js/script.js:1493
+msgid "Close"
+msgstr ""
+
+#: static/js/script.js:1505
+msgid "Movie filtering options"
+msgstr ""
+
+#: static/js/script.js:1639 static/js/plugins/jquery.filmaster.js:407
+msgid "or"
+msgstr ""
+
+#: static/js/script.js:1640 static/js/plugins/jquery.filmaster.js:387
+msgid "Cancel"
+msgstr ""
+
+#: static/js/script.js:1721 static/js/script.js.py:1826
+msgid "Oops... something went wrong :( Please accept our apologies."
+msgstr ""
+
+#: static/js/script.js:1739
+msgid "show all"
+msgstr ""
+
+#: static/js/script.js:1766
+msgid "profile"
+msgstr ""
+
+#: static/js/script.js:1791
+msgid "Edit"
+msgstr ""
+
+#: static/js/script.js:1799 static/js/script.js.py:2124
+msgid "Reply"
+msgstr ""
+
+#: static/js/script.js:1859
+msgid "0 min ago."
+msgstr ""
+
+#: static/js/script.js:1859
+msgid "Leave a comment"
+msgstr ""
+
+#: static/js/script.js:1907
+msgid "comment"
+msgid_plural "comments"
+msgstr[0] ""
+msgstr[1] ""
+
+#: static/js/script.js:2185
+msgid "Removing activity"
+msgstr ""
+
+#: static/js/script.js:2186
+msgid "Do you want to remove this activity?"
+msgstr ""
+
+#: static/js/script.js:2187
+msgid "Remove activity"
+msgstr ""
+
+#: static/js/script.js:2261
+msgid "Are you sure?"
+msgstr ""
+
+#: static/js/usersettings_location.js:38
+msgid "New location detected. Should we use it as your new default?"
+msgstr ""
+
+#: static/js/usersettings_location.js:125
+msgid "Autodetected location"
+msgstr ""
+
+#: static/js/usersettings_location.js:144
+msgid "Autodetected location. <a href='#' class='sl'>Click to change</a>."
+msgstr ""
+
+#: static/js/plugins/jquery.filmaster.js:386
+msgid "Ok"
+msgstr ""
+
+#: static/js/plugins/jquery.filmaster.js:436
+msgid "Removing entry"
+msgstr ""
+
+#: static/js/plugins/jquery.filmaster.js:437
+msgid "Do you want to remove this entry?"
+msgstr ""
+
+#: static/js/plugins/jquery.filmaster.js:438
+msgid "Remove entry"
+msgstr ""
+
+#: static/js/plugins/jquery.filmaster.js:480
+msgid "Removing demot"
+msgstr ""
+
+#: static/js/plugins/jquery.filmaster.js:481
+msgid "Do you want to remove this demot?"
+msgstr ""
+
+#: static/js/plugins/jquery.filmaster.js:482
+msgid "Remove demot"
+msgstr ""
+
+#: static/js/plugins/jquery.filmaster.js:640
+#: static/js/plugins/jquery.filmaster.js:644
+msgid "is more"
+msgstr ""
+
+#: static/js/plugins/jquery.filmaster.js:648
+msgid "equally"
+msgstr ""
+
+#: static/js/plugins/jquery.timeago.js:31
+msgid "in"
+msgstr ""
+
+#: static/js/plugins/jquery.timeago.js:32
+msgid "ago"
+msgstr ""
+
+#: static/js/plugins/jquery.timeago.js:34
+msgid "now"
+msgstr ""
+
+#: static/js/plugins/jquery.timeago.js:35
+msgid "a minute"
+msgstr ""
+
+#: static/js/plugins/jquery.timeago.js:36
+msgid "an hour"
+msgstr ""
+
+#: static/js/plugins/jquery.timeago.js:37
+msgid "today"
+msgstr ""
+
+#: static/js/plugins/jquery.timeago.js:38
+msgid "yesterday"
+msgstr ""
+
+#: static/js/plugins/jquery.timeago.js:39
+msgid "day before"
+msgstr ""
+
+#: static/js/plugins/jquery.timeago.js:40
+msgid "last week"
+msgstr ""
+
+#: static/js/plugins/jquery.timeago.js:41
+msgid "last month"
+msgstr ""
+
+#: static/js/plugins/jquery.timeago.js:42
+msgid "last year"
+msgstr ""
+
+#: static/js/plugins/jquery.timeago.js:83
+msgid "seconds"
+msgid_plural "seconds"
+msgstr[0] ""
+msgstr[1] ""
+
+#: static/js/plugins/jquery.timeago.js:91
+msgid "minutes"
+msgid_plural "minutes"
+msgstr[0] ""
+msgstr[1] ""
+
+#: static/js/plugins/jquery.timeago.js:99
+msgid "hours"
+msgid_plural "hours"
+msgstr[0] ""
+msgstr[1] ""
+
+#: static/js/plugins/jquery.timeago.js:113
+msgid "days"
+msgid_plural "days"
+msgstr[0] ""
+msgstr[1] ""
+
+#: static/js/plugins/jquery.timeago.js:129
+msgid "months"
+msgid_plural "months"
+msgstr[0] ""
+msgstr[1] ""
+
+#: static/js/plugins/jquery.timeago.js:136
+msgid "years"
+msgid_plural "years"
+msgstr[0] ""
+msgstr[1] ""
+
+#: static/js/plugins/jquery.truncator.js:42
+msgid "show more"
+msgstr ""

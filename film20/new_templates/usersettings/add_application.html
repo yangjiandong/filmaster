@@ -1,0 +1,14 @@
+{% extends "usersettings/base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Your Applications" %}{% endblock %}
+
+{% block content %}
+	<article class="settings">
+    <form method="post" class="settings">
+      <h1>{% trans "Settings" %}: <span>{% trans "New Application" %}</span></h1>
+      {% include "form_fieldset.html" %}
+      <input type="submit" value="{%trans 'Save Changes'%}" />
+    </form>
+	</article><!-- .settings -->
+{%endblock%}

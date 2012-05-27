@@ -1,0 +1,20 @@
+{% load i18n %}
+{% load upload_tags %}
+
+<div class="demot-form">
+    {% if based_on %}
+        <div class="upload-image-form">
+            <div id="image-preview"><img src="{{ based_on.image.url }}" /></div>
+        </div>
+    {% else %}
+        {% upload_image_form 'upload_demot_image' %}
+    {% endif %}
+    <form  id="form__upload_demot_image" action="{% url add-demot %}" method="POST" accept-charset="utf-8" enctype="multipart/form-data">
+        <input type="hidden" id="id_uploaded_image" name="uploaded_image" />
+        {% if based_on %}<input type="hidden" name="demot" value="{{ based_on.pk }}" />{% endif %}
+        {% include "form_fieldset.html" %}
+        <input type="submit" value="{% trans "Add Demot" %}">
+        <div class="loader"></div>
+    </form>
+</div>
+

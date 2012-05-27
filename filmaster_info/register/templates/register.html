@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content%}
+{% if form%}
+<form action="." method="POST">
+    <fieldset>
+        <legend>{{form.name.label}}</legend>
+        <span class="submit-failed">{{form.name.errors}}</span>
+        <div class="name">{{form.name}}</div>
+    </fieldset>
+    <fieldset>
+        <legend>{{form.nick.label}} </legend>
+        <span class="submit-failed">{{form.nick.errors}}</span>
+        <div class="nick">{{form.nick}}</div>
+    </fieldset>
+    <fieldset>
+        <legend>{{form.email.label}} </legend>
+       <span class="submit-failed">{{form.email.errors}}</span>
+        <div class="email">{{form.email}}</div>
+    </fieldset>
+    <fieldset>
+        <legend>{{form.movie_mania_level.label}} </legend>
+        <span class="submit-failed">{{form.movie_mania_level.errors}}</span>
+        <div class="movie_mania_level">{{form.movie_mania_level}}</div>
+    </fieldset>
+    <fieldset>
+        <legend>{{form.opinion.label}} </legend>
+        <span class="submit-failed">{{form.opinion.errors}}</span>
+        <div class="movie_mania_level">{{form.opinion}}</div>
+    </fieldset>
+    <fieldset>
+        <legend>{{form.comment.label}} </legend>
+        <span class="submit-failed">{{form.comment.errors}}</span>
+        <div class="movie_mania_level">{{form.comment}}</div>
+    </fieldset>
+<input type="submit" value="wyślij" class="newsletter-submit" />
+</form>
+{% else %}
+<p>Dziękujemy za zainteresowanie testowaniem serwisu. Twoja kandydatura zostanie rozważona. W przypadku zakwalifikowania się, wyślemy Ci maila z instrukcjami.<br />Zespół Filmaster.pl</p>
+{% endif %}
+{% endblock %}

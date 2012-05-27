@@ -1,0 +1,11 @@
+{% load i18n %}
+{% load widgets %}
+
+<section class="description">
+	<h1>{% trans "Track" %}</h1>
+	<p>{% trans "what others watch in theaters and on TV" %}</p>
+    <p class="join"><a href="{{ signup_url }}">{% trans "Join Filmaster" %}</a></p>
+</section><!-- .description -->
+<section class="stream">
+    {% latest_checkins %}
+</section><!-- .stream -->

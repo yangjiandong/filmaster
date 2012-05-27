@@ -1,0 +1,34 @@
+{% extends "moderation/record.html" %}
+
+{% load i18n %}
+
+{% block title %}
+    <p>
+    {% trans "Film" %} <a href="{{ item.film.get_absolute_url }}">{{ item.film }}</a> 
+    <strong>
+    {% if item.title %}
+        {% trans "title" %}
+    {% endif %}
+
+    {% if item.description %}
+        {% trans "description" %}
+    {% endif %}
+
+
+    {% if item.tag_list %}
+        {% trans "tags" %}
+    {% endif %}
+    </strong>:
+    </p>
+    
+    <ul>
+        {% with on=item.get_old_and_new %}
+            <li><strong>{% trans "old" %}</strong>: {{ on|first }}</li>
+            <li><strong>{% trans "new" %}</strong>: {{ on|last }}</li>
+            
+            {% if on|first %}
+            <li><strong>{% trans "difference" %}</strong>: {{ item.html_diff|safe }}</li>
+            {% endif %}
+        {% endwith %}
+    </ul>
+{% endblock %}

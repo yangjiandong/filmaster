@@ -1,0 +1,23 @@
+{% load useractivity_tags %}
+{% load i18n %}
+{% load utils %}
+<section class="meta">
+    <h1>{{ request.user.get_profile.get_current_display_name }}</h1>
+    <img width="180" height="180" src="{% avatars 180 request.user %}" alt="{{ request.user.get_profile.get_current_display_name }}" />
+    <nav>
+        <ul>
+            <li>{% a edit_profile %}{% trans "Edit profile" %}{% enda %}</li>
+            <li>{% a edit_avatar %}{% trans "Change avatar" %}{% enda %}</li>
+            <li>{% a edit_location %}{% trans "Set location" %}{% enda %}</li>
+            <li>{% a change_password %}{% if request.user.has_usable_password %}{% trans "Change Password" %}{%else%}{% trans "Set Password" %}{%endif%}{% enda %}</li>
+            <li>&nbsp;</li>
+            <li>{% a user_tvchannels %}{% trans "Favorite TV Channels" %}{% enda %}</li>
+            <li>{% a edit_notification_settings %}{% trans "Notifications" %}{% enda %}</li>
+            <li>{% a dashboard_settings %}{% trans "Dashboard settings" %}{% enda %}</li>
+            <li>&nbsp;</li>
+            <li>{% a import_ratings %}{% trans "Import movie ratings" %}{% enda %}</li>
+            <li>{% a associations %}{% trans "Connected social networks" %}{% enda %}</li> {# TODO: http://jira.filmaster.org/browse/FLM-878 #}           
+            <!--li>{% a applications %}{% trans "Authorized apps" %}{% enda %}</li-->
+        </ul>
+    </nav>
+</section> <!-- .meta -->

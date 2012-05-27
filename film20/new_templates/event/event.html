@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+{% load map_url %}
+{% load rating_tags %}
+{% load expr %}
+{% load posters %}
+{% load movie %}
+{% load fbconnect %}
+
+{% block head_extra %}
+<meta property="og:title" content="{{event.title}}" />
+<meta property="og:description" content="{% trans "Filmaster Awards are yearly awards for best films of the year selected by the community of Filmaster" %}" />
+<meta property="og:image" content="{{settings.FULL_DOMAIN}}/static/layout/logo.png" />
+<meta property="og:type" content="article" />
+<meta property="caption" content="{% blocktrans with title=event.title|escape%}I've just voted in {{title}} awards{% endblocktrans %}" />
+<!-- <meta property="og:image" content="" /> -->
+{% endblock %}
+
+{% block title%}{{event.title}}{% endblock%}
+{% block body-class %}event{% endblock %}
+{% block content %}
+<div class="oscars">
+
+<h1>{{event.title}}</h1>
+
+<section class="categories">
+        <h2>{% trans "Nomination categories" %}:</h2>
+        <ul>
+        {% for cat in categories %}
+                <li><a href="#cat-{{cat.nominated.0.oscar_type}}">{{cat.name}}</a></li>
+        {% endfor %}
+        </ul>
+</section>
+
+{%if event.lead %}
+{{event.lead|safe|linebreaks}}
+{%endif%}
+{{ event.body|safe|linebreaks }}
+{% if not user.is_authenticated %}
+<p><strong>Nie masz konta? <a href="http://filmaster.pl/konto/rejestracja/">Rejestracja na Filmasterze</a> trwa 10 sekund. Podajesz login i hasło... i już masz konto dzięki któremu możesz zagłosować! Mamy nadzieję, że po zagłosowaniu zostaniesz z nami dłużej! Tu <a href="http://filmaster.pl/pierwsze-kroki/">przeczytaj dlaczego warto</a>.</strong></p>
+{% endif %}
+<p>{% fb_like event %}</p>
+<ul>
+{% for cat in categories %}
+<li>
+<h2 id="cat-{{cat.nominated.0.oscar_type}}">{{cat.name}}:</h2>
+{% if cat.nominated.0.oscar_type >= 50 %}
+<p><strong>Uwaga: im gorszy tym niższą wystawiamy ocenę!</strong></p>
+{% endif %}
+<ul class="nominated-row">
+    {% for n in cat.nominated %}
+    <li>
+        <section class="nominated film">
+            <figure>
+                {%if n.person%}
+                    <img class="film-cover" src="{%poster 212 300 n.person%}" width="212" height="300" alt="" />
+                {%else%}
+                    <img class="film-cover" src="{%poster 212 300 n.film%}" width="212" height="300" alt="" />
+                {%endif%}
+                <figcaption>
+                    <p class="msg"></p>
+                    {%if n.person%}
+                        <a href="{% url show_person n.person.permalink %}">{{n.person}}</a>
+                        {% trans "in" %}
+                    {%endif%}
+                    <a href="{{ n.film.get_absolute_url }}">{{n.film.get_title}}</a>
+                    {% if event.is_closed and n.count %}
+                        - <span class="rated-film-mark">{{n.avg_rating}}</span> ({{n.count}})
+                    {% endif %}
+                {% rating_form film_id=n.film_id actor_id=n.person_id type=n.type%}
+                </figcaption>
+            </figure>
+        </section>
+    </li>
+{% endfor %}
+</ul>
+</li>
+{% endfor %}
+</ul>
+
+
+<h2>Jesteś tu nowy? Głosuj dalej!</h2>
+<p>Na stronie <a href="http://filmaster.pl/oceniaj-filmy/">Oceniaj Filmy &raquo;</a> podrzucimy Ci do oceny filmy, które najprawdopodobniej widział(eś/aś). Jak już ocenisz kilkanaście (a najlepiej kilkadziesiąt, im więcej tym lepiej), sprawdź co Filmaster poleca Ci obejrzeć w dalszej kolejności na stronie <a href="http://filmaster.pl/rekomendacje/">z rekomendacjami</a>. <strong>Nie chodź więcej na złe filmy!</strong> Jeśli zostaniesz z nami, na pewno to Ci nie grozi :)</p>
+</div>
+{% endblock %}
+
+{% block end-scripts %}
+<script>
+    {% if request.fb_association %}
+    setInterval(function(){
+        $('.fb_dialog_advanced').each(function(k, v) {
+            var top=$(v).css('top');
+            top = top.substring(0, top.length-2);
+            if(top.substring(0,1)!='-') {
+                $(v).css('top', document.body.scrollTop + 100 + 'px')
+            }
+        })
+    }, 1000)
+    $("body").bind("rated", function(event, type, widget) {
+        console.log('rated', type, widget);
+        var film = $(widget).parents('.nominated.film')
+        var picture = film.find('figure img.film-cover').attr('src')
+        picture = picture && (settings.FULL_DOMAIN + picture);
+        console.log(picture);
+        if(document.cookie.indexOf('event_posted=1')<0) {
+            FB.ui({
+                'method': 'feed',
+                'link': document.location.href,
+                'description': $('meta[property=og\\:description]').attr('content') || '',
+                'name': $('meta[property=og\\:title]').attr('content') || '',
+                'caption': $('meta[property=caption]').attr('content') || '',
+                'picture': picture 
+            }, function() {
+                
+            })
+            document.cookie = "event_posted=1";
+        }
+    })
+    {% endif %}
+</script>
+{% endblock %}

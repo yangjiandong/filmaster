@@ -1,0 +1,42 @@
+{% extends "movies/base.html" %}
+{% load i18n %}
+{% load expr %}
+{% load map_url %}
+{% load posters %}
+{% load object %}
+{% load movie %}
+{% load utils %}
+{% load format_date %}
+{% load useractivity_tags %}
+
+{% block title %}{% trans "Film reviews" %}{% endblock %}
+{% block description %}{% trans "Latest movie reviews by Filmaster authors." %}{% endblock %}
+
+{% block primary-content-aside %}
+	{% include 'aside/movies/reviews.html' %}
+{% endblock primary-content-aside %}
+{% block primary-content-wrapper-start %}{% endblock %}
+{% block secondary-content-aside %}{% endblock %}
+{% block films_widget %}{% endblock films_widget %}
+{% block primary-content-wrapper-end %}{% endblock %}
+
+{% block content %}
+
+<section class="reviews">
+	<h1>{% trans "Reviews" %}</h1>
+	{% if user.is_authenticated %}
+	<div class="filters">
+        <p>{% trans "Reviews"%}:</p>
+		<ul>
+            <li>{% a reviews %}{% trans "featured" %}{% enda %}</li>
+            <li>{% a reviews followed %}{% trans "followed only" %}{% enda %}</li>
+            {# <li>{% a reviews similar_users %}{% trans "Filmasters similar to you" %}{% enda %}</li> #}
+		</ul>
+	</div><!-- .filters -->
+	{% endif %}
+
+    {% include "movies/review_list.html" %}
+
+</section><!-- .reviews -->
+
+{% endblock content %}

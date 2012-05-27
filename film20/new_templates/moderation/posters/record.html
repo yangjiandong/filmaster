@@ -1,0 +1,30 @@
+{% extends "moderation/record.html" %}
+
+{% load i18n %}
+{% load map_url %}
+{% load show_film_tags %}
+{% load pyif %}
+
+{% block title %}
+    {% if item.content_type.name|lower == 'film' %}
+        <img src="{{ item.image.url }}" alt="[image]" style="float: left;" />
+        {% url_object item.content_object %} | {{ item.content_object.title }}
+        <p>{% directors item.content_object.directors.all "short" %}</p>
+    {% endif %}
+
+    {% if item.content_type.name|lower == 'person' %}
+        <img src="{{ item.image.url }}" alt="[image]" style="float: left;" />
+        {% url_person item.content_object %}
+        {% if item.content_object.year_of_birth %}
+        <dl>
+            <dt>{% trans "Date of birth" %}</dt>
+            <dd>{{ item.content_object.year_of_birth }}</dd>
+        </dl>
+        {% endif %}
+    {% endif %}
+
+{% endblock %}
+
+{% block extra_actions %}
+    {% include "moderation/resource_fields.html" %}
+{% endblock %}

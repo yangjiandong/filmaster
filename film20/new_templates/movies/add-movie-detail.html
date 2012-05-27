@@ -1,0 +1,40 @@
+{% extends "movies/add-movie.html" %}
+{% load i18n %}
+
+{% block title %}
+    {% trans "Added Film" %} | {{ added_film.get_title }}
+{%endblock%}
+
+{% block content %}
+    {% if user.is_authenticated %}
+
+        <section class="add-movie">
+            <h1>{{ added_film.title }} | {{ added_film.release_year }}</h1>
+
+            {% if form %}
+                <form method="post" accept-charset="utf-8" enctype="multipart/form-data">
+                    {{ form.as_p }}
+                    <p>
+                        <input type="submit" value="{% trans "Save" %}" name="save" /> | 
+                        <input type="submit" value="{% trans "Accepted" %}" name="accept" />
+                        <input type="submit" value="{% trans "Not accepted" %}" name="reject" />
+                    </p>
+                </form>
+            {% else %}
+                {% if moderated %}
+                    {% if accepted %}
+                        <p>{% trans "movie was accepted, go to film page: " %}<a href="{{ added_film.get_absolute_url }}">{{ added_film.film }}</a></p>
+                    {% else %}
+                        <p>{% trans "sorry, but this movie was rejected" %}</p>
+                    {% endif %}
+                {% else %}
+                    <p>{% trans "film will be added to database when the moderators approve it" %}</p>
+                {% endif %}
+            {% endif %}
+            <p>
+                <a href="{% url add-film-manual %}">{% trans "Add another movie" %}</a>
+            </p>
+        </section>
+
+    {%endif%}
+{% endblock %}

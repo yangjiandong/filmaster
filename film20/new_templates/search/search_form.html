@@ -1,0 +1,15 @@
+{% load i18n %}
+{% load map_url %}
+ 
+<form method="get" action="{% map_url "SEARCH" %}/">
+    <fieldset>
+        <legend>{% trans "Search" %}:</legend>
+        <div>
+            {{ form.q }}
+        </div>
+        <div class="models-field">
+            {{ form.t }}
+        </div>
+        
+    </fieldset>
+</form>

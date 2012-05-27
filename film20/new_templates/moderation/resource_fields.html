@@ -1,0 +1,12 @@
+{% load i18n %}
+<div>
+    <label>{% trans "is main" %}</label>
+    <input type="checkbox" name="is_main" {% if item.is_main %}checked="checked"{% endif %}/>
+</div>
+<div style="margin-top: 5px">
+    <select name="language">
+        <option value="all" {% if not item.LANG %}selected="selected"{% endif %}>{% trans "All languages" %}</option>
+        <option value="en" {% if item.LANG == 'en' %}selected="selected"{% endif %}>EN</option>
+        <option value="pl" {% if item.LANG == 'pl' %}selected="selected"{% endif %}>PL</option>
+    </select>
+</div>

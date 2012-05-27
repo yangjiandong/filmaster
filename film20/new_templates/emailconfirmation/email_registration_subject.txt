@@ -1,0 +1,1 @@
+{% load i18n %}{% trans "[filmaster.com] Welcome to Filmaster!" %}

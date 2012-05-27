@@ -1,0 +1,18 @@
+{% load i18n %}
+<article class="message{%if not message.visible%} hidden{%endif%}" id="message_{{message.id}}">
+  <header>
+  <div class="sender">{{message.sender}}</div>
+  <h1>{{message.subject}}</h1>
+  <div class="date">{{message.sent_at}}</div>
+  </header>
+  <div class="body">
+  <p>
+    {{ message.body|urlize|linebreaksbr }}
+  </p>
+  <a href="{%url messages_reply message.id%}">{% trans "Reply" %}</a>
+  <form method="post" action="{% url messages_delete message.id %}">
+    <input type="submit" value="{% trans 'Delete' %}" />
+    {% csrf_token %}
+  </form>
+  </div>
+</article>

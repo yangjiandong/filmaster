@@ -1,0 +1,21 @@
+{% load i18n %}
+{% load map_url %}
+{% load movie %}
+
+<form method="post" action="{% url process_ratings %}" class="rating-widget">
+    <fieldset>
+        <span class="rating-1 r{{ form.rating.value }}"></span>
+        {% if form.rating.value %}
+            <span title="{% trans "Remove rating" %}" class="x"></span>
+        {% endif %}
+        <span class="ajax-loader"></span>
+        <!-- <span class="rating-tooltip">{% rating_description form.rating.value %}</span> -->
+        {{ form.rating }}
+        <!--  hidden fields -->	  
+        {{ form.film_id }}
+        {{ form.actor_id }}
+        {{ form.director_id }}
+        {{ form.type }}
+        <input type="submit" value="{% trans "Rate" %}" />
+    </fieldset>
+</form>

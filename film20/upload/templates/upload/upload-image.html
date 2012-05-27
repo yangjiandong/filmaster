@@ -1,0 +1,12 @@
+{% load upload_tags %}
+
+<div id="main" class="upload-photo">
+
+{% upload_image_form 'upload_photo' %}
+
+<form id="form__upload_photo" action="{{ url }}" method="POST" accept-charset="utf-8" enctype="multipart/form-data">
+    {% csrf_token %}
+    <input type="hidden" id="id_uploaded_image" />
+    <input type="hidden" id="url_uploaded_image" />
+</form>
+</div>

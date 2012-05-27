@@ -1,0 +1,7 @@
+{% load movie %}
+{% load i18n %}
+<section class="checkin">
+    <h1>{% if film_uri %}{% trans "Movie Check-In" %}{% else %}{% trans "Screening Check-In" %}{% endif %}</h1>
+    <button class="btn" {% if checkin %}rel="/1.1/checkin/{{checkin.id}}/"{% endif %} data-film-uri="{{film_uri}}" data-screening-uri="{{screening_uri}}"></button>
+</section>
+

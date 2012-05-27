@@ -1,0 +1,35 @@
+{% load i18n %}
+{% load map_url %}
+{% load oembed_tags %}
+{% load posters %}
+{% load movie %}
+{% load utils %}
+
+<article class="movie">
+        {% with film.get_title as title %}
+        <h1>{{title|safe}} {% include "vue/release_date.html" %}</h1>
+        {% endwith %}
+        <div class="pic">
+            <img width="180" src="{%poster 180 auto film%}" alt="{{ film.get_title }}" />
+            {% if not request.GET.from_rater %}
+                <section class="recommendation-feedback">
+                <h2>{% trans "Do you like this recommendation?" %}</h2>
+                <form action="{% url vue_process_vote %}" method="post" class="ajax recommendation-vote">
+                    {{recommendation_vote_form}}
+                    <span class="ajax-loader" style="display:none"></span>
+                </form>
+                </section>
+            {% endif %}
+        </div>
+        {% film_description film %}
+	{% if film.get_videos %}
+		{% for external_video in film.get_videos|slice:":3" %}
+			{% spaceless %}
+			{% oembed 415x256 %}{{external_video.url}}{% endoembed %}
+			{% endspaceless %}
+		{% endfor %}
+	{% endif %}
+    {% film_actors film %} 
+</article>
+
+

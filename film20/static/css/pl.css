@@ -1,0 +1,9 @@
+body.registration a.fb-button {
+	background-image: url(/static/img/sign-up-facebook-pl.png);
+}
+body.registration a.twitter {
+	background-image: url(/static/img/sign-up-twitter-pl.png);
+}
+body.home a.fb-button {
+	background-image: url(/static/img/sign-up-facebook-main-pl.png);
+}

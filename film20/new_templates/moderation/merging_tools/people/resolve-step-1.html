@@ -1,0 +1,58 @@
+{% extends "moderation/merging_tools/index.html" %}
+
+{% load i18n %}
+{% load posters %}
+
+{% block title %}
+    {% trans "Admin tools - merging people | resolve" %}
+{% endblock %}
+
+{% block content-section %}
+
+<h1>{% trans "Admin tools - merging people | resolve step" %} {{ step }}</h1>
+<div class="moderation-content notification-setting">
+<form action="{% url people-merging-tool-resolve duplicate_person.pk %}" method="POST">
+    <input type="hidden" name="step" value="2" />
+    <table class="moderation-table">
+        <thead>
+            <tr>
+                <th>&nbsp;</th>
+                <th>A</th>
+                <th>B</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% with d=duplicate_person %}
+            <tr>
+                <td>{% trans "name" %}</td>
+                <td>{{ d.personA.name }}</td>
+                <td>{{ d.personB.name }}</td>
+            </tr>
+            <tr>
+                <td>{% trans "surname" %}</td>
+                <td>{{ d.personA.surname }}</td>
+                <td>{{ d.personB.surname }}</td>
+            </tr>
+            <tr>
+                <td>{% trans "year of birth" %}</td>
+                <td>{{ d.personA.year_of_birth }}</td>
+                <td>{{ d.personB.year_of_birth }}</td>
+            </tr>
+            <tr>
+                <td>{% trans "photo" %}</td>
+                <td><img src="{% poster 180 258 d.personA %}" width="180" height="258" /></td>
+                <td><img src="{% poster 180 258 d.personB %}" width="180" height="258" /></td>
+            </tr>
+            <tfoot>
+                <tr>
+                    <td></td>
+                    <td><input type="submit" name="A" value="{% trans "KEEP THIS" %}"/></td>
+                    <td><input type="submit" name="B" value="{% trans "KEEP THIS" %}"/></td>
+                </tr>
+            </tfoot>
+            {% endwith %}
+        </tbody>
+    </table>
+</form>
+</div>
+{% endblock %}

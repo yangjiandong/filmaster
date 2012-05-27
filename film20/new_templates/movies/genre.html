@@ -1,0 +1,34 @@
+{% extends "movies/base.html" %}
+{% load i18n %}
+{% load expr %}
+{% load map_url %}
+{% load posters %}
+{% load object %}
+{% load movie %}
+
+{% block primary-content-wrapper-start %}{% endblock %}
+
+{% block secondary-content-aside %}{% endblock %}
+
+{% block title %}
+	{% trans "Movie database" %}: {{ genre }}
+{% endblock %}
+
+{% block films_widget %}{% endblock films_widget %}
+
+{% block primary-content-wrapper-end %}{% endblock %}
+
+{% block content %}
+	<section class="genre">
+	<h1>{% trans "Movies in genre" %}: {{ genre }}</h1>
+
+    {% include "movies/filters/movies_filter.html" %}
+	{% if object_list %}
+    {% include "movies/genre_movie_list.html" %}
+	{% include "pagination/pagination.html" %}
+	{% else %}
+		<p>{% trans "There are no films that fulfill the given criteria." %}</p>
+		<p>{% trans "Please modify the criteria to get better results." %}</p>
+	{% endif %}
+</section><!-- .ranking -->
+{% endblock content %}

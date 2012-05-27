@@ -1,0 +1,12 @@
+{% load i18n %}
+
+{% if movies %}
+<section class="recommendations movies-in-article">
+    <h1>{% trans "Movies in this article" %}</h1>
+    <ul>
+        {% for movie in movies %}
+            <li><a href="{{ movie.get_absolute_url }}">{{ movie.get_title|safe }}</a></li>
+        {% endfor %}
+    </ul>
+</section>
+{% endif %}

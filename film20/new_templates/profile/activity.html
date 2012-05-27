@@ -1,0 +1,56 @@
+{% extends "profile/base.html" %}
+{% load i18n %}
+{% load followers %}
+{% load planet_tags %}
+{% load widgets %}
+{% load person %}
+{% load oembed_tags %}
+{% load urlimagize %}
+{% load smartlinebreaks %}
+{% load posters %}
+{% load map_url %}
+{% load useractivity_tags %}
+{% load sanitize %}
+{% load format_date %}
+{% load truncatechars %}
+{% load movie %}
+{% load threadedcommentstags %}
+{% load expr %}
+{% load posters %}
+
+{% block title %}{{activity.get_title}}{% endblock %}
+{% block description %}{{ activity.content|remove_spoiler|striptags|truncatechars:200 }}[...]{% endblock %}
+
+{% block head_extra %}
+<meta property="og:title" content="{{activity.get_title}}"/>
+<meta property="og:description" content="{{ activity.content|remove_spoiler|striptags|truncatechars:200 }}[...]" />
+<meta property="og:type" content="{{activity.get_type_name}}"/>
+{% if activity.film %}
+    <meta property="og:image" content="{{ settings.FULL_DOMAIN }}{% poster 100 141 activity.film %}"/>
+{% endif %}
+{% if activity.person %}
+    <meta property="og:image" content="{{ settings.FULL_DOMAIN }}{% poster 180 258 activity.person %}"/>
+{% endif %}
+{% endblock %}
+
+{% block content %}
+<div id="wall" class="wall stream show-comment-form {{activity.get_type_name}}">
+{% activity_subscribe_form activity %}
+{% block section %}
+<section>
+    <header>
+    {% block activity-header %}
+    {% endblock %}
+	</header>
+    {% block activity-content %}
+    {% endblock %}
+    <footer>
+    {% block activity-footer %}
+    {% endblock %}
+	</footer>
+</section>
+{% endblock %}
+{% include "comments/activity_comments.html" %}
+</div><!-- .wall .stream -->
+{% endblock content %}
+

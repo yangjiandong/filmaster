@@ -1,0 +1,15 @@
+{% load i18n %}
+{% load utils %}
+{% load map_url %}
+{% load useractivity_tags %}
+
+<section class="meta">
+    <h1><a href="{% url_user_link request.user %}">{{ request.user.get_profile.get_current_display_name }}</a></h1>
+    <p><a href="{% url_user_link request.user %}"><img width="180" height="180" src="{% avatars 180 request.user %}" alt="{{ request.user.get_profile.get_current_display_name }}" /></a></p>
+    <p class="edit"><a href="{% url edit_profile %}">{% trans "Edit your profile" %}</a></p>
+    <nav>
+        <ul>
+            {% include "aside/dashboard/user_links.html" %}
+        </ul>
+    </nav>
+</section> <!-- .meta -->

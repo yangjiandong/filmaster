@@ -1,0 +1,24 @@
+{% load posters %}
+{% load i18n %}
+{% load object %}
+{% load movie %}
+<ul class="movies">
+{% for film in object_list %}
+	<li>
+        <a href="{{ film.get_absolute_url }}">
+			<img width="100" height="140" src="{% poster 100 140 film %}" alt="{{ film.get_title }}" />
+			{{ film.get_title }} ({{ film.release_year }})
+		</a>
+		<p class="votes">({% if not film.number_of_votes %}0{% else %}{{ film.number_of_votes }}{% endif %} {% trans "votes" %})</p>
+		{% object_tags film %}
+		<p>{% film_directors film %}</p>
+
+		{% film_guess_score film request.user %}
+		{% film_average_score film request.user %}
+
+		{% film_description film 10 %}
+	</li>
+{% endfor %}
+</ul><!-- .movies -->
+
+

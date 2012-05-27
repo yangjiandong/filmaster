@@ -1,0 +1,11 @@
+{% load i18n %}
+{% if user.is_authenticated %}
+<section>
+    <h1>{% trans "Missing movie?" %}</h1>
+    <nav>
+        <ul>
+            <li>{% trans "Cannot find a movie?" %} <a href="{% url import_film %}">{% trans "Suggest adding it!" %}</a></li>
+        </ul>
+    </nav>
+</section>
+{% endif %}

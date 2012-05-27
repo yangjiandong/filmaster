@@ -1,0 +1,91 @@
+{% extends "wall/useractivity/base.html" %}
+{% load i18n %}
+{% load map_url %}
+{% load useractivity_tags %}
+{% load format_date %}
+{% load threadedcommentstags %}
+{% load sanitize %}
+{% load truncatechars %}
+{% load oembed_tags %}
+
+{% block activity-header %}
+    {% if activity.url_kind == 1 %}
+        {% trans "added a review of" %} <a href="{% url show_film activity.film_permalink %}">{{ activity.film_title }}</a>
+    {% endif %}
+    {% if activity.url_kind == 2 %}
+        {% trans "added news about " %} <a href="{% url show_film activity.film_permalink %}">{{ activity.film_title }}</a>
+    {% endif %}
+    {% if activity.url_kind == 3 or activity.url_kind == 4 %}
+        {% trans "added a trailer of" %} <a href="{% url show_film activity.film_permalink %}">{{ activity.film_title }}</a>
+    {% endif %}
+    {% if activity.url_kind == 5 %}
+        {% trans "added a full feature film" %} <a href="{% url show_film activity.film_permalink %}">{{ activity.film_title }}</a>
+    {% endif %}
+    {% if activity.url_kind == 6 %}
+        {% trans "added a video related with" %} <a href="{% url show_film activity.film_permalink %}">{{ activity.film_title }}</a>
+    {% endif %}
+    {% if activity.url_kind == 9 %}
+        {% trans "added a book related with " %} <a href="{% url show_film activity.film_permalink %}">{{ activity.film_title }}</a>
+    {% endif %}
+    
+    {% if not show_single and activity.hidden_activities > 0 %}
+        {% trans "and" %}
+        {% if activity.url_kind == 3 or activity.url_kind == 4 %}
+            <a href="{% url_username_link activity.user %}?f=video">
+        {% endif %}
+            {% blocktrans count count=activity.hidden_activities %}
+                1 other
+            {% plural %}
+                {{ count }} others
+            {% endblocktrans %}
+        {% if activity.url_kind == 3 or activity.url_kind == 4 %}
+            </a>
+        {% endif %}
+    {% endif %}
+{% endblock %}
+
+{% block activity-content %}
+    {% if activity.video_thumb %}
+        <section class="trailers">
+        <a title="{% trans "Watch trailer" %}" href="#">
+            <img width="180" height="135" src="{{ activity.video_thumb }}" alt="{% trans 'Trailer' %}: {{ film.get_title }}" />
+            <span></span>
+        </a>
+        <div class="v">{% oembed 560x345 %}{{activity.url}}{% endoembed %}</div>
+        </section>
+    {% else %}
+        {% if activity.url_kind == 1 %}
+            {% if activity.hidden_activities > 0 %}
+                {% with item=activity.get_json_content|first %}
+                    {% if item.content %}{{ item.content }}{% endif %}
+                {% endwith %}
+            {% else %}
+                {% if activity.content %}{{ activity.content }}{% endif %}
+            {% endif %}
+            <a href="{{ activity.url}}">{% trans "Read the review" %}</a>
+        {% else %}
+            {{ activity.url|urlizetrunc:55 }}
+        {% endif %}
+    {% endif %}
+
+    {% if not show_single and activity.hidden_activities > 0 %}
+	<div class="other-activities">
+		<h2>{% trans "Other" %}:</h2>
+	        <ul>
+            {# backward compatibility ... #}
+            {% with json_content=activity.get_json_content %}
+                {% if json_content|length > activity.hidden_activities %}
+                    {% for link in json_content|slice:"1:" %}
+                        <li><a href="{% if link.is_tv_series %}{% url show_series link.film_permalink %}{% else %}{% url show_film link.film_permalink %}{% endif %}">{{ link.film_title }}</a> - {{ link.url|urlizetrunc:35 }}</li>
+                    {% endfor %}
+                {% else %}
+                    {% for link in json_content %}
+                        <li><a href="{% if link.is_tv_series %}{% url show_series link.film_permalink %}{% else %}{% url show_film link.film_permalink %}{% endif %}">{{ link.film_title }}</a> - {{ link.url|urlizetrunc:35 }}</li>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+	        </ul>
+	</div>
+    {% endif %}
+{% endblock %}
+

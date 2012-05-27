@@ -1,0 +1,15 @@
+{%extends "base.html"%}
+{%load i18n %}
+{%load account %}
+{% block title %}{% trans "OAuth Error" %}{% endblock %}
+{% block content %}
+<ul class="errorlist">
+<li>
+{{error_description}}
+</li>
+</ul>
+{%if not user.is_authenticated %}
+<a href='{%url acct_login%}?{%get_next request%}'>{%trans "Log in"%}</a>
+{%endif%}
+
+{% endblock %}

@@ -1,0 +1,49 @@
+{% extends "base/base.html" %}
+{% load i18n %}
+{% load map_url %}
+{% load account %}
+
+{% block body-class %}iframe-signup{% endblock %}
+{% block body %}
+<div id="ajax-signup">
+<span class="ajax-loader"></span>
+<section class="quick-registration">
+    {% with skip_openid=1 %}
+        {%include "account/sso_buttons.html" %}
+    {% endwith %}
+</section><!-- .quick-registration -->
+
+<section class="full-registration">
+	<h2>{% trans "Or create an account" %}</h2>
+    <form class="register" id="signup_form" method="post">
+        <fieldset>
+            {{form.email.errors}}
+            <label for="id_email">{{form.email.label}}</label>
+            {{form.email}}
+            {{form.username.errors}}
+             <label for="id_username">{{form.username.label}}</label>
+            {{form.username}}
+            {{form.password1.errors}}
+            <label for="id_password1">{{form.password1.label}}</label>
+            {{form.password1}}                    
+            {{form.password2.errors}}
+            <label for="id_password2">{{form.password1.label}} <span>({% trans "repeat" %})</span></label>
+            {{form.password2}}
+            {% if not request.is_mobile %}
+            <p class="human">{{form.recaptcha}}</p>
+            {% endif %}
+            {{form.recaptcha.errors}}
+            <p>{% trans "By clicking <em>Sign Up</em>, you are indicating that you have read and agree to the" %}
+            <a href='{% map_url "TERMS" %}/?{%get_next request%}'>{% trans "Terms and conditions" %}</a> {% trans "and" %}
+            <a href='{% map_url "PRIVACY" %}/?{%get_next request%}'>{% trans "Privacy" %}</a>.</p>
+            <input type="submit" value="{% trans "Sign Up &raquo;" %}" />
+        </fieldset>
+    </form><!-- #register -->
+    </section><!-- .full-registration -->
+</div>
+{% endblock %}
+{% block end-scripts %}
+<script>
+    setInterval(FM.set_iframe_height, 100);
+</script>
+{% endblock %}

@@ -1,0 +1,35 @@
+{% load i18n %}
+{% load map_url %}
+{% load oembed_tags %}
+{% load posters %}
+{% load cache %}
+
+<section class="trailer">
+{#}{% cache settings.CACHE_TIMEOUTS.film_videos film_videos film.pk %}{#}
+    <h1>{% trans "Trailers" %}</h1>
+{% if film.get_videos %}
+    <ul>
+    {% for trailer in film.get_videos|slice:":3" %}
+        <!-- TODO: em... not finished yet -->
+        <li>
+            <a title="{% if film.is_short %}{% trans "Watch film" %}{% else %}{% trans "Watch trailer" %}{% endif %}" href="#">
+                <img width="180" height="135" src="{{ trailer.thumb }}" alt="{% trans 'Trailer' %}: {{ film.get_title }}" />
+                <span></span>
+            </a>
+            {% spaceless %}
+            <div class="v">
+                {% oembed 560x345 %}{{trailer.url}}{% endoembed %}
+                {% if user.is_authenticated %}
+                <a class="remove-trailer" href="{% url remove-video trailer.pk %}">{% trans "remove trailer" %}</a>
+                {% endif %}
+            </div>
+            {% endspaceless %}
+        </li>
+    {% endfor %}
+    </ul>
+{% endif %}
+{#}{% endcache %}{#}
+    {% if user.is_authenticated %}
+        <p><a id="add_video" class="edit" href="{% url add-video film.permalink %}">{% trans "add video" %}</a></p>
+    {% endif %}
+</section><!-- .trailer -->

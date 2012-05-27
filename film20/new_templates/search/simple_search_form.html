@@ -1,0 +1,8 @@
+{% load i18n %}
+{% load map_url %}
+<form class="search" method="get" action="{% map_url "SEARCH" %}">
+	<fieldset>
+		<input class="ac_search_phrase" type="text" name="q" value="{{ query }}"/>
+		<input type="submit" value="{%  trans "Search" %}"/>
+	</fieldset>
+</form>

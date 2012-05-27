@@ -1,0 +1,5 @@
+{% load i18n %}
+{% load notification %}
+{% trans "reviewed" %} {{film.get_title|autocut:ctx}} via @filmaster
+{{link|short_url}}
+{{hashtags|default:''}}

@@ -1,0 +1,53 @@
+{% extends "fbapp/canvas.html" %}
+{% block content %}
+<div id="my-timer">
+    Żeby zdobyć punkty masz jeszcze <b id="show-time">15</b> sekund.
+</div>
+
+    <form action="{% relurl fbapp_quiz %}" name="quizForm" id="quizForm" method="post" class="ajax">
+        <center><h1>{{ question.question }}</h1></center>
+        <ul>
+        {% for choice in question.choices %}
+        <li>
+            <input id="{% if choice.id %}{{choice.id}}{% else %}{{choice}}{% endif %}"
+                 type="radio" name="choice" value="{% if choice.id %}{{choice.id}}{% else %}{{choice}}{% endif %}"
+                  onclick="this.form.submit();">
+                <label for="{% if choice.id %}{{choice.id}}{% else %}{{choice}}{% endif %}">{{ choice }}</label>
+        </li>
+        {% endfor %}
+        </ul>
+        <input type="hidden" name="tstamp" value="{{ tstamp }}">
+    </form>
+{% endblock content %}
+
+{% block end-script %}
+<script type="text/javascript" src="/static/js/libs/jquery-1.6.2.min.js"></script>
+    <script type="text/javascript">
+        var settimmer = 0;
+        $(function(){
+                window.setInterval(function() {
+                    var timeCounter = $("b[id=show-time]").html();
+                    var updateTime = eval(timeCounter)- eval(1);
+                    if(updateTime > 0){
+                        $("b[id=show-time]").html(updateTime);
+                    }
+                    else{
+                        document.getElementById('quizForm').submit();
+                    }
+                }, 1500);
+        });
+    </script>
+{% endblock end-script %}
+
+{% block footer %}
+<div class="global-progress">
+    <section class="status">
+        <h1>Twój progres</h1>
+        <div class="progress-bar" id="rate-movies-progress">
+            <progress value="{{ progress }}" max="100">{{ progress }}%</progress>
+            <span class="progress"><span id="rate-movie-progress" style="width: {{ progress }}%;"></span></span>
+            <p id="progress-info">Odpowiadasz na <b>{{ answered }}</b> z <b>10 pytań</b></p>
+        </div>
+    </section>
+</div>
+{% endblock %}

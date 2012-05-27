@@ -1,0 +1,142 @@
+{% extends "profile/base.html" %}
+{% load i18n %}
+{% load fbconnect %}
+{% load nofollow %}
+{% load followers %}
+{% load planet_tags %}
+{% load widgets %}
+{% load map_url %}
+{% load useractivity_tags %}
+{% load threadedcommentstags %}
+{% load sanitize %}
+{% load movie %}
+{% load oembed_tags %}
+{% load urlimagize %}
+{% load smartlinebreaks %}
+{% load format_date %}
+{% load fragments %}
+{% load truncatechars %}
+{% load posters %}
+{% load debug %}
+{% load parse_nicknames %}
+
+{% block title %}{{activity.title_prefix}} {% article_title activity %}{% endblock %}
+{% block description %}{{activity.descr_prefix}} {{ activity.content|remove_spoiler|striptags|truncatechars:200 }}[...]{% endblock %}
+{% block head_extra %}
+<meta property="og:title" content="{{activity.title_prefix}} {% article_title activity %}"/>
+<meta property="og:description" content="{{activity.descr_prefix}} {{ activity.content|remove_spoiler|striptags|truncatechars:200 }}[...]" />
+<meta property="og:type" content="article"/>
+{% if activity.film %}
+    <meta property="og:image" content="{{ settings.FULL_DOMAIN }}{% poster 100 141 activity.film %}"/>
+{% else %}
+    <meta property="og:image" content="{{ settings.FULL_DOMAIN }}{% avatars 180 user_profile %}"/>
+{% endif %}
+{% endblock %}
+
+{% block extrajs %}
+    <script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
+{% endblock extrajs %}
+
+{% block content-start %}
+<div class="content wall">
+{% endblock %}
+
+{% block content %}
+	<article class="review">
+		<h1>{{ activity.get_title }}</h1>
+        
+        {% ifequal activity.user_id request.user.id %}
+            <a class="edit" href="{% url edit_article id=activity.object_id %}?next={{ activity.get_absolute_url }}">{% trans "edit this article" %}</a>
+        {% else %}
+            {% if request.user.is_superuser %}
+                <a class="edit" href="{% admin_change_url 'blog_post' activity.object_id activity.get_absolute_url %}">{% trans "edit this article" %}</a>
+            {% endif %}
+		{% endifequal %}
+
+        {% if activity.spoilers %}<p class="spoiler-warning">{% trans "Contains spoilers!" %}<p>{% endif %}
+        {% with activity.post as post %}
+            {%if post.lead %}
+                {{post.lead|sanitize:"b i em strong ol li ul blockquote a:href img:src h2 spoiler del"|spoiler|safe|oembed|urlimagize|parse_nicknames|nofollow|smartlinebreaks}}
+            {%endif%}
+            {{ post.body|sanitize:"b i em strong ol li ul blockquote a:href img:src h2 spoiler del"|spoiler|safe|oembed|urlimagize|parse_nicknames|nofollow|smartlinebreaks}}
+        {% endwith %}
+		<footer>
+			<p>{# TODO: fill datetime attribute in time tag #}
+				<a href="{% url_user_link activity.user %}">{{ activity.user.username }}</a> {{ activity.user.get_full_name }} <time datetime="2011-01-05">{% human_readable_date activity.created_at %}</time>
+			</p>
+		</footer>
+	</article>
+    {% with activity.LANG as lang %}
+        {% include "widgets/social_buttons.html" %}
+    {% endwith %}
+
+	<section id="wall" class="comments single-activity stream show-comment-form">
+        {% activity_subscribe_form activity %}
+        {# TODO: fix in http://jira.filmaster.org/browse/FLM-1145 #}   
+		{# <p>Powiadomienia o nowych komentarzach pod tym artykułem: <a href="#">włącz</a> <br> (włączamy powiadomianie automatycznie jeśli zabierzesz głos w dyskusji)</p> #}
+		{% if user.is_authenticated %}
+			<form class="comment-form" method="post" action="{% comment_form_url activity "blog" "post" %}" id="b{{activity.id}}">
+				<fieldset>
+					{% get_threaded_comment_form as form %}
+					{{ form.comment }}
+					<div><input type="submit" value="{% trans "Add comment" %}" /></div>
+				</fieldset>
+			</form>
+        	{% endif %}
+		<footer>
+			{% if user.is_authenticated %}
+			<p>
+				<a class="comment" href="#" rel="{{activity.api_resource_uri}}">{% trans "Leave a comment" %}</a>
+			</p>
+			{% endif %}
+		</footer>
+        {% include "comments/activity_comments.html" %}
+	</section><!-- .comments .stream -->
+{% endblock %}
+
+{% block secondary-content-aside %}
+<aside class="filmaster">
+        {% if activity.film %}
+            <section class="rate-movie-w">
+            {% if request.user.is_authenticated %}
+                <h1>{% trans "Rate film" %}</h1>
+                <div class="rate-movie">
+                    {% single_film_ratings_form activity.film %}
+                </div>
+            {% else %}
+                {# just the poster, no rating for non logged in users yet: http://jira.filmaster.org/browse/FLM-1244 #}
+                <div class="rate-movie">
+        		<figure>
+        			<img width="240" height="340" src="{% poster 240 340 activity.film %}" alt="{{ activity.film.title }}" />
+        			<figcaption>
+        				<p class="msg"></p>
+                        <a class="movie" href="{{ activity.film_absolute_url }}">{{ activity.film.get_title }} {%if activity.film.release_year %}<span>({{activity.film.release_year}})</span>{%endif%}</a>
+        			</figcaption>
+        		</figure>
+                </div>
+            {% endif %}
+            </section><!-- .rate-movie-w -->
+		<section class="others-ratings">
+            {% film_user_rating activity.film user_profile 'DETAILED' %}
+		</section>
+            {% related_articles activity user_profile %}
+        {% else %} 
+            {% if activity.post %}
+            {% with activity.post as post %}
+                {% related_films post %}
+                {% related_persons post %}
+                {% related_articles activity user_profile %}
+            {% endwith %}
+            {% endif %}
+        {% endif %}
+        {% users_best_rated user_profile %} 
+        {% if not request.user.is_authenticated %}
+            <a href="#" class="fb-button">{% trans "Connect with Facebook" %}</a>
+            {% connected_users %}
+        {% endif %}
+	</aside><!-- .filmaster -->
+{% endblock %}
+
+{% block content-end %}
+</div><!-- .content .wall -->
+{% endblock %}

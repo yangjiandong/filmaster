@@ -1,0 +1,7 @@
+<fieldset>
+{% if form.non_field_errors %}{{ form.non_field_errors }}{% endif %}
+
+{% for field in form %}
+    {% include "form_field.html" %}
+{% endfor %}
+</fieldset>

@@ -1,0 +1,7 @@
+{% load i18n %}
+{% if user.is_authenticated %}
+<div class="widget">
+<h1>{% trans "Rate Next Movie" %}</h1>
+<a href='{% url next_film_to_rate %}'>{% trans "Rate Next Movie" %}</a>
+</div>
+{% endif %}

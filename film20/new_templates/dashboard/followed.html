@@ -1,0 +1,11 @@
+{% extends "dashboard/base.html" %}
+{% load i18n %}
+
+{% block title %}
+    {% trans "Users you follow" %}
+{% endblock title %}
+
+{% block content %}
+    <p> You follow {{ followed_number }} users </p>
+	{% include 'filmasters/filmasters.html' %}
+{% endblock content %}

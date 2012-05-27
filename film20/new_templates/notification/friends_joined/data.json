@@ -1,0 +1,5 @@
+{%load json%}
+{
+    "user":{{user|jsonstr}},
+    "fb_user":{{fb_user|jsonstr}}
+}

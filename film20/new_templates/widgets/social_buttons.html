@@ -1,0 +1,47 @@
+<ul class="social-buttons">
+<li>
+<fb:like href="{{activity.get_absolute_url}}" layout="standard" show_faces="false" width="400" action="like" font="verdana" colorscheme="light"></fb:like>
+</li>
+</ul>
+
+{% if 'True' = 'False' %}
+
+{% if lang = 'pl' %}
+<ul class="social-buttons">
+<!-- wykop -->
+<li>
+<script language="javascript">
+// wykopywarka wersja standardowa (72x65)
+var wykop_url=location.href;// Link do strony
+var wykop_title=document.title;	// Tytuł strony (pobierany z <title>)
+var wykop_desc=encodeURIComponent('');
+var widget_bg='FFFFFF';
+var widget_type='normal';
+var widget_url='http://www.wykop.pl/dataprovider/diggerwidget/?url='+(wykop_url)+'&title='+(wykop_title)+'&desc='+(wykop_desc)+'&bg='+(widget_bg)+'&type='+(widget_type);
+document.write('<div><iframe src="'+widget_url+'" style="border:none;width:72px;height:65px;overflow:hidden;margin:0;padding:0;" frameborder="0" border="0"></iframe></div>');</script>
+</li>
+<!-- wykop -->
+{% endif %}
+
+<!-- twitter -->
+<li>
+<a href="https://twitter.com/share" class="twitter-share-button" data-count="vertical">Tweet</a><script type="text/javascript" src="//platform.twitter.com/widgets.js"></script>
+</li>
+<!-- twitter -->
+
+<!-- fb -->
+<li>
+<a name="fb_share"></a>
+<script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript">
+</script>
+</li>
+<!-- fb -->
+
+<!-- g+ -->
+<li>
+<g:plusone size="tall"></g:plusone>
+</li>
+<!-- g+ -->
+</ul>
+
+{% endif %}

@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+{% load pyif %}
+{% load merging_tools %}
+
+{% block title %}
+    {% if moderated_item %}{{ moderated_item.get_verbose_name_plural }} - {% endif %}
+    {% trans "Moderation" %}
+{% endblock %}
+
+{% block primary-content-wrapper-start %}{% endblock %}
+{% block primary-content-wrapper-end %}{% endblock %}
+
+{% block primary-content-aside %}
+<aside>
+    {% if moderated_items %}
+    <section class="moderation-options">
+        <h1>{% trans "Items to moderate:"%}</h1>
+        <nav>
+            <ul>
+                {% for item in moderated_items %}
+                <li>
+                    <a href="{{ item.get_absolute_url }}" class="{% if moderated_item.get_name == item.get_name %}selected{% endif %}">
+                        {{ item.get_verbose_name_plural }} <span class="count">{{ item.get_not_moderated.count }}</span>
+                    </a>
+                </li>
+                {% endfor %}
+           </ul>
+        </nav>
+    </section>
+    {% endif %}
+    
+    {% if moderator_tools %}
+    <section class="moderation-options">
+        <h1>{% trans "Moderator Tools:"%}</h1>
+        <nav>
+            <ul>
+                {% for item in moderator_tools %}
+                <li>
+                    <a href="{{ item.get_absolute_url }}" class="{% if moderated_item.get_name == item.get_name %}selected{% endif %}">{{ item.get_verbose_name }}</a>
+                </li>
+                {% endfor %}
+           </ul>
+        </nav>
+    </section>
+    {% endif %}
+
+    {% if user.is_superuser %}
+    <section class="moderation-options">
+        <h1>{% trans "Admin tools:"%}</h1>
+        <nav>
+            <ul>
+                <li><a href="{% url people-merging-tool %}">{% trans "people merging tool"%} <span class="count">{% people_to_merge_count %}</span></a></li>
+                <li><a href="{% url movie-merging-tool %}">{% trans "movies merging tool"%} <span class="count">{% movies_to_merge_count %}</span></a></li>
+            </ul>
+        </nav>
+    </section>
+    {% endif %}
+
+</aside>
+{% endblock primary-content-aside %}
+
+
+{% block content %}
+<section class="search-content">
+    {% block content-section %}
+    
+    <h1>{% trans "Moderation" %}{% if moderated_item %} - {{ moderated_item.get_verbose_name_plural }}
+    <a class="rss" href="{% url moderated-item-rss moderated_item.get_name %}"><img src="/static/img/rssico.png" alt="[rss]"/></a>
+{% endif %}</h1>
+    {% if moderated_items %}
+        <div class="moderation-content notification-setting">
+            {% if moderated_item %}
+                {% with moderated_item.get_template as template %}
+                    {% include template %}
+                {% endwith %}
+            {% endif %}
+        </div>
+
+    {% else %}
+        <div class="empty">{%trans "Nothing to moderate..." %}</div>
+    {% endif %}
+
+    {% endblock %}
+</section>
+{% endblock %}
+
+{% block end-scripts %}
+<script>
+    FM.trailers();
+</script>
+{% endblock %}

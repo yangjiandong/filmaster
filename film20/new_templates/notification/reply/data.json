@@ -1,0 +1,5 @@
+{%load json%}
+{
+"id":{{comment.pk|jsonstr}},
+"sender":{{from_user.username|json}}
+}

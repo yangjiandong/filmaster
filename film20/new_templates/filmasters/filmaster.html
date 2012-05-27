@@ -1,0 +1,11 @@
+{% load map_url %}
+{% load followers %}
+{% load display_user %}
+{% load useractivity_tags %}
+
+<h1><a href="{% url_username_link user %}">{{ user }}</a></h1>
+{% score_as_percent score %}
+<a href="{% url_username_link user %}" title="{% user_full_name user %}"><img width="115" height="115" src="{% avatars 115 user %}" alt="{{ user }}" /></a>
+{% if request.user.is_authenticated %}
+    {% follow_widget request.path request.user user %}
+{% endif %}

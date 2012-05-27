@@ -1,0 +1,18 @@
+{% extends "dashboard/base.html" %}
+{% load i18n %}
+{% load basket_tags  %}
+
+{% block title%}
+    {% basket_title type %}
+{% endblock title%}
+
+{% block content %}
+	<section class="movie-list {% basket_title type %}">
+    {% block user-info %}
+        <h1>{% basket_title type %}</h1>
+        <p>{% basket_feature_info type %}</p>
+        <p>{% trans "You can add movies to this list using the icons on film pages." %}</p>
+    {% endblock user-info %}
+    {% include 'userprofile/collection.html' %}
+	</section><!-- .movie-list -->
+{% endblock content %}

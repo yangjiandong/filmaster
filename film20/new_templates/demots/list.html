@@ -1,0 +1,39 @@
+{% extends "demots/base.html" %}
+{% load qs %}
+{% load i18n %}
+{% load pagination_tags %}
+
+{% block title %}{% trans "Demots" %}{% endblock %}
+{% block content %}
+    <div class="filters">
+        <ul>
+            {% for k, v in orders_map.items %}
+                <li><a class="{% if order == k %}selected{% endif %}" href='?{% qs_copy 'order' k 'page' 1 %}'>{{ v.name }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+    <ul class="demot-list">
+    {% for activity in activities %}
+	{% with demot=activity.demot %}
+		<li>
+			{% include "demots/demot.html" %}
+		</li>
+	{% endwith %}
+    {% empty %}
+        <li>{% trans "No demots to display" %}</li>
+    {% endfor %}
+    </ul>
+
+    {% include "pagination/pagination.html" %}
+{% endblock %}
+
+{% comment %}
+{% block end-scripts %}
+    <script src="http://masonry.desandro.com/jquery.masonry.min.js"></script>
+    <script>
+    $('.demot-list').masonry({
+      itemSelector: '.single-demot'
+    });
+    </script>
+{% endblock %}
+{% endcomment %}

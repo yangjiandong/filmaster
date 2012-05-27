@@ -1,0 +1,18 @@
+{% load i18n %}
+{% load account %}
+
+<span class="hide">
+{% if recommendations_status == 2 %}
+    {% trans "Your recommendations are getting computed right now. They should be ready in a few seconds" %}
+{% endif %}
+{% if recommendations_status == 1 or recommendations_status == 3 %}
+    {% trans "We've prepared personalized movie recommendations for you" %}
+    {% if user.is_authenticated %}
+        <a href="{% url my_recommendations %}">{% trans "Check them out!" %}</a>
+    {% else %}
+    <a class='ajax-signup' href='#'>{% trans "Sign up to check them out!" %}</a>
+        <iframe scrolling="no" width="520" class="ajax-signup" rel="{% relurl acct_signup %}"></iframe>
+        {#% signup_form %#}
+    {% endif %}
+{% endif %}
+</span>

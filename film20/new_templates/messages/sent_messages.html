@@ -1,0 +1,30 @@
+{% extends "messages/base.html" %} 
+{% load i18n %} 
+{% load pagination_tags %}
+
+{% block title %}{% trans "Sent messages" %}{% endblock %}
+
+{% block content %} 
+<section class="flatpage">
+<h1>{% trans "Sent Messages" %}</h1>
+<table class="conversations">
+    <thead>
+        <tr><th>{% trans "Recipient" %}</th><th>{% trans "Subject" %}</th><th>{% trans "Sent" %}</th><th>{% trans "Action" %}</th></tr>
+    </thead>
+    <tbody>
+{% autopaginate message_list %}
+{% for message in message_list %} 
+    <tr>
+        <td>{{ message.recipient }}</td>
+        <td>
+        <a href="{% url messages_view_conversation message.conversation_id %}#message_{{message.id}}">{{ message.get_subject }}</a>
+        </td>
+        <td>{{ message.sent_at|date:_("DATETIME_FORMAT") }}</td>
+        <td><a href="{% url messages_delete message.id %}?next={% url messages_outbox %}">{% trans "delete" %}</a></td>
+    </tr>
+{% endfor %}
+    </tbody>
+</table>
+{% paginator %}
+</section>
+{% endblock %}

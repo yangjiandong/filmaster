@@ -1,0 +1,64 @@
+{% extends "fbapp/event/base.html" %}
+{% load i18n %}
+
+{% block menu %}
+    {% include "fbapp/event/menu.html" %}
+{% endblock %}
+
+{% block invite_message %}{{ contest.title }}{% endblock %}',
+{% block wallpost_name %}{{ contest.title }}{% endblock %}
+{% block wallpost_caption %}{% endblock %}
+{% block wallpost_description %}{{ contest.wallpost_description }}{% endblock %} 
+
+{% block content %}
+<h1>{{ contest.title }}: {% trans "You scored" %} <span class="your-points">{{ participant.score }}</span> {% trans "points" %}</h1>
+
+<div class="event-message">
+    {{ contest.end_description }}
+</div>
+
+<hr />
+<h3>{% trans "Get more points!" %}</h3>
+<ol>
+    <li>
+    {% if participant.rated_count >= 6 %}
+        {% trans "You already scored points for rating" %}. <a href="{% url event_rate_films contest.slug %}">{% trans "Rate" %}</a> {% trans "more movies to get better recommendations" %}.
+    {% else %}
+        <a href="{% url event_rate_films contest.slug %}">{% trans "Rate 6 movies" %}</a> {% trans "to get additional 60 points" %}.
+    {% endif %}
+    </li>
+    <li>
+    {% if participant.wallpost_published %}
+        <s>{% trans "Publish info" %}</a> {% trans "about this quiz on your wall to get additional 20 points" %}.</s>
+    {% else %}
+        <a href='#' id='wallpost'>{% trans "Publish info" %}</a> {% trans "about this quiz on your wall to get additional 20 points" %}.
+    {% endif %}
+    </li>
+    <li>
+        <a href="#" id="invite">{% trans "Invite" %}</a> {% trans "your friends to get 5 points for each accepted invition" %}.
+    </li>
+</ol>
+
+{% load posters %}
+{% load recommended %}
+{% get_fbapp_recommended 4 as all_films %}
+{% if all_films %}
+<section class="top-movies" style="margin-top: 20px;">
+    <h3>Your all time top recommendations</h3>
+    <p style="text-align: left;">{% trans "Those are the movies you're gonna love, based on your ratings. Find out more at" %} <a href="http://filmaster.com/recommendations/">http://filmaster.com/recommendations/</a></p>
+    <ul>
+    {% for film in all_films %}
+    <li>
+        <a href="{{ film.get_absolute_url }}" title="{{ film.get_title }}" target="_blank">
+            <figure>
+                <img width="156" height="225" src="{% poster 156 225 film %}" alt="{{ film.get_title }}" />
+                <figcaption>{{ film.get_title }}{%if film.release_year %} <span>({{film.release_year}})</span>{%endif%}</figcaption>
+            </figure>
+        </a>
+    </li>
+    {% endfor %}
+    <ul>
+</section>
+{% endif %}
+
+{% endblock %}

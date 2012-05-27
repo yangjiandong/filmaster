@@ -1,0 +1,15 @@
+{% extends "fbapp/canvas.html" %}
+{% block content %}
+<h1>Quiz</h1>
+<p>Przed Tobą <strong>10 filmowych pytań</strong>.</p><br />
+<p>Na każde pytanie masz <b>15 sekund</b>, ale im szybciej odpowiesz, tym więcej punktów możesz zdobyć.</p></br />
+<p>Odpowiadasz klikając w jedną z zaprezentowanych opcji.</p><br />
+<p>Gdy będziesz gotowy kliknij start.<p><br />
+<p><strong>Powodzenia!</strong></p>
+
+<div class="play">
+    <form action="{% url fbapp_quiz %}" method="post">
+        <input type="submit" name="start" value="Start">
+    </form>
+</div>
+{% endblock content %}

@@ -1,0 +1,65 @@
+{% extends "festivals/base.html" %}
+{% load map_url %}
+{% load object %}
+{% load movie %}
+{% load posters %}
+{% load i18n %}
+{% load debug %}
+
+{% block title %}{{ festival.name }} &laquo; {% trans "Festival" %} {% endblock %}
+{% block description %}{{ festival.lead|striptags }}{% endblock %}
+{% block head_extra %}
+{{block.super}}
+<meta property="og:title" content="{{ festival.name }}"/>
+<meta property="og:description" content="{{ festival.lead|striptags }}" />
+<meta property="og:type" content="movie"/>
+{% if festival.event_image %}<meta property="og:image" content="{{ settings.FULL_DOMAIN }}{{ settings.MEDIA_URL }}{{ festival.event_image }}"/>{% endif %}
+{% endblock %}
+
+{%block content%}
+<article class="festival movie">
+	<header>
+    		<h1>{{festival.name}}</h1>
+	</header>
+	<section>
+        {% if festival.lead %}
+    	    <p>{{festival.lead|safe}}</p>
+        {% endif %}
+        {% if festival.body %}
+	        <p>{{festival.body|safe}}</p>
+        {% endif %}
+        <fb:like href="{{festival.get_absolute_url}}" layout="standard" show_faces="false" width="400" action="like" font="verdana" colorscheme="light"></fb:like>
+	</section>
+
+	{% if not request.user.is_authenticated %}
+	<section class="call-to-action">
+		<h1>{% trans "Filmaster&mdash;Your Festival Companion" %}</h1>
+		<ul class="features">
+			<li class="f-checkin">{% trans "check-in to screenings" %}</li>
+			<li class="f-rate">{% trans "rate movies and write reviews" %}</li>
+			<li class="f-interact">{% trans "interact with other film buffs" %}</li>
+		</ul>
+		<p>{% trans "and much more here and on your mobile!" %}</p>
+        <footer>
+            {% include "facebook_connect/facebook_button.html" %}
+			<p>{% trans "Download the app for" %}</p>
+			<ul>
+				<li class="iphone"><a href="http://itunes.apple.com/au/app/filmaster/id403634677?mt=8&ls=1">iPhone</a></li>
+				<li class="android"><a href="https://market.android.com/details?id=app.filmaster">Android</a></li>
+			</ul>
+		</footer>
+	</section>
+	{% endif %}
+
+</article><!-- .movie -->
+
+{%include "festivals/wall.html" %}
+
+{%endblock%}
+
+
+{% block end-scripts %}
+	<script>
+		FM.trailers();
+	</script>
+{% endblock %}

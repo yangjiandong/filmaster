@@ -1,0 +1,54 @@
+{%extends "showtimes/base.html"%}
+{%load qs%}
+{%load showtimes%}
+{%load map_url%}
+{%load i18n%}
+
+{% block showtimes-title %}{% trans "Cinema" %}{% endblock %}
+{% block showtimes-id %}theaters{% endblock %}
+
+{%block showtimestop%}
+{%if channel%}
+	<section class="cinema-description">
+		<h1 class="cinema_name">{{channel.name}}
+			{% if channel.distance %}
+			  <b style="font-size:75%">{{channel.distance}}km</b>
+			{%endif %}
+		</h1>
+		{%if channel.cinema %}
+			<p class="cinema_info">{{channel.cinema.address}}</p>
+		{%endif%}
+	</section><!-- .cinema-description -->
+{%endif%}
+{%endblock%}
+
+{%block showtimescontent%}
+{%if channel%}
+
+{% if days %}
+<div class="filters">
+	<ul>
+	{%for day in days%}
+		{%with d=day|date:"Y-m-d"%}
+		<li><a class="{%if day == date%}selected{%endif%}" href='?{% qs_copy 'date' day.date%}'>{{day|date:"l"}}</a></li>
+		{%endwith%}
+	{%endfor%}
+	</ul>
+</div>
+{% endif %}
+
+{%for film in films%}
+	<section class="rate-movie-simple">
+  {%with screenings=film.screenings%}
+    {% include "showtimes/film.html" %}
+    <ul class="in-cinema">
+      {% include "showtimes/screenings.html" %}
+    </ul>
+  {%endwith%}
+	</section>
+{%endfor%}
+
+
+{%endif%}
+
+{%endblock%}

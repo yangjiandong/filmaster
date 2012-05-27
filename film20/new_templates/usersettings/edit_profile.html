@@ -1,0 +1,13 @@
+{% extends "usersettings/base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Edit profile" %}{% endblock %}
+
+{% block content %}
+  <form method="POST" id="edit_profile_form" class="settings">
+  <h1>{% trans "Settings" %}: <span>{% trans "Edit profile" %}</span></h1>
+  {% include "form_fieldset.html" %}
+  <input type="submit" value="{%trans 'Save Changes'%}" />
+  {% csrf_token %}
+  </form>
+{% endblock %}

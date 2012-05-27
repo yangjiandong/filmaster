@@ -1,0 +1,37 @@
+{% extends "messages/base.html" %} 
+{% load i18n %} 
+
+{% block title %}{% trans "Compose message" %}{% endblock %}
+
+{% block content %} 
+<section class="flatpage"> 
+<h1>{% trans "Compose message"%}</h1>
+<form action="" method="post" class="create-message"> 
+{% if form.recipient.errors %}
+    <div class="error"{{ form.recipient.errors  }}</div>
+{% endif %}
+
+{% csrf_token %}
+{% include "form_fieldset.html" %}
+<input type="submit" value="{% trans "Send" %}" />
+</form>
+</section>
+{% endblock %}
+
+{% block end-scripts %}
+<script src="/static/js/plugins/jquery.autocomplete.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+	    $("#id_recipient").autocomplete('{% url search_user_autocomplete %}',{multiple:false});
+	});
+	function make_blue(elname) {
+	     $(elname).removeClass("gray_border");
+	     $(elname).addClass("blue_border");
+	}
+	function make_grey(elname) {
+	     $(elname).removeClass("blue_border");
+	     $(elname).addClass("gray_border");
+	}
+</script>
+{% endblock %}
+

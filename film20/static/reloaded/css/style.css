@@ -1,0 +1,1395 @@
+/*  HTML5 ✰ Boilerplate  */
+
+html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+abbr, address, cite, code, del, dfn, em, img, ins, kbd, q, samp,
+small, strong, sub, sup, var, b, i, dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, figcaption, figure,  footer, header, hgroup, 
+menu, nav, section, summary, time, mark, audio, video {
+  margin:0;
+  padding:0;
+  border:0;
+  outline:0;
+  font-size:100%;
+  vertical-align:baseline;
+  background:transparent;
+}                  
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section { 
+    display:block;
+}
+nav ul { list-style:none; }
+blockquote, q { quotes:none; }
+blockquote:before, blockquote:after,
+q:before, q:after { content:''; content:none; }
+a { margin:0; padding:0; font-size:100%; vertical-align:baseline; background:transparent; }
+ins { background-color:#ff9; color:#000; text-decoration:none; }
+mark { background-color:#ff9; color:#000; font-style:italic; font-weight:bold; }
+del { text-decoration: line-through; }
+abbr[title], dfn[title] { border-bottom:1px dotted; cursor:help; }
+table { border-collapse:collapse; border-spacing:0; }
+hr { display:block; height:1px; border:0; border-top:1px solid #ccc; margin:1em 0; padding:0; }
+input, select { vertical-align:middle; }
+
+body { font:13px/1.231 sans-serif; *font-size:small; } 
+select, input, textarea, button { font:99% sans-serif; }
+pre, code, kbd, samp { font-family: monospace, sans-serif; }
+
+body, select, input, textarea {   color: #444; }
+h1,h2,h3,h4,h5,h6 { font-weight: bold; }
+html { overflow-y: scroll; }
+
+a:hover, a:active { outline: none; }
+a, a:active, a:visited { color: #607890; }
+a:hover { color: #036; }
+
+ul, ol { margin-left: 1.8em; }
+ol { list-style-type: decimal; }
+
+nav ul, nav li { margin: 0; } 
+small { font-size: 85%; }
+strong, th { font-weight: bold; }
+td, td img { vertical-align: top; } 
+sub { vertical-align: sub; font-size: smaller; }
+sup { vertical-align: super; font-size: smaller; }
+pre {  padding: 15px;  white-space: pre;  white-space: pre-wrap;  white-space: pre-line;  word-wrap: break-word; }
+textarea { overflow: auto; } 
+.ie6 legend, .ie7 legend { margin-left: -7px; } 
+input[type="radio"] { vertical-align: text-bottom; }
+input[type="checkbox"] { vertical-align: bottom; }
+.ie7 input[type="checkbox"] { vertical-align: baseline; }
+.ie6 input { vertical-align: text-bottom; }
+/*label, input[type=button], input[type=submit], button { cursor: pointer; }*/
+button, input, select, textarea { margin: 0; }
+input:valid, textarea:valid   {  }
+input:invalid, textarea:invalid { border-radius: 1px;  -moz-box-shadow: 0px 0px 5px red; -webkit-box-shadow: 0px 0px 5px red;  box-shadow: 0px 0px 5px red; }
+.no-boxshadow input:invalid, 
+.no-boxshadow textarea:invalid { background-color: #f0dddd; }
+
+::-moz-selection{ background: #DA371F; color:#fff; text-shadow: none; }
+::selection { background:#DA371F; color:#fff; text-shadow: none; } 
+a:link { -webkit-tap-highlight-color: #FF5E99; } 
+
+button {  width: auto; overflow: visible; }
+.ie7 img { -ms-interpolation-mode: bicubic; }
+
+.ir { display: block; text-indent: -999em; overflow: hidden; background-repeat: no-repeat; text-align: left; direction: ltr; }
+.hidden { display: none; visibility: hidden; } 
+.visuallyhidden { position: absolute !important; clip: rect(1px 1px 1px 1px);  clip: rect(1px, 1px, 1px, 1px); }
+.invisible { visibility: hidden; }
+
+
+@media all and (orientation:portrait) { 
+  
+}
+
+@media all and (orientation:landscape) { 
+  
+}
+
+@media screen and (max-device-width: 480px) {
+  /* html { -webkit-text-size-adjust:none; -ms-text-size-adjust:none; } */
+}
+
+@media print {
+  * { background: transparent !important; color: #444 !important; text-shadow: none !important; }
+  a, a:visited { color: #444 !important; text-decoration: underline; }
+  a:after { content: " (" attr(href) ")"; } 
+  abbr:after { content: " (" attr(title) ")"; }
+  .ir a:after { content: ""; }  
+  pre, blockquote { border: 1px solid #999; page-break-inside: avoid; }
+  thead { display: table-header-group; }  
+  tr, img { page-break-inside: avoid; }
+  @page { margin: 0.5cm; }
+  p, h2, h3 { orphans: 3; widows: 3; }
+  h2, h3{ page-break-after: avoid; }
+}
+
+
+html {
+	background: #fff;
+}
+
+body {
+    background: #191919;
+    box-shadow: 0 40px 0 #101010 inset;
+    -webkit-box-shadow: 0 40px 0 #101010 inset;
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: 12px;
+}
+
+a,
+a:visited,
+a:hover,
+a:active {
+    color: #229698;
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: underline;
+}
+
+#container {
+    width: 984px;
+    margin: auto;
+    background: #efefef;
+    color: #575c63;
+}
+
+
+/* ----------------------------------------------------------- =erros */
+.errorlist {
+	margin: 1em 0;
+	padding-left: 0.5em;
+	border-left: 5px solid red;
+	color: #000;
+	font-weight: bold;
+}
+
+.errorlist li {
+	list-style: none;
+}
+
+/* ----------------------------------------------------------- =buttons */
+/**
+ * 	TODO: hover, active and focus state for buttons
+ */
+.btn,
+.join-us > p.join a,
+.join-us .rate-description > p.join a,
+#mobile_newsletter [type=submit],
+#reloaded_newsletter [type=submit],
+.wall .share input[type=submit],
+.wall .share input[type=submit] {
+	display: inline-block;
+    margin-top: 15px;
+    padding: 4px 20px;
+    line-height: 1.2;
+    color: #fff !important;
+    background: #309ea0;
+    border: 0;
+    border-radius: 2px;
+    box-shadow: 0 0 0 3px rgba(255,255,255,.6), 0 0 1px 4px rgba(0,0,0,.15), 0 -10px 15px -10px rgba(2, 129, 132, 1) inset, 0 10px 15px -10px rgba(95, 183, 185, 1) inset;
+    -webkit-box-shadow: 0 0 0 3px rgba(255,255,255,.6), 0 0 1px 4px rgba(0,0,0,.15), 0 -10px 15px -10px rgba(2, 129, 132, 1) inset, 0 10px 15px -10px rgba(95, 183, 185, 1) inset;
+}
+
+.join-us .join a {
+	padding: 6px 15px;
+}
+
+.join-us > p.join a {
+	font-family: "League Gothic", sans-serif;
+	font-size: 30px;
+	text-transform: uppercase;
+	padding: 7px 65px 0;
+	line-height: 1.2;
+    box-shadow: 0 0 0 3px rgba(255,255,255,.6), 0 0 1px 4px rgba(0,0,0,.15), 0 -20px 20px -10px rgba(2, 129, 132, 1) inset, 0 20px 20px -10px rgba(95, 183, 185, 1) inset;
+    -webkit-box-shadow: 0 0 0 3px rgba(255,255,255,.6), 0 0 1px 4px rgba(0,0,0,.15), 0 -20px 20px -10px rgba(2, 129, 132, 1) inset, 0 20px 20px -10px rgba(95, 183, 185, 1) inset;
+}
+
+/* ----------------------------------------------------------- =wall */
+.wall .share {
+    margin-bottom: 1px;
+    padding: 8px 8px 16px;
+    background: #fff;
+    text-align: center;
+}
+
+.wall .share input[type=text] {
+    width: 482px;
+    padding: 10px;
+    border: 1px solid #bababa;
+    background: #efefef;
+    box-shadow: 0 0 10px rgba(164, 154, 153, .75) inset;
+    -webkit-box-shadow: 0 0 10px rgba(164, 154, 153, .75) inset;
+}
+
+.wall ul.filters {
+    margin: 0 0 2px 0;
+    padding: 5px 7px;
+    text-transform: lowercase;
+    text-align: right;
+    font-size: 11px;
+    font-weight: bold;
+    color: #191919;
+    background: #fff;
+    box-shadow: 0 1px 0 0 #fff,0 -1px 0 0 #efefef inset;
+    -webkit-box-shadow: 0 1px 0 0 #fff,0 -1px 0 0 #efefef inset;
+}
+
+.wall ul.filters:nth-of-type(1) {
+    float: left;
+    text-align: left;
+}
+
+.wall ul.filters li {
+    display: inline;
+    padding: 0 5px;
+    border-left: 1px solid #191919;
+}
+
+.wall ul.filters li:first-child {
+    border: 0;
+}
+
+.wall ul.filters a {
+    font-weight: normal;
+    color: #da371f;
+}
+
+.wall article {
+    background: #fff;
+    margin-bottom: 1px;
+    padding: 10px 60px 10px 72px;
+    overflow: hidden;
+}
+
+.wall article header img {
+    float: left;
+    margin-left: -57px;
+}
+
+#main > div.content .wall h1 {
+	font-family: inherit;
+	font-size: inherit;
+	text-transform: inherit;
+	margin: 4px 0;
+}
+
+.wall article header p {
+    margin-bottom: 10px;
+    font-size: 11px;
+    font-weight: normal;
+}
+
+.wall article header a {
+    font-weight: bold;
+}
+
+.wall article footer {
+    font-size: 10px;
+    color: #aaa;
+}
+
+/* ----------------------------------------------------------- =font face */
+@font-face {
+  font-family: "League Gothic";
+  src: url("../fonts/LeagueGothic/LeagueGothic.eot?#iefix") format('embedded-opentype'),
+	     url("../fonts/LeagueGothic/LeagueGothic.woff") format('woff'), 
+	     url("../fonts/LeagueGothic/LeagueGothic.ttf")  format('truetype'),
+	     url("../fonts/LeagueGothic/LeagueGothic.svg#svgFontName") format('svg');
+}
+
+.expandable .more, .collapsed .more, .expanded .less {
+    display:none;
+}
+
+.widget {
+    margin-bottom: 8px;
+    border: 1px solid #ddd;
+}
+
+.widget > h1, #movie_info h1, #person_ingo h1 {
+    font-size: 150%;
+    border-bottom: 1px solid #ddd;
+}
+
+a.edit {
+    display: block;
+    color: red;
+}
+
+#movie_info > div, .widget {
+    margin-top: 1em;
+}
+
+#film_similar_ratings .score {
+    color: #888;
+    font-size: 80%;
+}
+
+#film_similar_ratings .rating {
+    display: block;
+    float: right;
+}
+
+.widget .film {
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+.widget .film .poster {
+    float: left;
+    margin-right: 10px;
+}
+
+#related_films .poster {
+    float: left;
+    margin-right: 10px;
+}
+
+#featured_reviews .featured_review {
+    overflow: hidden;
+}
+
+#featured_reviews .featured_review .author {
+    width: 82px;
+    float: left;
+}
+
+#film_cinema_screenings .town {
+   float: right;
+   color: #888;
+}
+
+table.screenings .hours {
+    padding-left: 1em;
+}
+
+#wall_filters {
+    overflow: hidden;
+}
+
+/* signup, registration */
+
+#quick_login .login_method, #quick_registration .login_method {
+    width: 400px;
+    padding: 10px;
+    margin: 10px 0px;
+    border: 1px solid #888;
+}
+
+#rating_progress .progressbar {
+    background-color: green;
+}
+
+#rating_progress .progressbar .progress {
+    height: 4px;
+    background-color: red;
+}
+
+/* ----------------------------------------------------------- =container */
+#container {
+	position: relative;
+}
+
+/* ----------------------------------------------------------- =header */
+
+/* = header */
+#container > header {
+    box-shadow: 0 40px 0 #101010 inset;
+    -webkit-box-shadow: 0 40px 0 #101010 inset;
+    color: #a09795;
+}
+
+.ie7 #container > header,
+.ie8 #container > header {
+	background: url(../images/header-bg.png) repeat-x;
+}
+
+#container > header hgroup {
+    float: left;
+}
+
+#container > header h1,
+#container > header h2 {
+    float: left;
+    vertical-align: top;
+}
+
+/**
+ * 	TODO: sprites!
+ */
+#container > header h1 a {
+    display: block;
+    width: 192px;
+    height: 50px;
+    background: transparent url(../images/logo.png) no-repeat;
+    text-indent: -9999em;
+    overflow: hidden;   
+}
+
+/**
+ * 	TODO: sprites!
+ */
+#container > header h2 {
+    width: 165px;
+    height: 36px;
+    margin-left: 19px;
+    text-indent: -9999em;
+    background: transparent url(../images/logo-tagline.png) no-repeat center center;
+}
+
+/* ----------------------------------------------------------- =user toolbox */
+#user-toolbox {
+	color: #a09795;
+	float: right;
+	padding-top: 13px;
+	font-size: 11px;
+}
+
+#user-toolbox p {
+	display: inline;
+}
+
+#user-toolbox ul {
+	display: inline;
+	margin: 0;
+}
+
+#user-toolbox li {
+	list-style: none;
+	display: inline;
+	padding-left: 3px;
+}
+
+#user-toolbox li.messages a {
+	color: #da371f;
+}
+
+/* ----------------------------------------------------------- =navigation */
+#container > header nav,
+#container > footer nav {
+    margin-bottom: 4px;
+    font-family: "League Gothic", Arial, sans-serif;
+    font-size: 22px;
+    line-height: 1;
+    text-transform: uppercase;
+    clear: left;
+}
+
+#container > header nav {
+    padding: 12px 0 14px 212px;
+}
+
+.ie7 #container > header nav {
+	zoom: 1;
+	z-index: 1;
+}
+
+#container > footer nav {
+    background: #191919;
+    padding: 23px 0 17px 203px;
+}
+
+#container > header nav li,
+#container > footer nav li {
+    display: inline;
+    padding-right: 40px;
+}
+
+#container > header nav a,
+#container > footer nav a {
+    color: #da371f;
+}
+
+/* ----------------------------------------------------------- =search */
+.search {
+    margin: 15px 12px 0 0;
+    float: right;
+    clear: right;
+    font-size: 0;
+}
+
+.search input {
+    display: inline-block;
+    font-size: 12px;
+}
+
+.search input[type=text] {
+    width: 198px;
+    height: 22px;
+    background: #fff;
+    border: 1px solid #ccc;
+}
+
+/**
+ * 	TODO: sprites!
+ */
+.search input[type=submit] {
+    width: 40px;
+    height: 30px;
+    text-indent: -9999px;
+    overflow: hidden;
+    border: 0;
+    background: transparent url(../images/search.png) no-repeat center center;
+}
+
+.ie7 .search input[type=submit] {
+	background-image: none;
+}
+
+.ie7 footer .search input[type=submit] {
+	color: #fff;
+}
+
+header .search {
+	position: absolute;
+	top: 41px;
+	right: 0;
+}
+
+/**
+ * 	TODO: doesn't work :/
+ */
+.ie7 header .search {
+	zoom: 1;
+}
+
+/* ----------------------------------------------------------- =main, =layouts */
+#main {
+    padding: 0 12px;
+    overflow: hidden;
+}
+
+#main > div.content {
+    width: 710px;
+    margin-bottom: 10px;
+    float: left;
+    background: #fff;
+}
+
+#main > .layout-loggedin {
+	width: 710px;
+	float: left;
+}
+
+#main > .layout-loggedin > div.content {
+    width: 520px;
+    float: right;
+}
+
+#main > .layout-loggedin > aside.profile {
+    width: 180px;
+    float: left;
+}
+
+#main > aside.filmaster {
+    width: 240px;
+    float: right;
+}
+
+/* ----------------------------------------------------------- =content */
+#main > div.content h1 {
+	font-family: "League Gothic", sans-serif;
+	font-size: 33px;
+	line-height: 1;
+	text-transform: uppercase;
+	color: #101010;
+}
+
+/* ----------------------------------------------------------- =join us */
+article.join-us {
+	padding-bottom: 20px;
+}
+
+#main > div.content article.join-us h1 {
+	text-align: center;
+	margin: 15px 0 10px;
+}
+
+#main > div.content article.join-us > h1 {
+	font-size: 44px;
+	margin-top:40px;
+	color: #229698;
+}
+
+article.join-us > section,
+article.join-us > div {
+	padding: 10px 10px 22px;
+	border-bottom: 1px solid #efefef;
+}
+
+/* =teaser */
+#main > div.content div.teaser h1 {
+	color: #229698;
+	text-align: left;
+}
+
+/* =rate movies */
+section.rate-movies {
+	overflow: hidden;
+}
+
+section.rate-movies > section.rate-description {
+	float: left;
+	width: 168px;
+	padding: 90px 30px 0 22px;
+}
+
+.join-us .join {
+	margin: 5px 0 10px;
+}
+
+section.rate-movies > section.rate-movie {
+	float: left;
+	width: 256px;
+	padding-left: 214px;
+	background: #efefef;
+	overflow: hidden;
+	font-size: 11px;
+}
+
+#main > div.content section.rate-movie h1 {
+	font-family: inherit;
+	text-transform: none;
+	line-height: 1.2;
+	font-size: 22px;
+	float: right;
+	width: 256px;
+	min-height: 80px;
+	margin-top: 20px;
+}
+
+section.rate-movies > section.rate-movie h1 + img {
+	float: left;
+	margin-left: -214px;
+}
+
+section.rate-movie p.rate {
+	font-weight: bold;
+}
+
+section.rate-movie ul.not-seen-yet-actions {
+	margin: 4px 0;
+}
+
+section.rate-movie ul.not-seen-yet-actions li {
+	list-style: none;
+	padding: 2px 0;
+}
+
+section.rate-movie ul.not-seen-yet-actions a {
+	padding: 3px 0 3px 20px;
+	background-repeat: no-repeat;
+	background-position: left center;
+}
+
+section.rate-movie ul.not-seen-yet-actions li:first-child a {
+	background-image: url(../images/icon-ok.png);
+}
+
+section.rate-movie ul.not-seen-yet-actions li:last-child a {
+	background-image: url(../images/icon-x.png);
+}
+
+section.rate-movie ul.not-seen-yet-actions li.last-child a {
+	background-image: url(../images/icon-x.png);
+}
+
+/**
+ * 	TODO: sprite it!
+ */
+section.rate-movie meter {
+	background: url(../images/rating.png) no-repeat;
+	width: 204px;
+	height: 15px;
+	display: block;
+	text-indent: -9999px;
+	overflow: hidden;
+	margin: 4px 0;
+}
+
+section.rate-movies > section.rate-movie meter {
+	margin-bottom: 50px;
+}
+
+section.rate-movie meter[value="9"] {
+	background-position: 0 -15px;
+}
+
+section.rate-movie meter[value="8"] {
+	background-position: 0 -30px;
+}
+
+section.rate-movie meter[value="7"] {
+	background-position: 0 -45px;
+}
+
+section.rate-movie meter[value="6"] {
+	background-position: 0 -60px;
+}
+
+section.rate-movie meter[value="5"] {
+	background-position: 0 -75px;
+}
+
+section.rate-movie meter[value="4"] {
+	background-position: 0 -90px;
+}
+
+section.rate-movie meter[value="3"] {
+	background-position: 0 -105px;
+}
+
+section.rate-movie meter[value="2"] {
+	background-position: 0 -120px;
+}
+
+section.rate-movie meter[value="1"] {
+	background-position: 0 -135px;
+}
+
+/* =cinema movies, =top movies */
+section.cinema-movies p,
+section.top-movies p {
+	text-align: center;
+}
+
+section.cinema-movies ul,
+section.top-movies ul {
+	margin: 0;
+	padding-top: 20px;
+	overflow: hidden;
+}
+
+/**
+ * 	TODO: make it bulletproof for multiple rows (float)
+ */
+section.cinema-movies li,
+section.top-movies li {
+	float: left;
+	width: 156px;
+	margin-left: 18px;
+	text-align: center;
+	list-style: none;
+}
+
+section.cinema-movies li:first-child,
+section.top-movies li:first-child {
+	margin-left:0;
+}
+
+section.cinema-movies figcaption,
+section.top-movies figcaption {
+	padding-top: 10px;
+}
+
+section.cinema-movies a:hover figcaption,
+section.top-movies a:hover figcaption {
+	text-decoration: underline;
+}
+
+#main > div.content section.top-movies h1 {
+	color: #da371f;
+}
+
+/* =stream, join us */
+article.join-us section.stream > p {
+	text-align: center;
+	padding-top: 0;
+}
+
+article.join-us section.stream ul {
+	margin: 10px 0 0;
+	font-size: 11px;
+	overflow: hidden;
+}
+
+/**
+ * 	TODO: make it bulletproof for multiple rows (float)
+ */
+article.join-us section.stream li {
+	float: left;
+	width: 156px;
+	padding-left: 56px;
+}
+
+article.join-us > p.join {
+	padding: 20px;
+	text-align: center;
+}
+
+/* ----------------------------------------------------------- =aside */
+aside {
+    font-size: 11px;
+}
+
+aside > section {
+    margin-bottom: 10px;
+    background: #fff;
+}
+
+aside h1 {
+    font-family: "League Gothic", sans-serif;
+    font-size: 20px;
+    line-height: 1;
+    text-transform: uppercase;
+    font-weight: normal;
+    padding: 21px 0 15px 10px;
+    color: #191919;
+}
+
+aside section .more {
+    font-size: 10px;
+    line-height: 30px;
+    padding-left: 20px;
+}
+
+aside nav ul {
+    margin: 0;
+    padding: 20px 10px;
+    list-style-type: none;
+    border-top: 1px solid #efefef;
+}
+
+/* ----------------------------------------------------------- =profile aside */
+aside.profile nav {
+	font-size: 12px;
+}
+
+
+/* =meta */
+aside .meta h1 {
+    font-size: 25px;
+    color: #da371f;
+}
+
+aside .meta h1 + a {
+    display: block;
+    margin-top: -10px;
+    padding: 0 10px 10px;
+    font-size: 10px;
+}
+
+/* =watches, =watched-by */
+section.watches ul,
+section.watched-by ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+section.watches li,
+section.watched-by li {
+    float: left;
+    width: 45px;
+    height: 45px;
+    position: relative;
+}
+
+section.watches li span,
+section.watched-by li span {
+    display: none;
+    position: absolute;
+    left: 20px;
+    top: -4px;
+    padding: 5px 10px;
+    background: #efefef;
+    z-index: 1;
+}
+
+section.watches li:hover span {
+    display: block;
+}
+
+section.watched-by a.more,
+section.watches a.more {
+	display: block;
+}
+
+/* ----------------------------------------------------------- =filmaster aside */
+aside.filmaster h1 {
+    padding-left: 25px;
+    background: #229698 no-repeat left bottom;
+    color: #fff;
+}
+
+aside.filmaster ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+/* =recommendations, =in-neighborhood */
+section.recommendations > ul li,
+section.in-neighborhood > ul li {
+	padding: 0;
+    border-bottom: 1px solid #efefef;
+}
+
+section.recommendations > ul a,
+section.in-neighborhood > ul a {
+	display: block;
+	padding: 15px 25px;
+}
+
+section.recommendations > ul a span,
+section.in-neighborhood > ul a span {
+	color: #575c63;
+}
+
+
+/* =stream, filmaster aside */
+/**
+ * 	TODO: expand clickable area to a whole LI
+ */
+section.stream {
+	line-height: 1.35;
+	padding-bottom: 10px;
+}
+
+aside.filmaster section.in-neighborhood h1,
+aside.filmaster section.stream h1 {
+    background-color: #da371f;
+}
+
+section.stream > ul li {
+	padding: 10px 15px 5px 66px;
+	overflow: hidden;
+}
+
+section.stream img {
+	float: left;
+	margin-left: -56px;
+}
+
+section.stream p {
+	padding-top: 4px;
+}
+
+section.stream a {
+	font-weight: bold;
+}
+
+section.stream strong {
+	color: #191919;
+}
+
+/**
+ * 	TODO: transparent bg for the png if needed
+ */
+section.stream meter {
+	background: url(../images/rating-small.png) no-repeat;
+	width: 137px;
+	height: 10px;
+	display: block;
+	text-indent: -9999px;
+	overflow: hidden;
+	margin: 4px 0;
+}
+
+section.stream meter[value="9"] {
+	background-position: 0 -10px;
+}
+
+section.stream meter[value="8"] {
+	background-position: 0 -20px;
+}
+
+section.stream meter[value="7"] {
+	background-position: 0 -30px;
+}
+
+section.stream meter[value="6"] {
+	background-position: 0 -40px;
+}
+
+section.stream meter[value="5"] {
+	background-position: 0 -50px;
+}
+
+section.stream meter[value="4"] {
+	background-position: 0 -60px;
+}
+
+section.stream meter[value="3"] {
+	background-position: 0 -70px;
+}
+
+section.stream meter[value="2"] {
+	background-position: 0 -80px;
+}
+
+section.stream meter[value="1"] {
+	background-position: 0 -90px;
+}
+
+/* =contest */
+section.contest section {
+	padding: 15px 20px;
+}
+
+section.contest p {
+	line-height: 1.6;
+}
+
+/**
+ * 	TODO: sprites!
+ */
+section.contest p.vote a {
+    font-family: "League Gothic", sans-serif;
+    font-size: 22px;
+    padding: 4px 0 0;
+    color: #da371f;
+    text-transform: uppercase;
+    display: block;
+    background: url(../images/button-more.png) no-repeat right;
+}
+
+/* ----------------------------------------------------------- =footer */
+#container > footer {
+	clear: both;
+}
+
+#container > footer ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+
+/* ----------------------------------------------------------- =filmaster specials */
+#container > footer .filmaster-specials > section {
+    float: left;
+    margin-right: 20px;
+}
+
+#container > footer .filmaster-specials {
+    overflow: hidden;
+    padding: 10px 0 15px;
+    font-size: 11px;
+    line-height: 16px;
+}
+
+#container > footer .filmaster-specials h1 {
+    margin-bottom: 10px;
+    padding: 5px 0;
+    font-family: "League Gothic", sans-serif;
+    font-size: 22px;
+    text-transform: uppercase;
+    font-weight: normal;
+    line-height: 20px;
+}
+
+#container > footer .filmaster-specials a {
+	font-weight: bold;
+}
+
+#container > footer .filmaster-specials h1 a {
+	font-weight: normal;
+}
+
+#container > footer .filmaster-specials h1 span {
+    color: #000;
+}
+
+#container > footer .filmaster-specials li {
+    margin-bottom: 3px;
+}
+
+/* =editorial office */
+#container > footer .editorial-office {
+    width: 170px;
+    margin-left: 12px;
+}
+
+/**
+ * 	TODO: sprites!
+ */
+#container > footer .editorial-office h1 {
+	overflow: hidden;
+	text-indent: -9999px;
+    background: url(../images/logo-tagline-small.png) no-repeat;
+    width: 95px;
+    height: 28px;
+    padding-top:0;
+    margin-top:5px;
+}
+
+/* =blog */
+#container > footer .blog {
+    width: 400px;
+}
+
+#container > footer .blog h1 {
+    margin-bottom: 16px;
+}
+
+#container > footer .blog p {
+	padding: 2px 0;
+}
+
+/* =twitter */
+/**
+ * 	TODO: sprites
+ */
+#container > footer .twitter ul {
+	width: 134px;
+	padding: 20px 12px 1px;
+	margin-top: -13px;
+    background: #fff url(../images/twitter-top.png) no-repeat;	
+}
+
+#container > footer .twitter li {
+	margin-bottom: 1em;
+}
+
+#container > footer .twitter ul a {
+	font-weight: normal;
+	color: #575c63;
+}
+
+/* =facebook */
+#container > footer .facebook {
+    width: 160px;
+	padding-top: 33px;
+}
+
+#container > footer .facebook h1 a {
+	background: #229698;
+	color: #fff;
+	display: block;
+	padding: 11px 12px;
+}
+
+/* =cc */
+#container > footer .cc {
+    padding-bottom: 15px;
+    font-size: 10px;
+    line-height: 50px;
+    text-align: center;
+    color: #747474;
+    background: #191919;
+}
+
+#container > footer .cc img {
+    margin-right: 10px;
+    vertical-align: middle;
+}
+
+/* ----------------------------------------------------------- =eu */
+div.eu {
+    background: #fff;
+    box-shadow: 0 10px 10px -5px rgba(0, 0, 0, .2) inset;
+    -webkit-box-shadow: 0 10px 10px -5px rgba(0, 0, 0, .2) inset;
+    font-size: 10px;
+    text-align: center;
+}
+
+/**
+ * 	TODO: do it with sprites
+ */
+div.eu ul {
+    width: 984px;
+    height: 80px;
+    margin: 0 auto;
+    padding: 0;
+    list-style-type: none;
+    box-align: center;
+}
+
+div.eu li {
+	float: left;
+	padding-top: 36px;
+	width: 600px;
+}
+
+div.eu li:first-child,
+div.eu li.first-child,
+div.eu li.last-child {
+    text-align: left;
+    width: 180px;
+	padding-top: 26px;
+}
+
+div.eu li:last-child {
+    text-align: left;
+    width: 180px;
+	padding-top: 26px;
+}
+
+div.eu li:last-child {
+    text-align: right;
+    float: right;
+}
+
+div.eu li.last-child {
+    text-align: right;
+    float: right;
+}
+
+/* ----------------------------------------------------------- =mobile */
+html.mobile {
+	background: #191919;
+	padding-bottom: 20px;
+}
+
+html.mobile #container > header {
+	overflow: hidden;
+	padding-bottom: 10px;
+}
+
+.mobile #main {
+	padding-bottom: 10px;
+}
+
+.mobile #main > .content {
+	float: none;
+	width: 100%;
+	line-height: 1.5;
+}
+
+.mobile #main > .content h1 {
+	margin: 30px 0 20px;
+}
+
+.mobile #main > .content h2 {
+	font-family: "League Gothic", sans-serif;
+	font-size: 33px;
+	text-transform: uppercase;
+	color: #DA371F;
+	margin: 30px 0 20px;
+}
+
+.mobile #main > .content > section {
+	padding: 10px 190px 60px;
+	border: 35px solid #efefef;
+	border-width: 35px 0 0 190px;
+}
+
+.mobile #main > .content > section:first-child {
+	border-top: 0;
+}
+
+.mobile #main .iphone-app-promo {
+	position: absolute;
+	top: 135px;
+	left: 70px;
+}
+
+.app-store a {
+	background: url(../images/button-app-store.jpg) no-repeat;
+	width: 135px;
+	height: 44px;
+	display: block;
+	overflow: hidden;
+	text-indent: -9999px;
+}
+
+.android a {
+	background: url(../images/button-android.jpg) no-repeat;
+	width: 135px;
+	height: 44px;
+	display: block;
+	overflow: hidden;
+	text-indent: -9999px;
+}
+
+/* =mobile newsletter */
+#mobile_newsletter {
+	padding: 20px 0 0;
+}
+
+#mobile_newsletter label {
+	display: block;
+	margin-top: 10px;
+	font-size: 11px;
+}
+
+#mobile_newsletter input[type="email"],
+#mobile_newsletter input[type="text"] {
+	padding: 5px;
+	width: 210px;
+    border: 1px solid #bababa;
+    background: #efefef;
+    box-shadow: 0 0 10px rgba(164, 154, 153, .75) inset;
+    -webkit-box-shadow: 0 0 10px rgba(164, 154, 153, .75) inset;
+}
+
+#mobile_newsletter ul {
+	list-style: none;
+	margin: 0;
+}
+
+#mobile_newsletter ul label {
+	margin: 0;
+	padding: 5px;
+	width: 210px;
+}
+
+#mobile_newsletter ul label:hover,
+#mobile_newsletter ul label:focus {
+	background: #efefef;
+}
+
+/* ----------------------------------------------------------- =toplayer */
+#overlay {
+	background: #000;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	opacity: 0.27;
+	filter: alpha(opacity = 27);
+	z-index: 100;
+	cursor: pointer;
+}
+
+#toplayer {
+	width: 310px;
+	padding-bottom: 15px;
+	background: #efefef;
+	color: #575c63;
+	font-size: 11px;
+	position: absolute;
+	top: 100px;
+	z-index: 200;
+	box-shadow: 0 0 5px 3px rgba(0,0,0,0.3);
+	-webkit-box-shadow: 0 0 5px 3px rgba(0,0,0,0.3);
+}
+
+#toplayer > h1 {
+	font-family: "League Gothic", sans-serif;
+	font-size: 20px;
+	text-transform: uppercase;
+	color: #101010;
+	padding: 15px 15px 10px;
+	margin-bottom: 10px;
+	border-bottom: 1px solid #d7d7d7;
+}
+
+#toplayer > p {
+	padding: 0 15px;
+}
+
+#toplayer a {
+	font-weight: bold;
+}
+
+#toplayer > a.close {
+	position: absolute;
+	top: 0;
+	right: 0;
+	width: 45px;
+	height: 45px;
+	background: url(../images/toplayer-x.png) no-repeat center center;
+	overflow: hidden;
+	text-indent: -9999px;	
+}
+
+#toplayer .btn {
+	margin-right: 8px;
+	font-weight: normal;
+}
+
+#toplayer_content {
+	display: none;
+}
+
+/* =reloaded_newsletter */
+#reloaded_newsletter fieldset {
+	padding: 15px;	
+}
+
+#reloaded_newsletter input[type=email] {
+	width: 200px;
+}
+
+#reloaded_newsletter input[type=submit] {
+	margin: 0 0 0 5px;
+}
+
+
+

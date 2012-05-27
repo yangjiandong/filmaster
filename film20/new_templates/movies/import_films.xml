@@ -1,0 +1,15 @@
+{% load map_url %}
+{% load i18n %}
+
+<rss version="2.0"><channel>
+<title>{%trans "already added films" %}</title>
+<language>pl</language>
+{%for imported_film in imported%}
+<item>
+<guid>{% map_url "MAIN" %}{% map_url_part "FILM" %}/{{imported_film.film.permalink}}</guid>
+<link>{% map_url "MAIN" %}{% map_url_part "FILM" %}/{{imported_film.film.permalink}}</link>
+<title>{{imported_film.film.get_title}}</title>
+<pubDate>{{imported_film.created_at}}</pubDate>
+</item>
+{%endfor%}
+</channel></rss>

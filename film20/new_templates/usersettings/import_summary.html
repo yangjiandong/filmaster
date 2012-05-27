@@ -1,0 +1,31 @@
+{% extends "usersettings/base.html" %}
+{% load i18n %}
+{% load map_url %}
+{% load switchcase %}
+{% load format_date %}
+
+{% block content %}
+	<article class="settings">
+    <h1>{%trans "Settings"%}: <span>{%trans "Import movie ratings" %}</span></h1>
+
+<div id="main-second-column-panel" class="notes-managment">
+{%if summary.movies_rated%}
+    <h2>{%trans "rated movies" %}</h2>
+    {{summary.movies_rated}}
+{%endif%}
+{%if summary.movies_already_rated %}
+    <h2>{%trans "already rated movies" %}</h2>
+    {{summary.movies_already_rated}}
+{%endif%}
+{%if summary.movies_not_rated%}
+    <h2>{%trans "movies not rated" %}</h2>
+    {{summary.movies_not_rated}}
+    {%comment%}
+    {%for film in not_rated_list%}
+        <a href='{{film.addlink}}'>{{film.get_title}}</a>; 
+    {%endfor%}
+    {%endcomment%}
+{%endif%}
+</div>
+	</article><!-- .settings -->
+{% endblock %}

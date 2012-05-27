@@ -1,0 +1,22 @@
+{% extends "festivals/base.html" %}
+{% load i18n %}
+{% load pagination_tags %}
+{% load showtimes %}
+{% load map_url %}
+{% load qs %}
+
+{% block title %}{{ festival.name }} &laquo; {% trans "Film reviews" %} {% endblock %}
+{% block description %}{% trans "Film reviews" %} from {{ festival.name }}{% endblock %}
+{% block head_extra %}
+{{block.super}}
+<meta property="og:title" content="{{ festival.name }} &laquo; {% trans "Film reviews" %} "/>
+<meta property="og:description" content="{% trans "Film reviews from" %} {{ festival.name }}" />
+<meta property="og:type" content="movie"/>
+{% if festival.event_image %}<meta property="og:image" content="{{ settings.FULL_DOMAIN }}{{ settings.MEDIA_URL }}{{ festival.event_image }}"/>{% endif %}
+{% endblock %}
+{% block content %}
+    <section class="reviews">
+        <h1>{{festival.name}} - {% trans "Reviews" %}</h1>
+        {% include "movies/review_list.html" %}
+    </section>        
+{%endblock%}

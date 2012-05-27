@@ -1,0 +1,14 @@
+{% extends "profile/base.html" %}
+{% load basket_tags %}
+{% load i18n %}
+
+{% block title %}{% basket_title type %} {% trans "of user" %} {{ user_profile.get_profile.get_current_display_name }}{% endblock title %}
+
+{% block content %}
+	<section class="movie-list">
+    {% block user-info %}
+        <h1>{% basket_title type %} {% trans "of user" %} {{ user_profile.get_profile.get_current_display_name }}</h1>
+    {% endblock user-info %}
+    {% include 'userprofile/collection.html' %}
+	</section><!-- .movie-list -->
+{% endblock content %}

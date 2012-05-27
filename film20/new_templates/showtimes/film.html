@@ -1,0 +1,25 @@
+{% load i18n %}
+{% load map_url %}
+{% load show_film_tags %}
+{% load object %}
+{% load movie %}
+{% load posters %}
+{% load debug %}
+
+{% if film.pk %}
+<header>
+	<h1><img width="100" height="141" alt="" src="{% poster 100 141 film %}">
+        <a class="t" href="{{ film.get_absolute_url }}">
+            {% if by_original_title %} {{film.title}} {% else %} {{ film.get_title }} {% endif %}
+        </a>
+    </h1>
+    <p>{% if by_original_title %} {{film.get_title}}{% else %} {{ film.title }}{% endif %}, 
+    
+    {% if film.release_year %}{{film.release_year}}{% endif %} {% film_directors film %}</p>
+	{% object_tags film %}
+</header>
+{% film_description film 30 %}
+{% film_average_score film request.user 2 %}
+{% film_guess_score film request.user 2 %}
+{% add_edit_film_rate_form film %}
+{%else%} <header><h1>{{film.get_title}}</h1></header> {%endif%}

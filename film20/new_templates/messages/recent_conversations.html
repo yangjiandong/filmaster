@@ -1,0 +1,34 @@
+{% extends "messages/base.html" %} 
+{% load i18n %} 
+{% load pagination_tags %}
+{% block head_extra %}
+<style>
+.unread {font-weight:bold}
+</style>
+{% endblock %}
+
+{% block title %}{% trans "Recent conversations" %}{% endblock %}
+
+{% block content %}
+<section class="flatpage">
+    <h1>{% trans "Inbox" %}</h1>
+    <table class="conversations">
+        <thead>
+            <tr><th>{% trans "Sender" %}</th><th>{% trans "Subject" %}</th><th>{% trans "Received" %}</th>
+        </thead>
+        <tbody>
+
+    {% autopaginate conversation_list settings.NUMBER_OF_MESSAGES %}
+    {% for c in conversation_list %} 
+        <tr class="{%if not c.is_read%}unread{%endif%}">
+            <td>{{ c.sender }}, {{c.recipient}} ({{c.cnt}})</td>
+            <td>
+                <a href="{{c.get_absolute_url }}">{{ c.subject }}</a>
+            <td>{{ c.updated_at|date:_("DATETIME_FORMAT") }}</td>
+        </tr>
+    {% endfor %}
+        </tbody>
+    </table>
+    {% paginator %}
+</section>
+{% endblock %}

@@ -1,0 +1,13 @@
+{% load format_date %}
+
+<ul>
+{% for note in entries %}
+    <li><a href="{{ note.link }}" title="{{ note.title }}">{{ note.title }}</a>
+    <p>
+    {% for content in note.content %}
+        {{ content.value|striptags|safe|truncatewords:22 }}
+    {% endfor %}
+    </p>
+    </li>
+{% endfor %}
+</ul>

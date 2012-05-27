@@ -1,0 +1,66 @@
+{% extends "showtimes/base.html" %}
+{% load i18n %}
+{% load pagination_tags %}
+{% load showtimes %}
+{% load map_url %}
+{% load qs %}
+
+{% block title %}{% trans "Recommended" %}: {% trans "in theaters" %}{% endblock %}
+{% block description %}{% trans "These are your top recommendations for movies currently showing in local theaters." %}{% endblock %}
+
+{% block showtimes-title %}{% trans "in theaters" %}{% endblock %}
+{% block showtimes-id %}theaters{% endblock %}
+
+{% block showtimescontent %}
+    {% if message %}
+	<p class="i">{{message|safe}}</p>
+	<p class="rate"><a href="#TODO">{% trans "Start rating movies" %}</a></p>
+    {% endif %}
+
+{% if days %}
+<div class="filters">
+        <ul>
+        {%for day in days%}
+                {%with d=day|date:"Y-m-d"%}
+                <li><a class="{%if day == date%}selected{%endif%}" href='?{% qs_copy 'date' day.date 'page' 1 %}'>{{day|date:"l"}}</a></li>
+                {%endwith%}
+        {%endfor%}
+        </ul>
+</div>
+{% endif %}
+
+
+    {% if films %}
+	{% for film in films %}
+			<section class="showtime-list rate-movie-simple">
+				{% include "showtimes/film.html" %}
+				<ul class="in-cinemas">
+					{%for c in film.channels%}
+						<li>
+							<a href="{%channelurl c%}">{{c}}</a>
+							<ul>
+								{%with screenings=c.screenings%}
+									{% include "showtimes/screenings.html" %}
+								{%endwith%}
+							</ul>
+						</li>
+					{%endfor%}
+				</ul><!-- .in-cinemas -->
+			</section>
+		{% endfor %}
+
+    {% include "pagination/pagination.html" %}
+
+    {%else%}
+        {% include "showtimes/no_showtimes.html" %}
+    {%endif%}
+{%endblock%}
+
+{% block end-scripts %}
+<!--script>
+	FM.showAllScreenings({
+		selector: ".showtime-list",
+		limit: 3
+	});
+</script-->
+{% endblock %}

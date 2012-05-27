@@ -1,0 +1,16 @@
+{% load display_user %}
+{% load i18n %}
+
+{% if not users %}
+    <section class="similar-filmasters">
+        <h1>{% if is_logged %}{%  trans "Filmasters similar to you" %}{% else %}{%  trans "Filmasters similar to " %}{{ user_checked.username }}{% endif %}</h1>
+    <ul>
+        {% for user in users %}
+            <li>{% display_user_with_similarity user_checked user %}</li>
+        {% endfor %}
+    </ul>
+    {% if more %}
+        <a href="{% if is_logged %}{% url similar_users_url %}{% else %}{% url profile_similar_users_url user_checked.username %}{% endif %}">{% trans "show all" %}</a>
+    {% endif %}
+    </section>
+{% endif %}

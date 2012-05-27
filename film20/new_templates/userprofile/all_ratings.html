@@ -1,0 +1,27 @@
+{% load i18n %}
+{% load expr %}
+{% load pyif %}
+
+{% expr 10 as prev_rating %} {# TODO: make it work with filter's sorting #}
+{% expr 1 as do_it_once %}
+<ul class="rated">
+{% for rating in object_list %}
+    {% pyif do_it_once == 1 %}
+    <li><meter value="{{ rating.rating }}" max="10">{{ rating.rating }}</meter>
+        <ul>
+            {% expr 0 as do_it_once %}
+            {% expr rating.rating as prev_rating %}
+    {% endif %}
+
+    {% pyif prev_rating != rating.rating %}
+        </ul>
+    </li>
+    <li><meter value="{{ rating.rating }}" max="10">{{ rating.rating }}</meter>
+        <ul>
+    {% endif %}
+    <li>
+    {# TODO: fix localized titles #}
+        <a href="{{ rating.film.get_absolute_url }}">{{ rating.film.get_title }} <span>{%if rating.film.release_year%}({{rating.film.release_year}}){%endif%} {{ rating.film.get_title }} </span></a></li>
+        {% expr rating.rating as prev_rating %}
+{% endfor %}
+</ul><!-- .rated -->

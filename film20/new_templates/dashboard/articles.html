@@ -1,0 +1,36 @@
+{% extends "dashboard/base.html" %}
+{% load i18n %}
+{% load utils %}
+
+{% block title %}{% trans "Your articles" %}{% endblock %}
+
+{% block content %}
+    <section class="dashboard flatpage">
+    <h1>{% trans "Your articles" %}</h1>
+
+	<p>{% a new_article %}{% trans "Write new article" %}{% enda %}</p>
+
+	<p>{% trans "Your articles" %}:
+        {% if drafts %}
+            <a href="?">{% trans "Published" %}</a> | {% trans "Drafts" %}</a>
+        {% else %}
+            {% trans "Published" %} | <a href="?{% trans "drafts" %}">{% trans "Drafts" %}</a>
+        {% endif %}
+    </p>
+    
+    {% if object_list %}
+        <div id="wall" class="stream">
+        {% for activity in object_list %}
+            {% include 'wall/useractivity/article.html' %}
+        {% endfor %}
+        {% include "pagination/pagination.html" %}
+        </div>
+    {% else %}
+        {% if drafts %}
+            {% trans "You have no draft articles, yet." %}
+        {% else %}
+            {% trans "You haven't published any articles, yet." %}
+        {% endif %}
+    {% endif %}
+    </section>
+{% endblock content %}

@@ -1,0 +1,12 @@
+{% load i18n %}
+{% if geo.is_country_supported %}
+		{% blocktrans %}
+		<p>Sorry, no showtimes available.</p>
+		{% endblocktrans %}
+{% else %}
+        {% url edit_location as edit_location %}
+        {% blocktrans with url=edit_location country_code=geo.country_code%}
+        <p> This country ({{country_code}}) - is not supported.
+        Check your <a href="{{url}}">location settings</a>.</p>
+        {% endblocktrans %}
+{% endif %}

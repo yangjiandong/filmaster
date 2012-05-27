@@ -1,0 +1,7 @@
+{% extends 'aside/follow.html' %}
+{% load i18n %}
+
+{% block class_name %}watches{% endblock %}
+{% block title %}{% trans "Followed by user" %}{% endblock %}
+{% block show_all_link %}{% url profile_followed user_profile %}{% endblock %}
+{% block empty_text %}{% trans "User is not following anyone, yet." %}{% endblock %}

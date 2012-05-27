@@ -1,0 +1,3 @@
+{% load i18n %}
+{% url my_recommendations as recommendations_url %}
+{% blocktrans %}Congratulations! Movie recommendations have been calculated for you based on your ratings. Check them out at: {{recommendations_url}}{% endblocktrans %}

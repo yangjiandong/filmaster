@@ -1,0 +1,24 @@
+{% load threadedcommentstags %}
+{% load i18n %}
+
+{% get_threaded_comment_tree for activity as tree %}
+{% for comment in tree%}
+    {%if comment%}
+        {% include "comments/comment_partial.html" %}
+	{% endif %}
+{% endfor %}
+{% if user.is_authenticated %}
+    <form method="post" action="{% get_comment_url activity %}" class="comment-form">
+        <fieldset>
+            {% get_threaded_comment_form as form %}
+            {{ form.comment }}
+            <input type="submit" value="OK" />
+        </fieldset>
+    </form>
+{% else %}
+    <p>
+        <a href="{% url acct_login %}">{% trans "Log in to comment " %}</a>
+        {% trans "or connect with " %}
+        {%include "facebook_connect/facebook_button.html"%}
+    </p>
+{% endif %}

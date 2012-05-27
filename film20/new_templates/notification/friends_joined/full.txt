@@ -1,0 +1,3 @@
+{%load i18n%}{% blocktrans with fbname=fb_user.name%}
+Hey! Your {{network}} friend, {{fbname}}, has just joined Filmaster as {{user}}. You can follow your friend by visiting: {{profile_url}}
+{% endblocktrans %}

@@ -1,0 +1,12 @@
+{% load i18n %}
+
+<div id="main" class="ajax-form">
+    <form method="post" action="{{ form.url }}">
+        {{ form.as_p }}
+
+        <div class="buttons">
+            <input type="submit" value="{% trans "submit" %}" />
+            <span> {% trans "or" %} <a href="#cancel">{% trans "Cancel" %}</a></span>
+        </div>
+    </form>
+</div>

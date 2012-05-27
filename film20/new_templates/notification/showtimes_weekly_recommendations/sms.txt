@@ -1,0 +1,5 @@
+{% load i18n %}
+{% load showtimes %}
+{% trans "This Week:" %}
+{% if cinema_films %}{% trans "Cinema" %}:{% for f in cinema_films|slice:":3" %}{%if not forloop.first%}|{%endif%}{{f.get_title}}{% endfor %}
+{%endif%}{%if tv_films %}TV:{% for f in tv_films|slice:":3" %}{%if not forloop.first%}|{%endif%}{{f.get_title}} {% if days > 1 %}{{f.channels.0.screenings.0|local_time:user.get_profile.timezone|date:"D"}} {% endif %}{{f.channels.0.screenings.0|local_time_txt:user.get_profile.timezone}} @{{f.channels.0}}{% endfor %}{% endif %}

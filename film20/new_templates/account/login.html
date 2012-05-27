@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+{% load account %}
+{% load i18n %}
+{% load map_url %}
+{% load captureas_tag %}
+
+{% block title %}{% trans "Log in" %}{% endblock %}
+
+{% block body-class %}registration{% endblock %}
+
+{% block content %}                
+{% if user.is_authenticated %}
+  <div>
+  <p>
+	<strong>
+	<span class="warning">{% trans "Note" %}</span>:
+    {% blocktrans %}You are already logged in as {{ user }}.{% endblocktrans %}
+    <a class='logout-link' href='{% map_url "LOGOUT" %}/?{%get_next request%}' title="">{% trans "Log out"%}</a>
+    </strong>
+  </p>
+  </div>
+{% else %}
+	{% block primary-content-wrapper-start %}{% endblock %}
+	{% block content-start %}{% endblock %}
+    <div id="signup">
+	<section class="standard-log-in">
+		<h1>{% trans "Standard log in" %}</h1>
+
+		<form class="log-in" id="signup_form" method="post" action="">
+			<fieldset>
+				<div class="loginstandard">
+					{% if reason %}
+						<div id="login-reason">
+						{% ifequal reason "vote" %}
+							{% trans "In order to vote you need to sign in." %}
+						{% endifequal %}
+						</div>
+					{% endif %}
+					<div id="registerinfo">
+					{% captureas signup_url %}{% url account.views.signup %}?{%get_next request%}{% endcaptureas %}
+					</div>
+					<div>{{ form.non_field_errors }}</div>
+
+					{% for field in form %}
+
+						{% if field.errors %}
+							{{ field.errors }}
+						{% endif %}
+					
+						{% if field.name == "remember" %}
+						<div class="check">
+							<label for="{{ field.id_for_label }}">{{ field }} {{ field.label }}</label>
+						{% else %}
+							{% if field.is_hidden %}
+							<!-- hidden -->
+							{% else %}
+								{{ field.label_tag }}
+							{% endif %}
+
+							{{ field }}
+						{% endif %}
+
+						{% if field.help_text %}
+							<p>{{ field.help_text }}!</p>
+						{% endif %}
+
+						{% if field.name == "remember" %}
+							</div><!-- .check -->
+						{% endif %}
+											 
+					{% endfor %}
+					<input type="submit" value="{% trans "Log in" %}" />
+					<p class="forgotten-pass"><a href='{% map_url "RESET_PASSWORD" %}/?{%get_next request%}'>{% trans "Forgot password?" %}</a></p>
+				</div>
+			</fieldset>
+		{% csrf_token %}
+		</form><!-- .log-in -->
+	</section><!-- .standard-log-in -->
+		
+	<section class="quick-registration">
+		<h1>{% trans "Quick log in" %}</h1>
+		<p>{% blocktrans %}Don't have an account? <strong><a href="{{ signup_url }}">Sign up</a></strong> or log in using one of those services:{% endblocktrans %}</p>
+{#		<p>{% trans "Use Your Facebook, Twitter or OpenID. One click instead of another password." %}</p>#}
+		{%include "account/sso_buttons.html"%}
+	</section><!-- .quick-registration -->
+    </div>
+	{% block content-end %}{% endblock %}
+	{% block primary-content-wrapper-end %}{% endblock %}
+		
+{% endif %}
+{% endblock %}

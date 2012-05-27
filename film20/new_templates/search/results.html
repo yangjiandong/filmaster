@@ -1,0 +1,73 @@
+{% extends "search/base.html" %}
+{% load i18n %}
+{% load map_url %}
+{% load search %}
+{% load pyif %}
+{% load pagination_tags %}
+
+{% block title %}
+{% if query %}
+{% trans "Search results for phrase: " %} '{{ query }}'
+{% else %}
+{% trans "Search" %}
+{% endif %}
+{% endblock %}
+
+{% block primary-content-wrapper-start %}{% endblock %}
+{% block primary-content-wrapper-end %}{% endblock %}
+
+{% block content %}
+<section class="search-content">
+    
+   <!--div class="search-form">
+        {% include 'search/search_form.html' %} 
+   </div-->
+
+   <h1>{% trans "Search" %} {% if query %}'<span class="searched-phrase">{{ query }}</span>'{% endif %}</h1> 
+
+   {% if query %}
+
+        {% if facets %}
+            {% for facet in facets %}
+                <h2>{{ facet.name|to_verbose_name }} ({{ facet.count }})</h2>
+                {% if full %}
+                    {% with facet.results as results %}
+                    {% autopaginate_new results %}
+                    <ul class="search-results">
+                    {% for item in results %}
+                        {% display_single_search_result item %}
+                    {% endfor %}
+                    </ul>
+                    {% paginate_new %}
+                    {% endwith %}
+                {% else %}
+                    <ul class="search-results">
+                    {% for item in facet.results %}
+                        {% display_single_search_result item %}
+                    {% endfor %}
+                    </ul>
+
+                    {% with facet.count as count %}
+                        {% pyif count > 4 %}
+                            <div class="show-more">
+                                <a href="{% url search-full %}?q={{ query }}&t={{ facet.name|urlencode }}">{% trans "more results"%} ...</a>
+                            </div>
+                        {% endif %}
+                    {% endwith %}
+                {% endif %}
+            {% endfor %}
+        {% else %}
+            <p>{% trans "Could not found what you're looking for. Try to adjust your query string" %}</p>
+
+                <h2>{% trans "Want to request a film?" %}</h2>
+            <p>
+                {% trans "If you are looking for a film that is not in our database, please let us know about it"%}
+                <strong><a href="{% map_url "ADD_FILMS" %}">{% trans "using this form" %}</a></strong>
+                {% trans " and we'll try to fix it as soon as we can" %}.
+            </p>
+        {% endif %}
+    {% else %}
+        <p>{% trans "Enter your search phrase in one of the boxes on the right to start search." %}</p>
+    {% endif %}
+</section>
+{% endblock %}

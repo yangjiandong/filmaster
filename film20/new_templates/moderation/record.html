@@ -1,0 +1,23 @@
+{% load i18n %}
+{% load map_url %}
+
+<tr class="moderation-record">
+    <td class="title">
+        {% block title %}{% endblock %}
+    </td>
+    <td class="user">
+        {% block user %}
+        <a href="{% url_user_link item.user %}">{{ item.user.username }}</a>
+        {% endblock %}
+    </td>   
+    <td class="actions">
+        <form method="post" action="{% url moderate-item moderated_item.get_name %}">
+            <input name="id" value="{{ item.pk }}" type="hidden" />
+
+            {% block extra_actions %}{% endblock %}
+
+            <input type="submit" value="{% trans "Accepted" %}" name="accept" />
+            <input type="submit" value="{% trans "Not accepted" %}" name="reject" />
+        </form>
+    </td>
+</tr>

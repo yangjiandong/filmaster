@@ -1,0 +1,14 @@
+{% extends "fbapp/base.html" %}
+{% load recommended %}
+
+{% block about %}
+<li><a href='{% url fbapp_main %}' id="main">Filmaster FB</a></li>
+{% endblock about %}
+
+{% block content %}
+<h1>Dzięki! :)</h1>
+<h2>Dziękujemy za wspólną zabawę. Wyniki ujawnimy {{ contest.final_date}}.
+    Możesz ich szukać tutaj, na naszej stronie lub w swojej skrzynce mailowej.</h2>
+<p class='recommendations'>A oto filmy, które mogą się Tobie spodobać według Filmastera:</p>
+{% fbapp_recommended %}
+{% endblock %}

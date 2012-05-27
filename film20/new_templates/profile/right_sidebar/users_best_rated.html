@@ -1,0 +1,13 @@
+{% load i18n %}
+<section class="others-ratings">
+<h1>{% trans "User's top rated movies" %}</h1>
+{% if movies %}
+    {% include 'aside/movies/movie_list.html' %}
+
+    {% if show_more %}
+    <a href="{% url ratings username=act_user.username %}">{% trans "show all" %}</a>
+    {% endif %}
+{% else %}
+    <p> {% trans "User hasn't rated any movies, yet" %}
+{% endif %}
+</section>

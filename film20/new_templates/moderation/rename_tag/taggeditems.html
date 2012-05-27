@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+{% load pagination_tags %}
+
+{% block title %}
+    {% trans "Objects tagged with tag:" %} {{ tag }}
+{% endblock %}
+
+{% block primary-content-wrapper-start %}{% endblock %}
+{% block primary-content-wrapper-end %}{% endblock %}
+
+{% block content %}
+    <section class="add-movie">
+        <h1>{% trans "Objects tagged with tag: " %} {{ tag }}</h1>
+        
+        {% autopaginate_new items %}
+
+        <ul>
+        {% for item in items %}
+            <li>{{ item.object }}</li>
+        {% endfor %}
+        </ul>
+        {% paginate_new %}
+    </section>
+
+{% endblock %}

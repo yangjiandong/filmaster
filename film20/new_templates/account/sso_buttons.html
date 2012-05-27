@@ -1,0 +1,24 @@
+{% load account %}
+{% load i18n %}
+<ul>
+    <li>{%include "facebook_connect/facebook_button.html"%}</li>
+	{%for service in OAUTH_SERVICES%}
+	<li class="login_method {{service.normalized_name}}">
+		<a class="{{service.normalized_name}}" target="_top" href="{%url oauth_login service.normalized_name%}?{%get_next request%}">{% trans "Sign up with" %} {{service.name}}</a>
+	</li>
+	{%endfor%}
+	{% if not request.is_mobile and not skip_openid %}
+	<li>
+		{% if openid_message %}<p>{{ openid_message }}</p>{% endif %}
+		<form class="open-id" action="." method="post">
+			<fieldset>
+				<label for="id_openid_url">{% trans "Your @openID:" %}</label>
+				{{ openidform.openid_url }}
+				{{ openidform.next }}
+				{{ openidform.reason }}
+				<input type="submit" value="{% trans "Log in" %}" />
+			</fieldset>
+		</form><!-- .open-id -->
+	</li>
+	{% endif %}
+</ul>

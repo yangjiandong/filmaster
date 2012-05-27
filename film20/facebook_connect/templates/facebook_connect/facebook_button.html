@@ -1,0 +1,9 @@
+{% load i18n %}
+{%load account%}
+{%if request.is_mobile and request.is_oauth%}
+<a class="fb-button" href="{% url fb_begin %}?{% get_next request %}"><img src="/static/img/sign-up-facebook.png" alt="Facebook login" /></a>
+{%else%}
+<!-- <fb:login-button autologoutlink="false" perms="{{settings.FACEBOOK_PERMS}}"></fb:login-button>
+-->
+<a class="fb-button" target="_top" href="{% url fb_begin %}?{% get_next request %}">{% trans "Sign up with" %} Facebook</a>
+{%endif%}

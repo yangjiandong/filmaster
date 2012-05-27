@@ -1,0 +1,5 @@
+{% load i18n %}
+{% blocktrans %}
+New cinemas around {{ town }}, {{ country }} found.
+To see our recommendations, please go to {{ url }}
+{% endblocktrans %}

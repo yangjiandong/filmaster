@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% load map_url %}
+{% load i18n %}
+{% load movie %}
+{% load object %}
+{% load posters %}
+{% load show_film_tags %}
+{% load pagination_tags %}
+
+{% block title %}
+    {% trans "Request a movie to be added" %}
+{% endblock %}
+
+{% block primary-content-aside %}
+<aside class="movie">
+    <section class="poster">
+        <p><img width="180" src="{%poster 180 auto film%}" alt="{{ film.get_title }}" /></p>
+        <p>
+            <a href="{{ film.get_absolute_url }}">{{ film.get_title }} {{ film.release_year }}</a>
+        </p>
+    </section>
+</aside>
+{% endblock primary-content-aside %}
+
+{% block primary-content-wrapper-start %}{% endblock %}
+{% block primary-content-wrapper-end %}{% endblock %}
+
+{% block content %}
+<script type="text/javascript" src="/static/js/libs/jquery-1.6.2.min.js"></script>
+<script type="text/javascript" src="/media/js/admin/RelatedObjectLookups.js"></script>
+
+<script type="text/javascript">
+var window_id = 0;
+
+// brutal override
+function showAddAnotherPopup(triggeringLink) {
+    var name = '__' + ( ++window_id );
+    triggeringLink.id = name;
+    name = id_to_windowname( name );
+    href = triggeringLink.href
+    if (href.indexOf('?') == -1) {
+        href += '?_popup=1';
+    } else {
+        href  += '&_popup=1';
+    }
+    var win = window.open(href, name, 'height=500,width=800,resizable=yes,scrollbars=yes');
+    win.focus();
+
+    return false;
+}
+
+function dismissAddAnotherPopup( win, id, name ) {
+    var link_id = windowname_to_id( win.name );
+    // ..
+    var triggeringLink = $( "#" + link_id );
+    var name_field = triggeringLink.prev();
+    var id_field = name_field.prev();
+    id_field.val( id );
+    name_field.val( name );
+
+    win.close();
+}
+
+</script>
+
+<section class="edit-cast">
+    <h1>{% trans "Edit cast" %}</h1> 
+    <form method="post" accept-charset="utf-8" enctype="multipart/form-data">
+        {{ form.as_p }}
+        <p style="clear:both;">
+            <input type="submit" name="save" value="{% trans "Save" %}" />
+        </p>
+    </form>
+</section>
+{% endblock %}
+
+{% block end-scripts %}
+    <script>document.write("<script src='/static/js/plugins/jquery.autocomplete.min.js'>\x3C/script>")</script>
+{% endblock %}

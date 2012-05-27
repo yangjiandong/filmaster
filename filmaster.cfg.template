@@ -1,0 +1,6 @@
+export FCGIPORT=9090
+export MINSPARE=2
+export MAXSPARE=4
+echo fastcgi port: $FCGIPORT
+
+# SKIP_CELERY=y

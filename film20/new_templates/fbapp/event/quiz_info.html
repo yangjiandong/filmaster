@@ -1,0 +1,12 @@
+{% extends "fbapp/event/base.html" %}
+{% load i18n %}
+
+{% block content %}
+<p>{% trans "Answer 10 simple movie-related questions. You have 15 seconds to answer each question but the quicker you are, the better. When you're ready hit START" %}</p>
+
+<div class="play">
+    <form action="{% url event_quiz contest.slug %}" method="post">
+        <input type="submit" name="start" value="{% trans 'START' %}">
+    </form>
+</div>
+{% endblock content %}

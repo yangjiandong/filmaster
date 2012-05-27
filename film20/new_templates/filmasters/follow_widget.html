@@ -1,0 +1,36 @@
+{% load i18n %}
+{% load pyif %}
+{% load map_url %}
+{% if you %}
+
+{% else %}
+	{% if relation %}
+			<form action="{% url follow_widget %}" id="followform" class="followform" method="post">
+			<fieldset>
+			<button class="btn">
+			{% ifequal relation.status 1%}
+				{% trans "Unfollow" %}
+			{% else %}
+				{% trans "Follow" %}
+			{% endifequal %}
+			</button>
+			<span class="ajax-loader"></span>
+			<input name="user_id" value="{{comment_user.id}}" type="hidden" />
+			<input id="follow-user-name" name="user_name" value="{{comment_user.username}}" type="hidden" />
+			<input name="next" value="{{next}}" type="hidden" />
+			<input id="follow_val" name="follow_val" value="{% ifequal relation.status 1%}0{% else %}1{% endifequal %}" type="hidden" />
+			</fieldset>
+			</form>
+	{% else %}
+			<form action="{% url follow_widget %}" id="followform" class="followform" method="post">
+			<fieldset>
+			<button class="btn">{% trans "Follow " %}</button>
+			<span class="ajax-loader"></span>
+			<input name="user_id" value="{{comment_user.id}}" type="hidden" />
+			<input id="follow-user-name" name="user_name" value="{{comment_user.username}}" type="hidden" />
+			<input name="next" value="{{ next }}" type="hidden" />
+			<input id="follow_val" name="follow_val" value="1" type="hidden" />
+			</fieldset>
+			</form>
+	{% endif %}
+{% endif %}

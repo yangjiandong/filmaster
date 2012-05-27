@@ -1,0 +1,2 @@
+{% load i18n %}
+{% blocktrans %}Unfortunately, something terrible happened and we failed to import your ratings. You will receive a notification upon a successful import.{% endblocktrans %}

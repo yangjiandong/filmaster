@@ -1,0 +1,1 @@
+{% load sanitize %}{% load urlimagize %}{% load oembed_tags %}{% load smartlinebreaks %}{% load parse_nicknames %}{{ content|sanitize:"b i em strong ol li ul blockquote a:href img:src h2 spoiler del"|spoiler|safe|oembed|urlimagize|parse_nicknames|smartlinebreaks}}

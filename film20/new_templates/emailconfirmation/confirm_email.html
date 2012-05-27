@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+
+{% block title %}{% trans "Confirm Email" %}{% endblock %}
+
+{% block content %}
+<div id="content-section">
+    {% if email_address %}
+        <h2>{% trans "Email Confirmed" %}</h2>
+        
+        <p>{% blocktrans with email_address.email as email and email_address.user as user %}You have confirmed that {{ email }} is your email address. Your username is '{{ user }}'.{% endblocktrans %}</p>
+    {% else %}
+        <p>{% trans "Invalid confirmation key." %}</p>
+    {% endif %}
+</div>
+{% endblock %}

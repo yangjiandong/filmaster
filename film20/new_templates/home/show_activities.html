@@ -1,0 +1,16 @@
+{% load i18n %}
+{% load switchcase %}
+
+<ul>
+    {% for activity in activities %}
+    {% with activity.activity_type as type %}
+    {% switch type %}
+        {% case 1 %}{% include 'wall/useractivity/home-article.html' %}{% endcase %}
+        {% case 2 %}{% include 'wall/useractivity/home-wall_post.html' %}{% endcase %}
+        {% case 3 %}{% include 'wall/useractivity/home-comment.html' %}{% endcase %}
+        {% case 4 %}{% include 'wall/useractivity/home-rating.html' %}{% endcase %}
+        {% case 7 %}{% include 'wall/useractivity/home-checkin.html' %}{% endcase %}
+    {% endswitch %}
+    {% endwith %}
+    {% endfor %}
+</ul>

@@ -1,0 +1,31 @@
+{% extends "fbapp/base.html" %}
+
+{% block content %}
+    <h1>Graj o bilety</h1>
+    <p>
+    Co tydzień do wygrania podwójne zaproszenia do kina, a raz w miesiącu
+    na gracza z największą ilością punktów czeka nagroda główna. Żeby
+    wziąć udział:
+    <ul>
+        <li>odpowiedz na 10 prostych pytań</li>
+        <li>oceń 6 obejrzanych filmów</li>
+    </ul>
+    (czas trwania: około minuty)
+    </p>
+
+    <div class="play">
+        <a href='{% url fbapp_choose_ticket %}'>GRAJ</a>
+    </div>
+    <div>
+        <h3>O bilety grają również:</h1>
+        <div class="friends">
+        {% if friends %}
+            {% for f in friends %}
+                <a href="{{f.link}}" title="{{f.name}}"><img src="{{f.picture_url}}" /></a>
+            {%endfor%}
+        {% else %}
+            <div class="empty">Nikt z twoich znajomych nie gra z nami ...</div>
+        {% endif %}
+        </div>
+    </div>
+{% endblock %}

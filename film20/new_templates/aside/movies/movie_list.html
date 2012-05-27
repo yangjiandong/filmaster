@@ -1,0 +1,11 @@
+{% load map_url %}
+{% load movie %}
+{% load i18n %}
+
+<ul>
+{% for movie in movies %}
+<li>
+	<a href="{{ movie.get_absolute_url }}" title="{{ movie.get_title }}">{{ movie.get_title }}</a>
+</li>
+{% endfor %}
+</ul>

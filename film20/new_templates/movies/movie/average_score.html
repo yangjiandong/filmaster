@@ -1,0 +1,12 @@
+{%load i18n%}
+{%load object%}
+
+{%if average%}
+	{% ifequal type 2 %}
+	<p class="avg">{%trans "Average rating"%}: <meter value="{{average|floatformat:'2'}}" max="10">{{average|floatformat:'2'}}</meter><span class="rating-2-avg r{{average|floatformat:'0'}}"></span></p>
+	{% else %}
+		<p class="avg">{%trans "Average rating"%}: {{average|floatformat:'2'}} <span class="votes">({{ votes }})</span> <meter class="rating-1-avg" max="10" value="{{average|floatformat:'0'}}">{{average|floatformat:'0'}} {%trans "stars"%}</meter></p>
+	{% endifequal %}
+{% else %}
+    {% trans "No one has rated this film, yet. Be the first Filmaster to rate it!" %}
+{%endif%}

@@ -1,0 +1,351 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-11-01 00:05+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: film_helper.py:29
+msgid "Title cannot be an empty strong!"
+msgstr ""
+
+#: film_helper.py:32
+#, fuzzy
+msgid "Title cannot be longer than 255 characters!"
+msgstr ""
+"Krótka recenzja nie może być dłuższa niż 255 znaków. To krótka recenzja :)"
+
+#: film_views.py:122 film_views.py:285 person_views.py:45
+msgid "Unsupported ajax type:"
+msgstr ""
+
+#: models.py:285
+msgid "Film localized"
+msgstr ""
+
+#: models.py:286
+msgid "Films localized"
+msgstr ""
+
+#: models.py:377 search_helper.py:14
+msgid "Film"
+msgstr ""
+
+#: models.py:378
+#, fuzzy
+msgid "Director"
+msgstr "Reżyseria"
+
+#: models.py:379
+#, fuzzy
+msgid "Actor"
+msgstr "Aktorzy"
+
+#: models.py:380
+msgid "Actor in film"
+msgstr ""
+
+#: models.py:381
+msgid "Director in film"
+msgstr ""
+
+#: models.py:382
+msgid "Screenplay"
+msgstr "Scenariusz"
+
+#: models.py:383
+msgid "Special effects"
+msgstr "Efekty specjalne"
+
+#: models.py:384
+msgid "Montaz"
+msgstr ""
+
+#: models.py:385
+msgid "Music"
+msgstr ""
+
+#: models.py:386
+msgid "Camera"
+msgstr ""
+
+#: models.py:387
+msgid "Novelty"
+msgstr "Innowacyjność"
+
+#: models.py:388
+msgid "Brutality"
+msgstr "Brutalność"
+
+#: rating_form.py:54
+msgid "Rating must be integer!"
+msgstr "Ocena musi być liczbą całkowitą!"
+
+#: rating_form.py:69
+msgid "object_id must be integer!"
+msgstr "object_id musi być liczbą całkowitą!"
+
+#: rating_form.py:79
+msgid "edit_id must be integer!"
+msgstr "edit_id musi być liczbą całkowitą!"
+
+#: rating_form.py:87
+msgid "Form type must be provided!"
+msgstr "Brak typu formularza!"
+
+#: rating_form.py:92
+msgid "Form type must be integer!"
+msgstr "Typ formularza musi być liczbą całkowitą!"
+
+#: rating_form.py:97
+msgid "Unknown form type: "
+msgstr "Nieznany typ formularza: "
+
+#: rating_form.py:114 rating_helper.py:100
+msgid "Already voted for this object!"
+msgstr "Już głosowałeś na ten obiekt!"
+
+#: rating_form.py:127
+msgid "Review cannot be longer than 255 characters!"
+msgstr ""
+"Krótka recenzja nie może być dłuższa niż 255 znaków. To krótka recenzja :)"
+
+#: rating_form.py:130
+msgid "Review cannot be shorter than 20 characters! This is a review, damn it!"
+msgstr ""
+"Recenzja nie może być krótsza niż 20 znaków. To jest recenzja do jasnej "
+"cholery! :)"
+
+#: rating_helper.py:184 rating_helper.py:233
+msgid "Object to be rated does not exists in database!"
+msgstr "Oceniany obiekt nie znajduje się w bazie danych. Brzmi groźnie."
+
+#: search_helper.py:13
+msgid "All"
+msgstr "Wszystko"
+
+#: search_helper.py:15
+msgid "People"
+msgstr "Ludzie filmu"
+
+#: search_helper.py:16
+msgid "Users"
+msgstr "Użytkownicy serwisu"
+
+#, fuzzy
+#~ msgid "Show Comment"
+#~ msgstr "Komentarze"
+
+#, fuzzy
+#~ msgid "Hide Comment"
+#~ msgstr "Komentarze"
+
+#~ msgid "Reply"
+#~ msgstr "Odpowiedz"
+
+#~ msgid "Rate films"
+#~ msgstr "Oceniaj filmy"
+
+#~ msgid "Likely score"
+#~ msgstr "Prawdopodobna ocena"
+
+#~ msgid "Your top users' ratings"
+#~ msgstr "Oceny bliskich użytkowników"
+
+#~ msgid "Nobody ranked this film, yet. Be the first one!"
+#~ msgstr "Nikt jeszcze nie ocenił tego filmu. Możesz być pierwszy!"
+
+#~ msgid "Film info"
+#~ msgstr "Informacje o filmie"
+
+#~ msgid "Release year"
+#~ msgstr "Rok premiery"
+
+#~ msgid "Directed by"
+#~ msgstr "Reżyseria"
+
+#~ msgid "Actors"
+#~ msgstr "Aktorzy"
+
+#~ msgid "as"
+#~ msgstr "jako"
+
+#~ msgid "Rate previous film"
+#~ msgstr "Oceń poprzedni film"
+
+#~ msgid "Rate next film"
+#~ msgstr "Oceń następny film"
+
+#~ msgid "Recently popular movies"
+#~ msgstr "Ostatnio ocenione filmy"
+
+#, fuzzy
+#~ msgid "Search results for phrase: "
+#~ msgstr "Oto co znalazłeś"
+
+#, fuzzy
+#~ msgid "Search"
+#~ msgstr "Oto co znalazłeś"
+
+#~ msgid "You searched for"
+#~ msgstr "Oto czego poszukiwałeś"
+
+#~ msgid "Search results"
+#~ msgstr "Oto co znalazłeś"
+
+#~ msgid "Best matches"
+#~ msgstr "Najlepsze wyniki"
+
+#~ msgid "Other matches"
+#~ msgstr "Reszta wyników"
+
+#~ msgid ""
+#~ "Could not found what you're looking for. Try to adjust your query string"
+#~ msgstr ""
+#~ "Niestety nie znaleziono niczego fajnego. Spróbuj poprawić zapytanie."
+
+#, fuzzy
+#~ msgid "Search results for: "
+#~ msgstr "Oto co znalazłeś"
+
+#, fuzzy
+#~ msgid "Search films"
+#~ msgstr "Oto co znalazłeś"
+
+#~ msgid "Search!"
+#~ msgstr "Szukaj!"
+
+#~ msgid "Film title"
+#~ msgstr "Tytuł filmu"
+
+#, fuzzy
+#~ msgid "Search people"
+#~ msgstr "Oto co znalazłeś"
+
+#~ msgid "Person name"
+#~ msgstr "Imię"
+
+#~ msgid "Person surname"
+#~ msgstr "Nazwisko"
+
+#~ msgid "Person"
+#~ msgstr "Osoba"
+
+#~ msgid "Advanced rating"
+#~ msgstr "Szczegółowa ocena"
+
+#~ msgid "Nobody except you ranked this film, yet. You must be a film maniac!"
+#~ msgstr ""
+#~ "Nikt oprócz Ciebie nie ocenił tego filmu. Musisz być prawdziwym maniakiem."
+
+#~ msgid "Comments"
+#~ msgstr "Komentarze"
+
+#~ msgid "Reply to Original"
+#~ msgstr "Dodaj nowy komentarz"
+
+#~ msgid "Edit Tags"
+#~ msgstr "Edytuj tagi"
+
+#~ msgid "Rate other movies"
+#~ msgstr "Oceń inne filmy"
+
+#~ msgid "Main page"
+#~ msgstr "Strona główna"
+
+#~ msgid "Date of birth"
+#~ msgstr "Data urodzenia"
+
+#~ msgid "Movies directed"
+#~ msgstr "Filmy jako reżyser"
+
+#~ msgid "Movies played"
+#~ msgstr "Filmy jako aktor"
+
+#~ msgid "User profile"
+#~ msgstr "Profil użytkownika"
+
+#~ msgid "You have sent this user an invitation which is still pending."
+#~ msgstr ""
+#~ "Wysłałeś temu użytkownikowi zaproszenie, na które jeszcze nie "
+#~ "odpowiedział."
+
+#~ msgid "This user refused your invitation."
+#~ msgstr "Ten użytkownik odrzucił Twoje zaproszenie."
+
+#~ msgid "This user is officially your friend!"
+#~ msgstr "Ten użytkownik jest oficjalnie Twoim przyjacielem!"
+
+#~ msgid "Invite this person friend!"
+#~ msgstr "Zaprzyjaźnij się z tym użytkownikiem!"
+
+#~ msgid "Welcome"
+#~ msgstr "Witamy"
+
+#~ msgid "Your profile"
+#~ msgstr "Twój profil"
+
+#~ msgid "Log out"
+#~ msgstr "Wyloguj się"
+
+#~ msgid "Log in"
+#~ msgstr "Zaloguj się"
+
+#~ msgid "Sign up"
+#~ msgstr "Zarejestruj się"
+
+#~ msgid "Currently you have no new invitations."
+#~ msgstr "Obecnie nie masz nowych zaproszeń."
+
+#~ msgid "Favorite films"
+#~ msgstr "Ulubione filmy"
+
+#~ msgid "Edit your profile"
+#~ msgstr "Edytuj swój profil"
+
+#~ msgid "Show your public profile"
+#~ msgstr "Pokaż swój publiczny profil"
+
+#~ msgid "Your blog"
+#~ msgstr "Twój blog"
+
+#~ msgid "Add note"
+#~ msgstr "Dodaj notkę blogową"
+
+#~ msgid "Manage your notes"
+#~ msgstr "Zarządzaj notkami blogowymi"
+
+#~ msgid "Your invitations"
+#~ msgstr "Twoje zaproszenia"
+
+#~ msgid "You have received no new invitations."
+#~ msgstr "Nie masz żadnych nowych zaproszeń."
+
+#~ msgid "Rating"
+#~ msgstr "Ocena"
+
+#~ msgid "Short review"
+#~ msgstr "Krótka recenzja"
+
+#~ msgid "Edit Rating"
+#~ msgstr "Edytuj ocenę"
+
+#~ msgid "Rate"
+#~ msgstr "Oceń"
+
+#~ msgid "User"
+#~ msgstr "Użytkownik"
+
+#~ msgid "said"
+#~ msgstr "powiedział"

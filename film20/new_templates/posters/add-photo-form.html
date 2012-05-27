@@ -1,0 +1,26 @@
+{% load i18n %}
+{% load upload_tags %}
+
+<div id="main" class="upload-photo">
+{% upload_image_form 'add_person_photo' %}
+
+<form id="form__add_person_photo" action="{{ url }}" method="POST" accept-charset="utf-8" enctype="multipart/form-data">
+    {% csrf_token %}
+    <input type="hidden" id="id_uploaded_image" name="uploaded_image" />
+
+    <p>
+        <label for="id_in_all_languages">{% trans "In all languages"%}:</label>
+        <input id="id_in_all_languages" type="checkbox" name="in_all_languages">
+    </p>
+
+    <p>
+        <label for="id_is_main">{% trans "Is main"%}:</label>
+        <input id="id_is_main" type="checkbox" name="is_main">
+    </p>
+
+    <div class="buttons">
+        <input type="submit" value="{% trans "Submit" %}" />
+        <span> {% trans "or" %} <a href="#cancel">{% trans "Cancel" %}</a></span>
+    </div>
+</form>
+</div>

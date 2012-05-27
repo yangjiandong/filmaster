@@ -1,0 +1,41 @@
+{% load i18n %}
+{% load expr %}
+{% load map_url %}
+{% load posters %}
+{% load object %}
+{% load movie %}
+{% load utils %}
+{% load format_date %}
+{% load useractivity_tags %}
+{% load debug %}
+
+{% if reviews %}
+{% include "pagination/pagination.html" %}
+
+{% for review in reviews %}
+    <section>
+        <header>
+            <h1><a href="{{ review.get_absolute_url }}">{{ review.get_title }}</a></h1>
+            <p><a href="{% if review.film %}{{ review.film.get_absolute_url }}{% else %}{{ review.get_absolute_url }}{% endif %}"><img width="100" height="141" alt="{% if review.film %}{{ review.film.get_title }}{% else %}{{ review.get_title }}{% endif %}" src="{% if review.film %}{% poster 100 141 review.film %}{% else %}{% poster_default %}{% endif %}" /></a></p>
+            {% if review.film %}
+                <p>{% film_user_rating review.film review.user 'SIMPLE' %}</p>
+            {% endif %}
+            {% if review.film %}
+                <h2>{% trans "about" %} <a href="{{ review.film.get_absolute_url }}">{{ review.film_title }} ({{ review.film.release_year }})</a></h2>
+            {% endif %}
+        </header>
+        {% if review.spoilers %}<img src="/static/img/spoiler.png" alt="Spoiler!" />{% endif %}
+        <p>{% if review.post.lead %}{{ review.post.lead|striptags }}{% else %}{{ review.post.body|truncatewords:40|striptags}}{% endif %}</p>
+        <footer>
+            <p><a href="{% url_username_link review.user %}">{{ review.user }}</a></p>
+            <p>
+                <time datetime="TODO!" title="{{ review.post.publish }}">{% human_readable_date review.post.publish %}</time>
+                <a href="{{ review.get_absolute_url }}">{% trans "read more" %}</a>
+            </p>
+        </footer>
+    </section>
+{% endfor %}
+{% include "pagination/pagination.html" %}
+{% else %}
+    <p>{% trans "There are no reviewed films." %}</p>
+{% endif %}

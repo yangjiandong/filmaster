@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load map_url %}
+{% block title %}{%trans "Associate Facebook with your existing Filmaster account"%}{%endblock%}
+{% block content %}
+{% if error %}
+<h2 class="error">{{error}}</h2>
+{% endif %}
+{% endblock %}

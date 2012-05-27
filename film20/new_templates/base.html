@@ -1,0 +1,138 @@
+{% extends "base/base.html" %}
+{% load i18n %}
+{% load map_url %}
+{% block body %}
+
+{% ifequal settings.LANGUAGE_CODE "pl" %}
+{% if not request.is_mobile %}
+{% if not request.user.is_authenticated %}
+{% ifnotequal request.path "/" %}
+	<div class="billboard">
+		<!-- BBelements one2many Position: Filmaster.pl(4193) / Pozostale(2) / billboard(1) / billboard 750x100 750x100(30) -->
+		<!-- HowTo: Place this code into the html page there the ad should appear. -->
+		<div id='bmone2n-4193.2.1.30'></div>
+	</div>
+{% endifnotequal %}
+{% endif %}
+{% endif %}
+{% endifequal %}
+
+	<div id="container">
+        {% if request.GET.debug %}
+        <div id="debug">
+            {{request.unique_user.id}}
+            {{request.timezone}} {{request.geo}}
+        </div>
+        {% endif %}
+        {% block header %}
+{% if not request.is_mobile or not request.is_oauth %}
+    {% include 'base/header.html' %}
+{% endif %}
+		{% endblock %}
+		{% block rate-site-header %}<!-- TODO: move somewhere else -->
+		{% endblock %}
+
+		<div id="main">
+
+			{% if messages %} <!-- TODO: do sth with this -->
+				<div id="messages" class="flash-messages">
+					{% for message in messages %}
+						<p {%if message.tags%}class="{{ message.tags }}"{%endif%}>{{ message|safe }}</p>
+					{% endfor %}
+				</div><!-- #messages .messages -->
+			{% endif %}
+
+			{% block primary-content-wrapper-start %}
+			<div class="primary-content">
+			{% endblock %}
+				{% block content-start %}
+				<div class="content">
+				{% endblock %}
+
+				{# used on all pages #}
+				{% block content %}
+				{% endblock content %}
+
+				{% block content-end %}
+				 </div> <!-- .content -->
+				{% endblock %}
+
+				{% block primary-content-aside %}{% endblock %}
+
+			{% block primary-content-wrapper-end %}
+			</div><!-- .primary-content -->
+			{% endblock %}
+
+			{% block secondary-content-aside %}{% endblock %}
+		</div><!-- #main -->
+		
+		{% block footer %}
+{% if not request.is_mobile or not request.is_oauth %}
+			{% include 'base/footer.html' %}
+{% endif %}
+        {% endblock %}
+
+		{% ifequal settings.LANGUAGE_CODE "pl" %}
+		{% if not request.is_mobile %}
+		{% if not request.user.is_authenticated %}
+		{% ifnotequal request.path "/" %}
+			<div class="skyscraper">
+				<!-- BBelements one2many Position: Filmaster.pl(4193) / Pozostale(2) / skyscraper(1) / skyscraper_pl 160x600 160x600(31) -->
+				<!-- HowTo: Place this code into the html page there the ad should appear. -->
+				<div id='bmone2n-4193.2.1.31'></div>
+			</div>
+		{% endifnotequal %}
+		{% endif %}
+		{% endif %}
+		{% endifequal %}
+
+	</div> <!-- #container -->
+{% if not request.is_mobile or not request.is_oauth %}
+	{% include 'base/eu.html' %}
+{% endif %}
+{% if not request.is_mobile and not settings.SKIP_EXTERNAL_REQUESTS %}
+    {% if settings.LANGUAGE_CODE == 'pl' %}
+        <script type="text/javascript" src="http://app.sugester.pl/filmaster/widget.js"></script>
+        {% else %}
+        <script src='http://app.sugester.pl/filmaster-com/widget.js' type='text/javascript'></script>
+        {% endif %}
+        {% endif %}
+
+    {# disabling snapEngage for now #}
+    {% if 'false' == 'true' %}
+<script type="text/javascript">
+document.write(unescape("%3Cscript src='" + ((document.location.protocol=="https:")?"https://snapabug.appspot.com":"http://www.snapengage.com") + "/snapabug.js' type='text/javascript'%3E%3C/script%3E"));</script><script type="text/javascript">
+SnapABug.addButton("4416161b-b556-446d-a25b-155ea504be3c","1","55%");
+</script>
+    {% endif %}
+{% endblock %}
+{% block body-end %}
+    <script type="text/javascript">
+    var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+    document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+    <script type="text/javascript">
+    try {
+    var pageTracker = _gat._getTracker("{{ settings.ANALYTICS_CODE }}");
+    pageTracker._trackPageview();
+    } catch(err) {}</script> 
+
+{% ifnotequal request.path "/" %}
+<!-- BBelements one2many code -->
+<!-- HowTo: All the ad codes must be above this code! -->
+<!-- HowTo: It is good idea to place this code just below the last ad code. -->
+<script type='text/javascript' src='http://go.arbopl.bbelements.com/bb/bb_one2n.js?1281505240'></script>
+<script type='text/javascript'>/* <![CDATA[ */ 
+bmone2n.addPosition('4193.2.1.30','');
+bmone2n.addPosition('4193.2.1.36','');
+bmone2n.addPosition('4193.2.1.9','');
+bmone2n.addPosition('4193.2.1.31','');
+bmone2n.getAd('go.arbopl.bbelements.com','',''+(typeof(bburlparam)=='string'?'&'+bburlparam:''));
+/* ]]> */</script>
+<div id='bmone2t-4193.2.1.30' style='display:none'><script type='text/javascript'>/* <![CDATA[ */ bmone2n.makeAd('4193.2.1.30'); /* ]]> */</script></div>
+<div id='bmone2t-4193.2.1.36' style='display:none'><script type='text/javascript'>/* <![CDATA[ */ bmone2n.makeAd('4193.2.1.36'); /* ]]> */</script></div>
+<div id='bmone2t-4193.2.1.9' style='display:none'><script type='text/javascript'>/* <![CDATA[ */ bmone2n.makeAd('4193.2.1.9'); /* ]]> */</script></div>
+<div id='bmone2t-4193.2.1.31' style='display:none'><script type='text/javascript'>/* <![CDATA[ */ bmone2n.makeAd('4193.2.1.31'); /* ]]> */</script></div>
+<script type='text/javascript'>/* <![CDATA[ */ bmone2n.moveAd(); /* ]]> */</script>
+{% endifnotequal %}
+{% endblock %}

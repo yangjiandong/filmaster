@@ -1,0 +1,7 @@
+{% load followers %}
+
+<aside class="profile">
+	{% include 'aside/profile/meta.html' %}
+    {% profile_followers user_profile %}
+    {% profile_following user_profile %}
+</aside><!-- .profile -->

@@ -1,0 +1,7 @@
+{% extends 'aside/follow.html' %}
+{% load i18n %}
+
+{% block class_name %}watched-by{% endblock %}
+{% block title %}{% trans "Following you" %}{% endblock %}
+{% block show_all_link %}{% url dashboard_followers %}{% endblock %}
+{% block empty_text %}{% trans "You don't have any followers, yet. Perhaps it's time to start being a bit more active on Filmaster?" %}{% endblock %}

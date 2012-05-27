@@ -1,0 +1,32 @@
+{% load map_url %}
+<script>document.write("<script src='/static/js/plugins/jquery.autocomplete.min.js'>\x3C/script>")</script>
+
+<script type="text/javascript">
+    $(document).ready(
+    function()
+    {
+        $("#show-lead").click(
+        function()
+        {
+            $("#lead").toggle();
+        });
+
+        $("#id_related_film").autocomplete('/ajax{% map_url_part "SEARCH_FILM" %}/',{
+          multiple:true,
+          formatResult:function(row) {
+            return row[1] && row[1].replace('\\','\\\\','g').replace(',','\\,','g').replace('&verticalline;','|') || ''
+          },
+          formatItem: function(row) { return row[0].replace('&verticalline;','|'); },
+        });
+        $("#id_related_person").autocomplete('/ajax{% map_url_part "SEARCH_PERSON" %}/',{multiple:true});
+
+    });
+    function make_blue(elname){
+         $(elname).removeClass("gray_border");
+         $(elname).addClass("blue_border");
+    }
+    function make_grey(elname){
+         $(elname).removeClass("blue_border");
+         $(elname).addClass("gray_border");
+    }
+</script>

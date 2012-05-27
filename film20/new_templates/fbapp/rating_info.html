@@ -1,0 +1,6 @@
+<section class="rating-info{% if participant.rated_count >= progress_max %} all-rated{% endif %}">
+    {% if participant.rated_count >= progress_max or participant.ratings_start_count > 100 %}
+        <p>Gratulacje! Masz już <b><span id="result">{{ participant.score }}</span> punktów</b>. <a class="next" href="{% url fbapp_viral_view %}">Dalej</a></p>
+    {% endif %}
+</section>
+ 

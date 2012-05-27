@@ -1,0 +1,5 @@
+{%load json%}
+{
+    "town":{{town|jsonstr}},
+    "country":{{country|jsonstr}}
+}

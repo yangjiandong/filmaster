@@ -1,0 +1,53 @@
+{% extends "show_main.html" %}
+
+{% load i18n %}
+{% load movie %}
+
+{% block title %}{% blocktrans %}{{ recommendations_user }}'s movie recommendations{% endblocktrans %}{% endblock %}
+{% block head_extra %}
+<meta property="og:title" content="{% blocktrans %}Check out my amazing movie recommendations delivered by Filmaster!{% endblocktrans %}" />
+<meta property="og:description" content="{% blocktrans %}These are {{ recommendations_user }}'s movie recommendations. Find out yours by rating 15 movies you love or hate on Filmaster!{% endblocktrans %}" />
+<meta property="og:image" content="{{ settings.FULL_DOMAIN }}/static/layout/logo.png"/>
+{% endblock %}
+
+{% block body-class %}home{% endblock %}
+
+{% block content %}
+    <article class="join-us">
+        <section class="call-to-action">
+            <h1>{% blocktrans %}These are {{ recommendations_user }}'s movie recommendations{% endblocktrans %}</h1>
+            {% if recommendations_user.username = request.user.username %} 
+                <h2><a name="fb_share" type="icon_link" share_url="{% url user_recommendations recommendations_user %}">{% trans "Share your movie recommendations on Facebook!"%}</a> 
+                <script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script></h2>
+            {% else %}
+                <h2><a href="{% url rate_films %}">{% trans "Check out your recommendations by rating 15 movies!" %}</a></h2>
+            {% endif %}
+        </section>
+        {% top_on_main_page %}
+    </article><!-- .join-us -->
+{% endblock content %}
+
+
+{% block end-scripts %}
+{% if share %}
+    <script>
+        var prev_fbAsyncInit = window.fbAsyncInit
+        var share = function(){
+            FB.ui({
+                method: 'feed',
+                name: "{% blocktrans %}Check out my amazing movie recommendations delivered by Filmaster!{% endblocktrans %}",
+                link: "{% url user_recommendations recommendations_user %}",
+                picture: "{{ settings.FULL_DOMAIN }}/static/layout/logo.png",
+                description: "{% blocktrans %}These are {{ recommendations_user }}'s movie recommendations. Find out yours by rating 15 movies you love or hate on Filmaster!{% endblocktrans %}",
+            });
+        };
+        window.fbAsyncInit = function() {
+            prev_fbAsyncInit();
+            // ...
+            $( document ).ready( function() {
+                setTimeout( share, "1000" );
+            });
+        };
+    </script>
+{% endif %}
+{% endblock %}

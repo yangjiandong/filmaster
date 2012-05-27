@@ -1,0 +1,7 @@
+{% if object.description %}
+	{{ object.description|striptags }}
+{% else %}
+	{% if object.get_localized_film.fetched_description %}
+		{{ object.get_localized_film.fetched_description|striptags|cut:"[opis dystrybutora]"|cut:"[dystrybutor]" }}
+	{% endif %}
+{% endif %}

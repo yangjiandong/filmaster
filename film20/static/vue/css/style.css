@@ -1,0 +1,809 @@
+html, body, h1, h2, h3, h4, h5, h6, p, fieldset, figure, fieldset {
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    background: #fff url(../img/blue_repeat.jpg) repeat-y top center;
+}
+body {
+    min-height: 790px;
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: 12px;
+    background: transparent url(../img/blue_top.jpg) no-repeat top center;
+    color: #000;
+}
+
+a {
+	color: #ff850c;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-size: 12px;
+	font-weight: normal;
+}
+p {
+	margin-bottom: 1em;
+}
+
+a.fb-button {
+	display: inline-block;
+	width: 154px;
+	height: 22px;
+	overflow: hidden;
+	text-align: left;
+	text-indent: -9999px;
+	vertical-align: sub;
+	background: url("../img/login-facebook-small.png") repeat scroll 0 0 transparent;
+}
+
+p.rate-movies-more {
+	position: relative;
+	text-align: right;
+}
+a.main-button {
+	position: absolute;
+	top: -25px;
+	right: 0;
+	display: inline-block;
+	color: #000;
+	text-decoration: none;
+	border-radius: 3px;
+	box-shadow: 0 1px 1px rgba(0, 0, 0, .5), 0 0 1px rgba(0, 0, 0, .4) inset;
+
+	background-image: linear-gradient(bottom, rgb(193, 193,193) 0%, rgb(222, 222, 222) 100%);
+	background-image: -o-linear-gradient(bottom, rgb(193, 193,193) 0%, rgb(222, 222, 222) 100%);
+	background-image: -moz-linear-gradient(bottom, rgb(193, 193,193) 0%, rgb(222, 222, 222) 100%);
+	background-image: -webkit-linear-gradient(bottom, rgb(193, 193,193) 0%, rgb(222, 222, 222) 100%);
+	background-image: -ms-linear-gradient(bottom, rgb(193, 193,193) 0%, rgb(222, 222, 222) 100%);
+	background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, rgb(193, 193,193)), color-stop(1, rgb(222, 222, 222)));
+	outline: none;
+}
+
+fieldset {
+	border: 0;
+}
+
+.wrapper + p.rate-movies-more {
+	margin-top: 10px;
+}
+.wrapper + p.rate-movies-more a.main-button {
+	position: static;
+}
+p.rate-movies-more a.main-button span {
+	display: block;
+	padding: 6px 10px 5px 32px;
+	background: transparent url(../img/refresh2.png) no-repeat 8px 5px;
+
+}
+
+p.msg {
+	position: absolute;
+	top: 176px;
+	right: 0;
+	width: 180px;
+	padding: 0 10px;
+	background: rgba(0, 0, 0, .8);
+	line-height: 50px;
+	color: #fff;
+	font-weight: bold;
+	text-align: center;
+}
+
+section > h1 {
+	font-family: "Arial Rounded MT Bold", "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 22px;
+	line-height: 22px;
+}
+section > h2 {
+	margin-bottom: 10px;
+	font-family: "Arial Rounded MT Bold", "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 14px;
+	line-height: 22px;
+}
+
+#container {
+	width: 980px;
+	margin: auto;
+}
+
+#main {
+	margin: 10px 0;
+	float: left;
+	width: 980px;
+}
+
+section.info {
+	float: left;
+	width: 630px;
+	padding: 15px;
+	background: rgba(0, 0, 0, .7);
+	color: #fff;
+	border-radius: 8px;
+	margin-bottom: 10px;
+}
+section.info h1 {
+	font-size: 18px;
+}
+body.recommendations section.info {
+    width: 950px;
+}
+section.info > a {
+	font-weight: bold;
+}
+
+section.rate-films {
+	float: left;
+	width: 630px;
+	padding: 15px;
+	background: #fff;
+	border-radius: 8px;
+}
+
+section.detailed-recommendations {
+	clear:both;
+	padding: 15px;
+	background: #fff;
+	border-radius: 8px;
+}
+section.error {
+    clear:both;
+	padding: 15px;
+	background: #fff;
+	border-radius: 8px;
+}
+
+section.recommendations {
+	float: right;
+	width: 270px;
+	padding: 15px;
+	background: rgb(57, 66, 75); /* fallback for the shitties browser in the world */
+	background: rgba(57, 66, 75, .95);
+	box-shadow: 0 210px 100px -100px #000 inset;
+	color: #fff;
+	border-radius: 8px;
+}
+
+header {
+        overflow: hidden;
+}
+header h1 {
+    float: left;
+    border-radius: 0 0 8px 8px;
+    background: rgba(255, 255, 255, .5) url(../img/vue_logo.png) no-repeat 50% 35px;
+}
+header h1 a {
+	display: block;
+	width: 228px;
+	height: 135px;
+	background: transparent url(../img/vue_logo.png) no-repeat 50% 35px;
+	text-indent: -9999em;
+	overflow: hidden;
+}
+
+
+
+section.rate-films ul.rate-movies-simple {
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+	overflow: hidden;
+	border-bottom: 1px dotted #b2b2b2;
+}
+section.rate-films ul.rate-movies-simple li {
+	float: left;
+	width: 200px;
+	padding: 10px 0 10px 15px;
+	border-top: 1px dotted #b2b2b2;
+	position: relative;
+}
+section.rate-films ul.rate-movies-simple li:nth-child(3n+1) {
+	clear: left;
+	padding-left: 0;
+}
+section.rate-films ul.rate-movies-simple h2 {
+	font-family: "Arial Rounded MT Bold", "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 18px;
+	line-height: 18px;
+}
+section.rate-films ul.rate-movies-simple a {
+	color: #415c69;
+}
+section.rate-films figcaption a {
+	font-family: "Arial Rounded MT Bold", "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 18px;
+	line-height: 18px;
+	color: #415C69;
+}
+
+.timer {
+    display: none; /* we don't really want to show time as it is now */
+	background: none repeat scroll 0 0 rgba(0, 0, 0, 0.5);
+	border-radius: 0 0 0 8px;
+	color: #FFFFFF;
+	font-weight: bold;
+	height: 30px;
+	line-height: 30px;
+	position: absolute;
+	right: 0;
+	text-align: center;
+	top: 10px;
+	width: 30px;
+}
+
+/* = mood selector */
+ul.mood-selector {
+	float: left;
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+	border-radius: 6px;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, .5), 0 0 1px rgba(255, 255, 255, .5) inset, 0 -1px 1px rgba(255, 255, 255, .15) inset;
+
+	background-image: linear-gradient(bottom, rgb(0,0,0) 0%, rgb(63,63,63) 100%);
+	background-image: -o-linear-gradient(bottom, rgb(0,0,0) 0%, rgb(63,63,63) 100%);
+	background-image: -moz-linear-gradient(bottom, rgb(0,0,0) 0%, rgb(63,63,63) 100%);
+	background-image: -webkit-linear-gradient(bottom, rgb(0,0,0) 0%, rgb(63,63,63) 100%);
+	background-image: -ms-linear-gradient(bottom, rgb(0,0,0) 0%, rgb(63,63,63) 100%);
+	background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, rgb(0,0,0)), color-stop(1, rgb(63,63,63)));
+}
+
+ul.mood-selector li.pressed {
+	background-image: linear-gradient(top, rgb(0,0,0) 0%, rgb(63,63,63) 100%);
+	background-image: -o-linear-gradient(top, rgb(0,0,0) 0%, rgb(63,63,63) 100%);
+	background-image: -moz-linear-gradient(top, rgb(0,0,0) 0%, rgb(63,63,63) 100%);
+	background-image: -webkit-linear-gradient(top, rgb(0,0,0) 0%, rgb(63,63,63) 100%);
+	background-image: -ms-linear-gradient(top, rgb(0,0,0) 0%, rgb(63,63,63) 100%);
+	background-image: -webkit-gradient(linear, right top, right bottom, color-stop(0, rgb(0,0,0)), color-stop(1, rgb(63,63,63)));
+}
+
+
+ul.mood-selector li {
+	float: left;
+	border-right: 1px solid #000;
+	border-left: 1px solid rgba(255, 255, 255, .1);
+}
+ul.mood-selector li:first-child {
+	border-left: 0;
+	border-radius: 6px 0 0 6px;
+}
+ul.mood-selector li:last-child {
+	border-right: 0;
+	border-radius: 0 6px 6px 0;
+}
+ul.mood-selector li.pressed {
+	box-shadow: 0 0 1px rgba(255, 255, 255, 0.4) inset, 0 -1px 2px rgba(0, 0, 0, 0.5) inset, 0 1px 0 rgba(255, 255, 255, 0.2) inset;
+
+	background-image: linear-gradient(top, rgb(0,0,0) 0%, rgb(63,63,63) 100%);
+	background-image: -o-linear-gradient(top, rgb(0,0,0) 0%, rgb(63,63,63) 100%);
+	background-image: -moz-linear-gradient(top, rgb(0,0,0) 0%, rgb(63,63,63) 100%);
+	background-image: -webkit-linear-gradient(top, rgb(0,0,0) 0%, rgb(63,63,63) 100%);
+	background-image: -ms-linear-gradient(top, rgb(0,0,0) 0%, rgb(63,63,63) 100%);
+	background-image: -webkit-gradient(linear, right top, right bottom, color-stop(0, rgb(0,0,0)), color-stop(1, rgb(63,63,63)));
+}
+
+ul.mood-selector li a {
+	position: relative;
+	float: left;
+	width: 43px;
+	height: 40px;
+	font-size: 12px;
+	line-height: 40px;
+	text-align: center;
+	text-shadow: 0 -1px 1px rgba(0, 0, 0, .7);
+	color: #fff;
+	text-decoration: none;
+	opacity: .6;
+}
+ul.mood-selector li.pressed a {
+	color: #fff;
+	opacity: 1;
+}
+ul.mood-selector li a:focus {
+	outline: none;
+}
+ul.mood-selector li a:hover {
+	color: #fff;
+	opacity: 1;
+}
+ul.mood-selector li:first-child a {
+	width: 44px;
+}
+ul.mood-selector li:last-child a {
+	width: 44px;
+}
+ul.mood-selector li a span {
+	display: block;
+	text-align: center;
+	line-height: 10px;
+	padding-top: 26px;
+	text-transform: lowercase;
+}
+ul.mood-selector li a {
+	background-position: 50% 2px;
+	background-repeat: no-repeat;
+}
+ul.mood-selector li.mood-love a {
+	background-image: url(../img/mood-warm.png);
+}
+ul.mood-selector li.mood-action a {
+	background-image: url(../img/mood-action.png);
+}
+ul.mood-selector li.mood-depressing a {
+	background-image: url(../img/mood-dark.png);
+}
+ul.mood-selector li.mood-comedy a {
+	background-image: url(../img/mood-funny.png);
+}
+ul.mood-selector li.mood-experimental a {
+	background-image: url(../img/mood-indie.png);
+}
+body.recommendations section.detailed-recommendations {
+    position: relative;
+}
+
+body.recommendations ul.mood-selector {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+}
+body.recommendations section.detailed-recommendations {
+    position:relative;
+}
+
+body.recommendations ul.mood-selector {
+    position: absolute;
+    top: 12px;
+    right: 15px;
+}
+/* ---------- */
+
+
+html.home ul.recommended-films {
+	clear: both;
+	margin: 0 0 10px;
+	padding: 10px 0 0;
+	list-style-type: none;
+	border-bottom: 1px dotted #808080;
+/*	overflow: hidden;*/
+}
+html.home ul.recommended-films li {
+	float: left;
+	width: 125px;
+    min-height: 183px;
+	border-top: 1px dotted #808080;
+	padding: 10px 20px 10px 0;
+    background: transparent url(../img/recommended-small.png) no-repeat 0 10px;
+}
+html.home ul.recommended-films li:nth-child(2n) {
+	padding-right: 0;
+}
+html.home ul.recommended-films h2 {
+	font-size: 14px;
+	font-family: "Arial Rounded MT Bold", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+html.home ul.recommended-films a {
+	color: #fff;
+	cursor: pointer;
+}
+html.home ul.recommended-films a.poster {
+	display: block;
+	padding: 2px;
+	background: url(../img/recommended-small.png) no-repeat;
+}
+html.home ul.recommended-films a.poster img {
+	display: block;
+}
+
+/* = footer */
+footer {
+	clear: both;
+	margin: 10px 0 20px;
+	padding: 15px;
+	background: #000;
+	color: #fff;
+	font-size: 14px;
+	border-radius: 8px;
+	overflow: hidden;
+}
+footer section {
+	float: left;
+	width: 475px;
+}
+footer .register {
+	text-align: right;
+}
+
+/* ----------------------------------------------------------- =rating */
+/**
+ * TODO: sprite it!
+ * TODO: Opera & Chrome default styling bug
+ */
+.rating-1,
+.rating-1-avg {
+	display: block;
+	text-indent: -9999px;
+	overflow: hidden;
+	margin: 4px 0;
+	background-repeat: no-repeat;
+}
+
+p.rate {
+	background: rgba(0, 0, 0, .8);
+	position: absolute;
+	top: 226px;
+	width: 200px;
+	margin: 0;
+}
+.rating-1-avg,
+.rating-1 {
+	background: transparent url(../img/stars.png) no-repeat 50% -250px;
+	width: 160px;
+	height: 50px;
+	margin: 0 auto;
+	cursor: pointer;
+}
+
+/* =rating 1 */
+meter.rating-1-avg[value="10"],
+span.rating-1-avg.r10,
+meter.rating-1[value="10"],
+span.rating-1.r10,
+meter.rating-1-avg[value="9"],
+span.rating-1-avg.r9,
+meter.rating-1[value="9"],
+span.rating-1.r9 {
+	background-position: 50% 0;
+}
+
+meter.rating-1-avg[value="8"],
+span.rating-1-avg.r8,
+meter.rating-1[value="8"],
+span.rating-1.r8,
+meter.rating-1-avg[value="7"],
+span.rating-1-avg.r7,
+meter.rating-1[value="7"],
+span.rating-1.r7 {
+	background-position: 50% -50px;
+}
+
+meter.rating-1-avg[value="6"],
+span.rating-1-avg.r6,
+meter.rating-1[value="6"],
+span.rating-1.r6,
+meter.rating-1-avg[value="5"],
+span.rating-1-avg.r5,
+meter.rating-1[value="5"],
+span.rating-1.r5 {
+	background-position: 50% -100px;
+}
+
+meter.rating-1-avg[value="4"],
+span.rating-1-avg.r4,
+meter.rating-1[value="4"],
+span.rating-1.r4,
+meter.rating-1-avg[value="3"],
+span.rating-1-avg.r3,
+meter.rating-1[value="3"],
+span.rating-1.r3 {
+	background-position: 50% -150px;
+}
+
+meter.rating-1-avg[value="2"],
+span.rating-1-avg.r2,
+meter.rating-1[value="2"],
+span.rating-1.r2,
+meter.rating-1-avg[value="1"],
+span.rating-1-avg.r1,
+meter.rating-1[value="1"],
+span.rating-1.r1 {
+	background-position: 50% -200px;
+}
+
+meter.rating-1-avg[value="0"],
+span.rating-1-avg.r0,
+meter.rating-1[value="0"],
+span.rating-1.r0 {
+	background-position: 50% -250px;
+}
+
+.rate-movie {
+	width: 200px;
+	min-height: 266px;
+}
+.rate-movie input, .rate-movie label {
+    display: none;
+}
+
+.rate-movie .skip-movie {
+    position: absolute;
+    top: 10px;
+    right: 0px;
+    font-weight: bold;
+    text-decoration: none;
+	padding: 5px;
+	background: #000;
+	background: rgba(0, 0, 0, .7);
+	color: #fff !important;
+}
+
+#film-toplayer {
+	display: none; 
+	position: absolute;
+	top: 0;
+	left: 50%;
+	margin: 20px 0 20px -485px;
+	background-color: rgba(0, 0, 0, .95); 
+	color: #fff !important;
+	padding: 10px !important; 
+	width: 630px;
+	z-index: 1000;
+	opacity: 1 !important;
+	border-radius: 8px;
+	line-height: 20px;
+	box-shadow: 0 0 20px rgba(0, 0, 0, 1);
+}
+#film-toplayer .ajax-loader {
+    width: 40px;
+    height: 40px;
+    background: transparent url(../img/ajax-loader.gif) no-repeat 50% 50%;
+    text-indent: -9999em;
+}
+#film-toplayer .ajax-loader {
+    display:none;
+}
+#film-toplayer .close {
+	position: relative;
+	float: right;
+	text-indent: -9999em;
+	overflow: hidden;
+	width: 30px;
+	height: 30px;
+	margin: -10px -10px 0 0;
+	box-shadow: 0 0 2px rgba(255, 255, 255, .25) inset, -1px 1px 0 rgba(0, 0, 0, .5) inset, 0 -2px 1px -1px rgba(255, 255, 255, .3) inset;
+	border-radius: 0 7px 0 8px;
+
+	background-image: linear-gradient(bottom, rgb(0, 0, 0) 0%, rgb(63, 63, 63) 100%);
+	background-image: -o-linear-gradient(bottom, rgb(0, 0, 0) 0%, rgb(63, 63, 63) 100%);
+	background-image: -moz-linear-gradient(bottom, rgb(0, 0, 0) 0%, rgb(63, 63, 63) 100%);
+	background-image: -webkit-linear-gradient(bottom, rgb(0, 0, 0) 0%, rgb(63, 63, 63) 100%);
+	background-image: -ms-linear-gradient(bottom, rgb(0, 0, 0) 0%, rgb(63, 63, 63) 100%);
+	background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, rgb(0, 0, 0)), color-stop(1, rgb(63, 63, 63)));
+}
+#film-toplayer .close:before {
+	display: block;
+	position: absolute;
+	top: 0;
+	right: 0;
+	content: " ";
+	width: 30px;
+	height: 30px;
+	background: transparent url(../img/close.png) no-repeat 7px 6px;
+}
+#film-toplayer .movie {
+	padding: 20px 20px 20px 210px;
+}
+#film-toplayer .movie .pic {
+	float: left;
+	margin-left: -200px;
+}
+#film-toplayer .movie > h1 {
+	font-family: "Arial Rounded MT Bold", "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 18px;
+	line-height: 18px;
+	margin: 0 20px 1em -200px;
+}
+#film-toplayer h2 {
+	font-family: "Arial Rounded MT Bold", "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 14px;
+}
+#film-toplayer .crew ul {
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+}
+#film-toplayer .crew li {
+	display: inline;
+}
+#film-toplayer .crew li span {
+	color: #ff850c;
+}
+#film-toplayer .description {
+	font-size: 14px;
+}
+
+form.recommendation-vote > label {
+    display:none;
+}
+
+body.recommendations ul.movies {
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+	overflow: hidden;
+	line-height: 20px;
+	font-size: 12px;
+	clear: both;
+	border-bottom: 1px dotted #b2b2b2;
+}
+body.recommendations ul.movies li {
+	float: left;
+	width: 465px;
+	padding: 15px 0;
+	border-top: 1px dotted #b2b2b2;
+}
+body.recommendations ul.movies li:nth-child(2n) {
+	padding-left: 20px;
+}
+body.recommendations ul.movies li:nth-child(2n+1) {
+	clear: left;
+}
+body.recommendations ul.movies li > a {
+	float: left;
+	margin-right: 15px;
+}
+body.recommendations ul.movies h2 {
+	font-family: "Arial Rounded MT Bold", "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 18px;
+	margin-bottom: 12px;
+}
+body.recommendations ul.movies h2 a {
+	color: #000;
+	text-decoration: none;
+}
+body.recommendations ul.movies h2 a span {
+	color: #999;
+}
+body.recommendations ul.movies .description {
+	margin-left: 215px;
+}
+
+span.more {
+    font-weight: bold;
+}
+
+.description span.more {
+    display: none;
+}
+
+body.recommendations #film-toplayer {
+	width: 950px;
+}
+
+body.recommendations .detailed-recommendations h1 {	
+	margin: 5px 0 1em;
+}
+
+
+/* = pagination */
+ul.pagination {
+	margin: 0;
+	padding: 10px 0;
+	list-style-type: none;
+	text-transform: capitalize;
+}
+ul.pagination li {
+	display: inline-block;
+	font-weight: bold;
+}
+ul.pagination li a {
+	padding: 5px 10px;
+}
+.recommended-films li {
+    min-height:209px;
+}
+.recommendations.all .vue, .recommendations.vue .all {
+    display:none;
+}
+.recommendations.vue h2.vue {
+    font-size:14px;
+    font-weight:bold;
+}
+
+#film-toplayer .ajax-loader {
+    display:none;
+}
+
+section.recommendations > p {
+    clear:both;
+}
+
+
+.recommendation-feedback {
+	width: 180px;
+}
+.recommendation-feedback h2 {
+	margin: 2em 0 1ex;
+	text-align: center;
+	font-weight: bold;
+	line-height: 1em;
+}
+.recommendation-feedback ul {
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+	width: 160px;
+	height: 48px;
+	margin: auto;
+	font-weight: bold;
+
+	border-radius: 6px;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, .5), 0 0 1px rgba(255, 255, 255, .5) inset, 0 -1px 1px rgba(255, 255, 255, .15) inset;
+
+	background-image: linear-gradient(bottom, rgb(0,0,0) 0%, rgb(63,63,63) 100%);
+	background-image: -o-linear-gradient(bottom, rgb(0,0,0) 0%, rgb(63,63,63) 100%);
+	background-image: -moz-linear-gradient(bottom, rgb(0,0,0) 0%, rgb(63,63,63) 100%);
+	background-image: -webkit-linear-gradient(bottom, rgb(0,0,0) 0%, rgb(63,63,63) 100%);
+	background-image: -ms-linear-gradient(bottom, rgb(0,0,0) 0%, rgb(63,63,63) 100%);
+	background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, rgb(0,0,0)), color-stop(1, rgb(63,63,63)));
+}
+.recommendation-feedback li {
+	float: right;
+}
+.has-js .recommendation-feedback ul label {
+	display: block;
+	width: 79px;
+	height: 48px;
+	border-right: 1px solid #000;
+	border-left: 1px solid rgba(255, 255, 255, .1);
+	line-height: 48px;
+	text-align: center;
+	cursor: pointer;
+}
+.has-js .recommendation-feedback ul label.r_on {
+	box-shadow: 0 0 1px rgba(255, 255, 255, 0.4) inset, 0 -1px 2px rgba(0, 0, 0, 0.5) inset, 0 1px 0 rgba(255, 255, 255, 0.2) inset;
+
+	background-image: linear-gradient(top, rgb(0,0,0) 0%, rgb(63,63,63) 100%);
+	background-image: -o-linear-gradient(top, rgb(0,0,0) 0%, rgb(63,63,63) 100%);
+	background-image: -moz-linear-gradient(top, rgb(0,0,0) 0%, rgb(63,63,63) 100%);
+	background-image: -webkit-linear-gradient(top, rgb(0,0,0) 0%, rgb(63,63,63) 100%);
+	background-image: -ms-linear-gradient(top, rgb(0,0,0) 0%, rgb(63,63,63) 100%);
+	background-image: -webkit-gradient(linear, right top, right bottom, color-stop(0, rgb(0,0,0)), color-stop(1, rgb(63,63,63)));
+}
+.has-js .recommendation-feedback ul li:last-child label {
+	border-left: 0;
+	border-radius: 6px 0 0 6px;
+	color: #3c0;
+}
+.has-js .recommendation-feedback ul li:first-child label {
+	border-right: 0;
+	border-radius: 0 6px 6px 0;
+	color: #c00;
+}
+.has-js .recommendation-feedback ul label input { position: absolute; left: -9999px; }
+
+/* = progress bar */
+.global-progress {
+    padding: 10px 12px;
+    overflow: hidden;
+}
+
+.global-progress .progress-bar {
+    padding-top: 3px;
+}
+
+.global-progress progress {
+    display: none;
+}
+
+.global-progress span.progress {
+    display: block;
+    border-radius: 3px;
+    margin-bottom: 12px;
+    background: #1c6eda url(../img/progress.png) repeat-x;
+    box-shadow: 0 0 1px rgba(255, 255, 255, 0.7), 0 1px 2px rgba(0, 0, 0, 0.2) inset, 0 -1px 1px rgba(255, 255, 255, 0.9) inset;
+}
+
+.global-progress span.progress span {
+    height: 14px;
+    display: block;
+    border-radius: 3px 0 0 3px;
+    background: #1c6eda url(../img/progress.png) repeat-x 0 -19px;
+}
+
+.global-progress #movies-to-rate {
+    font-weight: bold;
+}
+a {
+    cursor: pointer;
+}

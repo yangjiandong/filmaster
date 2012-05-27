@@ -1,0 +1,7 @@
+{% load i18n %}
+{% load map_url %}
+
+<abbr title="{% trans 'Directed by' %}">{% trans "dir" %}</abbr>:
+{% for director in directors %}
+   {% url_person director %}{% if not forloop.last %}, {% endif %}
+{% endfor %}

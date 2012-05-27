@@ -1,0 +1,16 @@
+{% extends "usersettings/base.html" %}
+{% load i18n %}
+
+{% block title %}{% blocktrans %}Your Applications{% endblocktrans %}{% endblock %}
+
+{% block content %}
+	<article class="settings">
+		<h1>{%trans "Settings"%}: <span>{%trans "Authorized apps"%}</span></h1>
+        <form method="post">
+        <h2>{%trans "Application" %} {{consumer.name}}</h2>
+        <p>{% trans "Description" %}: {{consumer.description}}</p>
+        <p>{% trans "Key" %}: {{consumer.key}}</p>
+        <p>{% trans "Secret" %}: {{consumer.secret}}</p>
+        <a href="{%url applications%}">{%trans "Applications"%}</a>
+	</article><!-- .settings -->
+{%endblock%}

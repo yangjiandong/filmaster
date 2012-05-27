@@ -1,0 +1,2 @@
+{% load i18n %}
+{% blocktrans %}Your first personalized movie suggestions are ready!{% endblocktrans %}

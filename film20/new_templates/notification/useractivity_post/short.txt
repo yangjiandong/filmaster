@@ -1,0 +1,2 @@
+{% load i18n %}
+{% blocktrans with post.title as title%}I wrote a film review: {{ title }}{% endblocktrans %}

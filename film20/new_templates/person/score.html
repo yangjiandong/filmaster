@@ -1,0 +1,17 @@
+{% load i18n %}
+{% load rating_tags %}
+	<section class="person-rating">
+	<h1>{{title}}</h1>
+    <p>
+    {% trans "Your rating" %}:
+    </p>
+    {% rating_form actor_id=actor_id director_id=director_id type=rating_form_type %}
+{%if average%}
+    <p class="avg">
+        {%trans "Average rating"%}: 
+        {{average|floatformat:'2'}}
+        <span class="rating-2-avg r{{average|floatformat:'0'}}">
+        </span>
+    </p>
+{%endif%}
+    </section>

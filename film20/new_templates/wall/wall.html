@@ -1,0 +1,25 @@
+{% load filmaster_recommends %}
+
+<div class="wall">
+{% block share %}
+{% if user.is_authenticated and form%}
+	{% include "wall/post_form.html" %}
+{%endif%}
+{% endblock %}
+
+<div class="filters">
+{% block wallfilter %}
+{% endblock %}
+</div><!-- .filters -->
+
+{% if follow_tab %}
+    {% if has_following %}
+        {% include 'wall/useractivity/show_activities.html' %}
+    {% else %}
+        {% recommended_users %}
+    {% endif %}
+{% else %}
+    {% include 'wall/useractivity/show_activities.html' %}
+{% endif %}
+
+</div><!-- .wall -->

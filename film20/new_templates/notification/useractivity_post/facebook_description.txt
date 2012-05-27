@@ -1,0 +1,6 @@
+{% load i18n %}
+{%if post.spoilers%}
+[SPOILER ALERT !]
+{%else%}
+{{ post.lead|default:post.body|striptags|truncatewords:50}}
+{%endif%}

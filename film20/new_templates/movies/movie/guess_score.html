@@ -1,0 +1,10 @@
+{%load i18n%}
+{%load object%}
+
+{%if guess%}
+	{% ifequal type 2 %}
+		<p class="estimate">{%trans "Guess rating"%}: <meter value="{{guess|floatformat:'2'}}" max="10">{{guess|floatformat:'2'}}</meter><span class="rating-2 r{{guess|floatformat:'0'}}"></span></p>
+	{% else %}
+		<p class="estimate">{%trans "Guess rating"%}: {{guess|floatformat:'2'}} <meter class="rating-1" max="10" value="{{guess|floatformat:'0'}}">{{guess|floatformat:'0'}} {%trans "stars"%}</meter></p>
+	{% endifequal %}
+{%endif%}

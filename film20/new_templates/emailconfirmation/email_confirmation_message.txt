@@ -1,0 +1,15 @@
+{% load i18n %}{% load map_url %}{% trans "REGISTRATION_EMAIL_WELCOME" %}
+
+{% trans "REGISTRATION_EMAIL_PART1" %}
+
+{% trans "First, please confirm your e-mail here: " %} {{ activate_url }} 
+
+{% trans "This way we'll be able to notify you about private messages received, replies to your posts and new movies that match your taste!" %}
+
+{% trans "REGISTRATION_EMAIL_PART2" %}
+
+{% trans "REGISTRATION_EMAIL_MOBILE" %}
+
+{% trans "If you are not" %} {{ user }}, {% trans "please ignore this e-mail." %}
+
+{% trans "REGISTRATION_EMAIL_GREETS" %}

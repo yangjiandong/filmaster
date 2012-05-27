@@ -1,0 +1,96 @@
+{% extends "profile/base.html" %}
+{% load i18n %}
+{% load followers %}
+{% load planet_tags %}
+{% load widgets %}
+{% load person %}
+{% load oembed_tags %}
+{% load urlimagize %}
+{% load smartlinebreaks %}
+{% load posters %}
+{% load map_url %}
+{% load useractivity_tags %}
+{% load sanitize %}
+{% load format_date %}
+{% load truncatechars %}
+{% load movie %}
+{% load threadedcommentstags %}
+{% load expr %}
+{% load posters %}
+{% load fbconnect %}
+
+{% block title %}{{activity.title_prefix}} {% wall_post_title activity %}{% endblock %}
+{% block description %}{{activity.descr_prefix}} {{ activity.content|remove_spoiler|striptags|truncatechars:200 }}[...]{% endblock %}
+{% block head_extra %}
+<meta property="og:title" content="{{activity.title_prefix}} {% wall_post_title activity %}"/>
+<meta property="og:description" content="{{activity.descr_prefix}} {{ activity.content|remove_spoiler|striptags|truncatechars:200 }}[...]" />
+<meta property="og:type" content="article"/>
+{% if activity.film %}
+    <meta property="og:image" content="{{ settings.FULL_DOMAIN }}{% poster 100 141 activity.film %}"/>
+{% endif %}
+{% if activity.person %}
+    <meta property="og:image" content="{{ settings.FULL_DOMAIN }}{% poster 180 258 activity.person %}"/>
+{% endif %}
+{% endblock %}
+
+{% block content %}
+<div id="wall" class="wall stream show-comment-form wall-post">
+{% activity_subscribe_form activity %}
+<section>
+	<header>
+    <p>
+        <a href="{% url_username_link activity.username %}">{{ activity.user.get_profile.get_current_display_name }}
+        <img width="45" height="45" src="{% avatars 45 activity.username %}" alt="{{ activity.user.get_profile.get_current_display_name }}" /></a>
+        {% include "wall/useractivity/wall_post_detail.html" %}
+    </p>
+	</header>
+
+    {% with content=activity.content %}
+    <div class="c wallpost-body">{% include "profile/wall_post/body.html" %}</div>
+    {% endwith %}
+    {% fb_like activity %}
+    <footer>
+		<p>
+            <time class="timeago" datetime="{{ activity.created_at|date:"c" }}">{% human_readable_date activity.created_at %}</time>.
+			{% if user.is_authenticated %}
+                {% if user.username == activity.username %}
+                    <a class="edit-wallpost" href="#edit-{{ activity.short_review.pk }}" rel="{{ activity.api_object_uri }}">{% trans "Edit" %}</a>
+                {% endif %}
+				<a class="comment" href="{% url show_wall_post activity.username activity.short_review_id %}" rel="{{activity.api_resource_uri}}">{% trans "Leave a comment" %}</a>
+			{% endif %}
+		</p>
+	</footer>
+
+</section>
+{% include "comments/activity_comments.html" %}
+
+</div><!-- .wall .stream -->
+{% endblock content %}
+
+{% block secondary-content-aside %}
+	<aside class="filmaster">
+		{% if activity.film %}
+            {% if request.user.is_authenticated %}
+                <section class="rate-movie-w">
+                <h1>{% trans "Rate film" %}</h1>
+                <div class="rate-movie">
+                    {% single_film_ratings_form activity.film %}
+                </div>
+                </section><!-- .rate-movie-w -->
+            {% endif %}
+			<section class="others-ratings">
+			{% film_user_rating activity.film user_profile 'DETAILED' %}
+			</section>
+        {% else %}
+            {% if activity.person %}
+            {% with activity.person as person %}
+                <section class="photo">
+                <h1>{% trans "Photo" %}: {{ person.localized_name|safe }} {{ person.localized_surname|safe }}</h1>
+                <a href="{% url show_person person.permalink %}"><img src="{% poster 180 258 person %}" width="180" height="258" /></a>
+                </section><!-- .photo -->
+            {% endwith %}
+            {% endif %}
+        {% endif %}
+		{% users_best_rated user_profile %}
+	</aside><!-- .filmaster -->
+{% endblock %}

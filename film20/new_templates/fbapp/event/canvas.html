@@ -1,0 +1,53 @@
+{% extends "fbapp/event/base.html" %}
+{% load i18n %}
+
+{% block content %}
+    <h1>{{ event.title }}</h1>
+
+    <div class="event-message">
+        {{ event.start_description }}
+    </div>
+
+    <form class="event-tickets" action="{% url event_quiz event.slug %}" method="GET">
+        {% if event.tickets.count > 0 %}
+            {% if event.tickets.count == 1 %}
+                {% with ticket=event.tickets.all|first %}
+                    <input type="hidden" name="ticket" value="{{ ticket.id }}" />
+                {% endwith %}
+            {% else %}
+            <div class="radios">
+                <h3>{% trans "Select ticket" %}:</h3>
+                {% for ticket in event.tickets.all %}
+                    <p>
+                        <input type="radio" id="r_{{ ticket.id }}" name="ticket" value="{{ ticket.id }}" 
+                            {% if participant.ticket.id == ticket.id %}
+                            checked="checked"
+                            {% else %}
+                                {% if not participant.ticket and forloop.first %}
+                                checked="checked"
+                                {% endif %}
+                            {% endif %} />
+                        <label for="r_{{ ticket.id }}">{% if ticket.descr %}{{ ticket.descr }}: {% endif %} {{ ticket.theater }} - {{ticket.date}}</label>
+                    </p>
+                {% endfor %}
+                </select>
+            </div>
+            {% endif %}
+        {% endif %}
+        <div class="play">
+            <input type="submit" value="{% trans "PLAY NOW" %}" />
+        </div>
+    </form>
+    <div>
+        {% if friends %}
+        <h3>{% trans "Your SXSW friends playing for tickets" %}:</h1>
+        <div class="friends">
+            {% for f in friends %}
+                <a href="{{f.link}}" title="{{f.name}}"><img src="{{f.picture_url}}" /></a>
+            {%endfor%}
+        </div>
+        {% else %}
+        <div class="empty">{% trans "none of your friends play for tickets right now" %}</div>
+        {% endif %}
+    </div>
+{% endblock %}

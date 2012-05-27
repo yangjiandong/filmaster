@@ -1,0 +1,43 @@
+{% load i18n %}
+{% load map_url %}
+{% load twittertags %}
+{% load blog_feed %}
+{% load cache %}
+<footer>
+	{% include 'search/simple_search_form.html' %}
+
+	{% include 'base/menu.html' %}
+	
+	<div class="filmaster-specials">
+		<section class="editorial-office">
+			<h1>Filmaster</h1>
+            <ul>
+                <li><a href="{% map_url "ABOUT" %}/" title="{% trans "About" %}">{% trans "About" %}</a></li>
+                <li><a href="{% map_url "CONTACT" %}/" title="{% trans "Contact" %}">{% trans "Contact" %}</a></li>
+                <li><a href="{% map_url "COOPERATION" %}/" title="{% trans "Cooperation" %}">{% trans "Cooperation" %}</a></li>
+                <li><a href="{% map_url "BANNERS" %}/" title="{% trans "Banners" %}">{% trans "Banners" %}</a></li>
+                <li><a href="{% map_url "ADVERTISEMENT" %}/" title="{% trans "Advertizement" %}">{% trans "Advertizement" %}</a></li>
+            </ul>
+		</section><!-- .editorial-office -->
+{% if not settings.SKIP_EXTERNAL_REQUESTS %}
+		<section class="blog">
+            <h1><a href="http://{% trans "blog.filmaster.com" %}" title="{% trans "Filmaster Blog" %}">{% trans "blog.filmaster.com" %}</a></h1>
+
+            {% cache 500 blog_feed %}
+                {% blog_feed %}
+            {% endcache %}
+		</section><!-- .blog -->
+
+		<section class="twitter">
+            {% twitter_url %} <h1> Twitter <span>@filmaster</span></a></h1>
+            {% twitter_activity %}
+		</section><!-- .twitter -->
+{% endif %}
+		<section class="facebook">
+            {% facebook_url %} <h1>{% trans "Join Filmaster" %} <span>@facebook</span></a></h1>
+            <div class="fb-facepile" data-href="{{ settings.FACEBOOK_URL }}" data-max-rows="1" data-width="190"></div>
+		</section><!-- .facebook -->
+
+	</div><!-- #filmaster-specials -->
+	<p class="cc"><span></span> {% trans "All the content is licensed under Creative Commons 2.5 Attribution" %}.</p>
+</footer>

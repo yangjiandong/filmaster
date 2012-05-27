@@ -1,0 +1,19 @@
+{% extends 'profile/base.html' %}
+{% load i18n %}
+
+{% block body-class %}user-rating{% endblock %}
+
+{% block title %}
+    {% trans "Movies rated by " %} {{ ratings_user }}
+    {% if rating_type_str != "Film" %}
+        {% trans "in category" %} {{ rating_type_str }}
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    {% include 'profile/rated_films.html' %}
+{% endblock content %}
+
+{% block end-scripts %}
+    {% include 'userprofile/rating_scripts.html' %}
+{% endblock end-scripts %}

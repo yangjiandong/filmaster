@@ -1,0 +1,5 @@
+{%load json%}
+{
+    "user":{{user|jsonstr}},
+    "checkin_id":{{checkin.id}}
+}

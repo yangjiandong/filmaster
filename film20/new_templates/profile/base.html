@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load map_url %}
+{% load display_user %}
+{% load useractivity_tags %}
+{% load followers %}
+{% load expr %}
+{% load movie %}
+{% load wall %}
+
+{% block title %}{{ user_profile.get_profile.get_current_display_name }} @Filmaster{% endblock %}
+{% block description %}{% if user_profile.get_profile.description %}{{ user_profile.get_profile.description|striptags }}{% endif %}{% endblock %}
+{% block head_extra %}
+<meta property="og:title" content="{{ user_profile.get_profile.get_current_display_name }} @Filmaster"/>
+<meta property="og:description" content="{% if user_profile.get_profile.description %}{{ user_profile.get_profile.description|striptags }}{% endif %}"/>
+<meta property="og:type" content="blog"/>
+<meta property="og:image" content="{{ settings.FULL_DOMAIN }}{% avatars 180 user_profile %}"/>
+
+<link rel="alternate" type="application/rss+xml" href="{% url articles_rss user_profile.username %}" title="{% trans "Articles by" %} {{ user_profile }}"/>
+{% endblock %}
+{% block content %}
+    <div class="wall">
+        <div class="filters">
+            <ul id="activity_filters">
+                {% if custom_filter %}
+                    <li>{% filterlink "f=custom" "default" %}{% trans "custom" %}{%endfilterlink%}</li>
+                    <li>{% filterlink "f=all" %}{% trans "all" %}{%endfilterlink%}</li>
+                {% else %}
+                    <li>{% filterlink "f=all" "default" %}{% trans "all" %}{%endfilterlink%}</li>
+                {% endif %}
+
+				<li>{% filterlink "f=reviews" %}{% trans "reviews" %}{% endfilterlink %}</li>
+				<li>{% filterlink "f=posts" %}{% trans "posts" %}{% endfilterlink %}</li>
+				<li>{% filterlink "f=ratings" %}{% trans "film ratings" %}{% endfilterlink %}</li>
+				<li>{% filterlink "f=video" %}{% trans "video" %}{% endfilterlink %}</li>
+				<li>{% filterlink "f=images" %}{% trans "images" %}{% endfilterlink %}</li>
+            </ul>
+        </div><!-- .filters -->
+
+        {% include 'wall/useractivity/show_activities.html' %}
+    </div>
+{% endblock content %}
+
+{% block primary-content-aside %}
+    {% include 'aside/profile.html' %}
+{% endblock primary-content-aside %}
+
+{% block secondary-content-aside %}
+	<aside class="filmaster">
+		{% users_best_rated user_profile %} 
+		{% users_wishlist user_profile %}
+		{% users_shitlist user_profile %}
+	</aside>
+{% endblock %}
+
+{% block end-scripts %}
+	<script>
+		$(".comment-form").find("textarea").autogrow();
+        function toggle_reply(id)
+        {
+            $("#reply-"+id).toggle('fast');
+            return false;
+        }
+
+		FM.trailers();
+	</script>
+{% endblock %}

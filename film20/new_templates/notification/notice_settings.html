@@ -1,0 +1,42 @@
+{% extends "userprofile/base.html" %}
+{% load i18n %}  
+{% block title %}{% trans "Notification settings" %}{% endblock %}
+
+{% block content %} 
+<div id="main-second-column-panel"> 
+
+<form method="POST" action="">
+<h2><legend>{% trans "Notification settings"%}</legend></h2>
+<table class="settings-table">
+    <tr>
+        <th>{% trans "Notice type" %}</th>
+        {% for media in notice_settings.column_headers%}
+        <th style="min-width:50px">{{media}}</th>
+        {%endfor%}
+    </tr>
+
+{% for row in notice_settings.rows %}
+    <tr>
+        <td>{% trans row.notice_type.display %}</td>
+        {% for cell in row.cells %}
+            <td>
+            {% if cell %}
+              <input type="checkbox" name="{{ cell.label }}" {% if cell.value %}checked="on"{% endif %} />
+            {% endif %}
+            </td>
+        {% endfor %}
+    </tr>
+{% endfor %}
+</table>
+<input type="submit" value="{% trans "Submit" %}" />
+</form>
+<ul>
+{%for medium in media%}
+  {%if medium.description%}
+  <li>{{medium.description|safe}}</li>
+  {%endif%}
+{%endfor%}
+</ul>
+</div>
+
+{% endblock %}

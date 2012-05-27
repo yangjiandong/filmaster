@@ -1,0 +1,6 @@
+{% load i18n %}
+{% if request.user.is_superuser %}
+<ul>
+    <li><a href='{% url event_score_board contest.slug %}'>{% trans "score board" %}</a></li>
+</ul>
+{% endif %}

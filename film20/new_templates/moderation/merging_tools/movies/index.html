@@ -1,0 +1,30 @@
+{% extends "moderation/merging_tools/index.html" %}
+
+{% load i18n %}
+
+{% block title %}
+    {% trans "Admin tools - merging movies" %}
+{% endblock %}
+
+{% block content-section %}
+
+<h1>{% trans "Admin tools - merging movies" %}</h1>
+{% if items %}
+    <div class="moderation-content">
+        <ul>
+        {% for item in items %}
+            <li>
+            {{ item.filmA }} (<a href="{{ item.filmA.get_absolute_url }}">{{ item.filmA.get_absolute_url }}</a>)
+            vs 
+            {{ item.filmB }} (<a href="{{ item.filmB.get_absolute_url }}">{{ item.filmB.get_absolute_url }}</a>)
+            <a href="{% url movie-merging-tool-resolve item.pk %}">{% trans "RESOLVE" %}</a>
+            </li>
+        {% endfor %}
+        </ul>
+    </div>
+
+{% else %}
+    <div class="empty">{%trans "Nothing to display ..." %}</div>
+{% endif %}
+
+{% endblock %}

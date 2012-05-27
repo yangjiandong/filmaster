@@ -1,0 +1,15 @@
+{% load notification %}
+{% load i18n %}
+{% with film=film|autocut:ctx film_url=film.get_absolute_url%}
+{% blocktrans %}
+rated {{film_kind}} "{{film}}" {{film_url}} giving it {{rating}}/10 on @filmaster
+{% endblocktrans %}
+{% if extra_cnt %}
+{% blocktrans count extra_cnt=extra_cnt%}
+(+{{extra_cnt}} more)
+{% plural %}
+(+{{extra_cnt}} more)
+{% endblocktrans %}
+{% endif %}
+{{hashtags|default:''}}
+{% endwith %}

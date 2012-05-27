@@ -1,0 +1,7 @@
+{% load i18n %}
+{% if regional_info %}
+<section class="in-neighborhood">
+    <h1>{% trans "In your area" %}</h1>
+    {{ regional_info.contents|safe }}
+</section> <!-- .in-neighborhood -->
+{% endif %}

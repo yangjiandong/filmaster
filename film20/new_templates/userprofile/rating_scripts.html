@@ -1,0 +1,15 @@
+{% load i18n %}
+{% load map_url %}
+{% block end-scripts %}
+	<script src="/static/js/plugins/jquery.autocomplete.min.js"></script>
+	<script>
+		(function() {
+			FM.toggleFilter({
+				show_filter_label: "{% trans "Filter" %}"
+			});
+			$("#id_tags").autocomplete("{% abs_url 'search_tag_autocomplete' %}",{multiple:true});
+			$("#id_related_director").autocomplete('{% abs_url 'search_person_autocomplete' %}',{multiple:false});
+			$("#id_related_actor").autocomplete('{% abs_url 'search_person_autocomplete' %}',{multiple:false});
+		}());
+    </script>
+{% endblock %}

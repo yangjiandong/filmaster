@@ -1,0 +1,14 @@
+{% load i18n %}{% load showtimes %}
+{% for film in films %}{% filter striplinebreaks %}
+    {{film.get_title}}
+    {% if film.pk %}, {% trans "dir" %}. {{film.get_directors|join:", "}}{% endif %}
+    {% filter lower %}
+        {% if film.guess_rating %}
+            , {% trans "Your likely rating" %}: {{film.guess_rating|floatformat:1}}
+        {% else %}
+            {% if film.average_score %}, {% trans "Average rating" %}: {{film.average_score|floatformat:1}}{% endif %}
+        {% endif %}
+    {% endfilter %}
+{% endfilter %}{% if film.on_wishlist %} ({% trans "on your wishlist" %}){% endif %}
+{% filmscreenings_text user film channels date days %}
+{% endfor %}

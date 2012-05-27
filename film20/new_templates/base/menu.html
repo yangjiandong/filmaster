@@ -1,0 +1,18 @@
+{% load i18n %}
+{% load account %}
+{% load utils %}
+<nav>
+	<ul>
+		<li>{% a show_dashboard match_prefix %}{% trans "Dashboard" %}{% enda %}</li>
+		<li>{% a movies match_prefix %}{% trans "Movies" %}{% enda %}</li>
+		<li class="m_r">{% a my_recommendations match_prefix %}{% trans "Recommendations" %}{% enda %}
+            {% if geo.is_country_supported %}
+            <ul>
+				<li>{% a my_recommendations %}{% trans "All" %}{% enda %}</li>
+				<li>{% a recommendations_theaters match_prefix %}{% trans "Cinemas" %}{% enda %}</li>
+				<li>{% a recommendations_tv match_prefix %}{% trans "TV" %}{% enda %}</li>
+            </ul>
+            {% endif %}
+		</li>
+	</ul>
+</nav>

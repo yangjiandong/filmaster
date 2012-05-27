@@ -1,0 +1,2 @@
+{% load i18n %}
+{% blocktrans %}Your movie ratings have been imported.{% endblocktrans %}

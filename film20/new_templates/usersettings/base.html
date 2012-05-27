@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load debug %}
+
+{% block primary-content-wrapper-start %}{% endblock %}
+
+{% block primary-content-aside %}
+<aside class="profile">
+	{% include 'aside/dashboard/user_settings.html' %}
+</aside><!-- .profile -->
+{% endblock %}
+
+{% block primary-content-wrapper-end %}{% endblock %}
+
+

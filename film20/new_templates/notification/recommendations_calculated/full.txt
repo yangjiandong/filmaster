@@ -1,0 +1,4 @@
+{% load i18n %}
+{% url my_recommendations as recommendations_url %}
+{% blocktrans %}Your personal movie recommendations (the proper ones!) have been calculated.
+You can browse them at: {{FULL_DOMAIN}}{{recommendations_url}}{% endblocktrans %}

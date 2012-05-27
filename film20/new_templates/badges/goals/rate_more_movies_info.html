@@ -1,0 +1,7 @@
+{% load i18n %}
+{% with count=goal.progress.value left=goal.progress.left %}
+        {% blocktrans with count as count %}
+            You have rated <strong id="movies-rated">{{count}}</strong>/15 movies.
+        {% endblocktrans %}
+        <a href="{% url rate_films %}">{% blocktrans with left as left %}Rate <strong id="movies-to-rate">{{left}}</strong> more{% endblocktrans %}</a> &amp; {% trans "find what to watch tonight, instantly!" %}
+{% endwith %}

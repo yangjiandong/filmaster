@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load map_url %}
+{% block title %}{%trans "Finish your Facebook registration"%}{%endblock%}
+{% block content %}
+<h2>{% trans "Register on Filmaster with Facebook Account" %}</h2>
+{% trans "Fill in this form to get features of a full user account on Filmaster. You will be automatically logged in when you use your Facebook account. No extra passwords! :)" %}<br />
+{% trans "If you already have an account on this site you can assign your Facebook account to your Filmaster account using" %} <a href="{% map_url "ASSIGN_FACEBOOK" %}">{% trans "simple login form" %}</a>.<br />
+
+<form action="." method="post">
+          <table>
+            <tr>
+              <td style="width:35%;"><b>{% trans "Login" %}</b></td>
+              <td>{{ form.login }}{% if form.login.errors %}<div class="errmsg">{{ form.login.errors|join:", " }}</div>{% endif %}</td>
+            </tr>
+            <tr>
+              <td><b>{% trans "Email" %}</b></td>
+              <td>{{ form.email }}{% if form.email.errors %}<div class="errmsg">{{ form.email.errors|join:", " }}</div>{% endif %}</td>
+            </tr>
+            <tr>
+              <td></td>
+              <td><input type="submit" value="{% trans "Register" %}"></td>
+            </tr>
+          </table>
+</form>
+{% endblock %}

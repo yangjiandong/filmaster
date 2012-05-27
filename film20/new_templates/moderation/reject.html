@@ -1,0 +1,18 @@
+{% extends "moderation/index.html" %}
+
+{% load i18n %}
+{% load pyif %}
+
+{% block content-section %}
+	
+<h2>{% trans "Moderation" %}</h2>
+<p>{% trans "Reject" %} {{ moderated_item.get_verbose_name }}</p>
+<br />
+<form method="POST">
+	<input type="hidden" name="reject" />
+	<input type="hidden" name="id" value="{{ item.pk }}"/>
+	{{ form.as_p }}
+	<br />
+	<p><input type="submit" name="confirmed" value="{% trans "Reject" %}" /> | <a href="javascript:history.back()">{% trans "Cancel" %}</a></p>
+</form>
+{% endblock %}

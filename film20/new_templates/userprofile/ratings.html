@@ -1,0 +1,52 @@
+{% load i18n %}
+{% load planet_tags %}
+{% load widgets %}
+{% load object %}
+{% load show_film_tags %}
+{% load movie %}
+{% load map_url %}
+{% load expr %}
+
+{% load posters %}
+{% load chunks%}
+{% load pyif %}
+{% load debug %}
+
+{% block title %}
+{% endblock title %}
+
+{% block content %}
+<section class="user-ratings">
+	<h1>{% block username %}{% endblock username %}</h1>
+
+	<p>{% block user_rated %}{% endblock user_rated %} <strong>{{ ratings_count }}</strong> {% trans "movies" %}
+		{% if not default_filter %}{% trans "(custom filters applied)" %}{% endif %}.
+	</p>
+
+	<div class="filters">
+		<p>{% trans "Show:" %} </p>
+		<ul>
+			<li><a href="?show_all=1">{% trans "all on one page" %}</a></li>
+			<li><a href="?sort_by=title">{% trans "alphabetically" %}</a></li>
+			<li><a href="?sort_by=asc">{% trans "lowest ratings" %}</a></li>
+			<li><a href="?sort_by=default">{% trans "highest ratings" %}</a></li>
+            <li><a href="?sort_by=date">{% trans "date" %}</a></li>
+		</ul>
+		<p class="or">{% trans "or" %} </p>
+		{% include "movies/filters/rated_movies_filter.html" %}
+	</div><!-- .filters -->
+
+{% if is_showing_all %}
+	{% block download %}{% endblock download %}
+{% endif %}
+{% if object_list %}
+	{% if is_showing_all %}
+        {% include "userprofile/all_ratings.html" %}
+	{% else %}
+		{% include "userprofile/detailed_ratings.html" %}
+	{% endif %}
+{% else %}
+	<p>{% trans "No ratings, yet. Try removing custom filters to see the ratings." %}</p>
+{% endif %}
+</section>
+{% endblock %}

@@ -1,0 +1,13 @@
+{%load i18n%}
+{%load object%}
+
+{%if ratings %}
+    {% if not simple %}
+        <h1>{% trans "Author's ratings" %}</h1>
+    {% endif %}
+    <ul>
+    {% for rating in ratings %}
+        {% if not simple %}<li>{{ rating.desc }} {% endif %}<meter value="{{ rating.rating }}" max="10" class="rating-3">{{rating.rating}} {% trans "stars" %}</meter>{% if not simple %}</li>{% endif %}
+    {% endfor %}
+    </ul>
+{%endif%}

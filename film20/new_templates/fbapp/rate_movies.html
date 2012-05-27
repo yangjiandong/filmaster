@@ -1,0 +1,569 @@
+{% extends 'fbapp/canvas.html' %}
+{% load i18n %}
+{% load movie %}
+{% load badges %}
+
+{% block body %}rate-movies-page{% endblock body %}
+
+{% block content %}
+<section>
+{% if films %}
+    <a id="rate_next_film" href="{% url rate_next_film %}"></a>
+    <ul class="rate-movies-simple">
+        {% for film in films %}
+        <li>
+            <section class="rate-movie">
+                {% block form %}
+                    {% film_ratings_form_with_target film "_blank" %}
+                {% endblock %}
+            </section><!-- .rate-movie -->
+        </li>
+        {% endfor %}
+    </ul>
+{% else %}
+        {% blocktrans %}
+        <p>You have seen all suggested movies.</p>
+        {% endblocktrans %}
+{% endif %}
+            <p class="rate-movies-more">
+                <span class="ajax-loader"></span>
+            </p>
+        </section>
+        {% block info %}
+        <section class="quiz" style="display: none;">
+            <p>Gratulacje! Masz już <b><span id="result">{{ participant.score }}</span> punktów</b>. <a href="{% url fbapp_viral_view %}">Dalej</a></p>
+        </section>
+        {% endblock %}
+{% endblock content %}
+{% block end-script %}
+    {% load compress %}
+    {% compress js %}
+        <script src="/static/js/libs/jquery-ui-1.8.16.custom.min.js"></script>
+        <script src="/static/js/plugins/jquery.form-2.11.js"></script>
+        <script src="/static/js/plugins/jquery.autogrow.min.js"></script>
+        <script src="/static/js/plugins/jquery.filmaster.js"></script>
+        <script src="/static/js/plugins/jquery.timeago.js"></script>
+        <script src="/static/js/plugins/jquery.ajaxmanager.js"></script>
+        {# <script src="/static/js/script.js"></script> #}
+
+   <script>
+/**
+* Filmaster JavaScript scripts
+*/
+
+"use strict";
+var FM = {};
+
+FM.fixMarkup = function(scope) {
+    var $meter = scope.find("meter");
+    if($meter.length > 0 && ((navigator.userAgent.indexOf("Chrome") !== -1) || (navigator.userAgent.indexOf("Opera") !== -1))) {
+        for (var i = 0; i < $meter.length; i++) {
+            var meter_class = $meter[i].className || "meter",
+                meter_value = $meter[i].value
+            ;
+            if(meter_value) {
+                meter_class += " r" + meter_value;
+            }
+            $($meter[i]).hide().after('<span value="' + meter_value + '" class="' + meter_class + '">' + $meter[i].innerHTML + '</span>')
+        }
+    }
+    //FM.showAllScreenings({
+    //    selector: scope.find("#film-cinema-screenings > ul"),
+    //    limit: 3
+    //});
+
+    //FM.filmCheckinButton(scope);
+    //FM.rateMovieWidget({widget:scope.find('.rate-movie')})
+
+    //FM.ajaxizeSignupForm(scope)
+    //FM.showAjaxSignup(scope)
+    //window.fb_init && fb_init(scope);
+};
+
+
+FM.API_VERSION = "1.1";
+FM.API_PREFIX = '/api/' + FM.API_VERSION;
+
+/**
+ * dirty markup fixes
+ */
+(function() {
+    var ie7 = $('html').hasClass("ie7"),
+        ie8 = $('html').hasClass("ie8")
+    ;
+
+    // last child
+    if (ie7 || ie8) {
+        var $main = $('#main');
+        $main.find('ul.not-seen-yet-actions > li:last').addClass('last-child');
+        $main.find('div.stream > section > p:last-child').addClass('last-child');
+    }
+    var $meter = $("meter");
+    if($meter.length > 0 && ((navigator.userAgent.indexOf("Chrome") !== -1) || (navigator.userAgent.indexOf("Opera") !== -1))) {
+        for (var i = 0; i < $meter.length; i++) {
+            var meter_class = $meter[i].className || "meter",
+                meter_value = $meter[i].value
+            ;
+            if(meter_value) {
+                meter_class += " r" + meter_value;
+            }
+            $($meter[i]).hide().after('<span value="' + meter_value + '" class="' + meter_class + '">' + $meter[i].innerHTML + '</span>')
+        }
+    }
+}());
+
+FM._prev_film_ids = function() {
+    return $.map($('.rate-movie input.film-id'), function(i) {return $(i).val()}).join(',')
+}
+
+FM.rateMovieWidgetSmall = function(config) {
+    var widget_selector = config.widget || 'body.rate-movies-page .rate-movie, body.home .join-us .rate-movie',
+        true_widget_selector = config.widget || '.rate-movie > form',
+        $widgets =  $(widget_selector),
+        $true_widgets = $(true_widget_selector),
+        rate_next_url = $( "#rate_next_film" ).attr( "href" )
+    ;
+
+    var replaceWidget = function( $widget ) {
+        stop_timer($widget);
+        $widget.unbind( 'mouseleave' )
+               .unbind( 'mouseenter' )
+               .css( "opacity", "1" )
+               .stop()
+               .animate({opacity: 0.3}, 2000);
+
+        FM.rateNextAjax.add({
+            type: "POST",
+            url : rate_next_url,
+            beforeCreate: function(xhr, opts) {
+                opts.data = {prev_film_ids: FM._prev_film_ids()}
+            },
+            success: function( msg ) {
+                $widget.html( msg )
+                       .css( "opacity", "0.3" )
+                       .stop()
+                       .animate({opacity: 1}, 2000);
+
+                FM.rateMovieWidgetSmall({ widget: $widget });
+            },
+            error: function() {
+                $widget.css( "opacity", "0.3" )
+                       .stop()
+                       .animate({opacity: 1}, 2000);
+            }
+
+        });
+    };
+
+    function stop_timer($widget) {
+        var id = $.data($widget, 'interval')
+        if(id) clearInterval(id);
+    }
+    
+    function start_timer($widget) {
+        return // AUTO RELOAD DISABLED
+        stop_timer($widget);
+        var $timer = $widget.find('.timer');
+        function setTimer() {
+            var current = $.data( $widget, 'current-time' ) || 60;
+            $.data( $widget, 'current-time', --current );
+            $timer.html( current);
+            if ( current <= 0 ) {
+                $timer.html( '' );
+                replaceWidget( $widget );
+            }
+        };
+        $.data($widget, 'interval', setInterval(setTimer, 1000))
+    }
+
+    if($true_widgets.length > 0) {
+        $widgets.each(function(i) {
+            var hoverable = !$($widgets[i]).hasClass("sr1"),
+                $rating = $($widgets[i]).find(".rating-1"),
+                $feature_rating = $($widgets[i]).find(".rating-3"),
+                $this_widget = $($widgets[i]),
+                movie_url = $this_widget.find(".movie").attr("href"),
+                $ajax_loader = $this_widget.find(".ajax-loader"),
+                $message = $this_widget.find("p.msg"),
+                movie_title = $this_widget.find(".movie").html(),
+                //$timer = $( '<div class="timer"></div>' ).appendTo( $this_widget ),
+                $skip_movie = $( '<a href="#" class="skip-movie">' + gettext( 'Nie widziałem - dalej!' ) + '</a>' ).appendTo( $this_widget )
+            ;
+
+            $skip_movie.click( function() {
+                replaceWidget( $this_widget );
+                return false;
+            });
+
+            // get movie id from movie url
+            movie_url = (movie_url.slice(0, movie_url.length - 1));
+            movie_url = (movie_url.slice(movie_url.lastIndexOf("/") + 1, movie_url.length));
+
+            // stop counter when the cursor is on the widget
+            $this_widget.bind( "mouseenter", function() {
+                stop_timer($this_widget);
+            }).bind( "mouseleave", function() {
+                start_timer($this_widget);
+            });
+
+            // set interval
+            start_timer($this_widget);
+
+            /**
+             * rate - submits ratings, updates stars look
+             * @param stars - star widget collection
+             * @param wv - star widget version
+             */
+            function rate(stars, wv) {
+                // for each star widget
+                stars.each(function(i) {
+                    var $this_star = $(stars[i]),
+                        current_rating = $this_star.prev("input").val() || 0,
+                        new_rating = 0,
+                        type_str = $this_star.prev("input").attr("id"),
+                        type_desc = $this_star.prevAll("label").text(),
+                        type = 1
+                    ;
+
+                    // get rating type
+                    type = type_str.slice(type_str.indexOf("_", 6) + 1, type_str.length);
+
+                    // change stars look on mouseover
+                    $this_star.bind("mousemove", function(e) {
+                        var width = this.clientWidth;
+                        // read new rating
+                        new_rating = (((e.clientX - $(this).offset().left) / (width) * 10) + 0.5).toFixed();
+                        // change markup
+                        $(this).attr("class", "rating-" + wv + " r" + new_rating);
+                    }).bind("click", function() {
+                        // clear interval if exists ...
+                        stop_timer($this_widget);
+                        // ... unbind start_timer on mouse leave
+                        $this_widget.unbind("mouseleave")
+                        // ... and bind mouseleave action
+                        $this_widget._mouse_leaved = false;
+                        $this_widget.bind( "mouseleave", function() {
+                            $this_widget._mouse_leaved = true;
+                        });
+
+                        var put_url = "http://" + location.host + "/api/" + FM.API_VERSION + "/profile/ratings/film/" + movie_url + "/" + type + "/";
+                        // set new rating
+                        current_rating = new_rating;
+                        // change markup
+                        $(this).attr("class", "rating-" + wv + " r" + new_rating);
+
+                        hoverable = false;
+                                
+                        $ajax_loader.show();
+                        /*                        
+                        $.ajax({
+                          type: 'POST',
+                          url: "/fbapp/rate_films/",
+                          data: {"rating": "new_film"},
+                          success: function(response) {alert(response)},
+                          error: alert('error'),
+                          dataType: ""
+                        });
+                        */
+                        FM.ratingAjax.add({
+                            type: "POST",
+                            url:"/ajax/rate-film/",
+                            data: {rating: new_rating, type:type, film_permalink:movie_url},
+                            success: function(msg) {
+                                    $ajax_loader.hide();
+                                    $message.text(gettext("Good job! ") + type_desc + gettext(" rated"))
+                                            .css("opacity", "1")
+                                            .stop()
+                                            .animate({opacity: 0.5}, 1000);
+                                    // step 1: rate movie -> rate in details
+                                    if(type == 1) {
+                                        if($this_widget.hasClass("sr1")) {
+                                            $this_widget.removeClass("sr1").addClass("sr2").find("figcaption").append($this_star);
+                                        }
+                                    }
+                                    
+                                    if($this_star.text() === "") {
+                                         $("body").trigger("rated");
+                                    }
+
+                                    $this_star.text("rated");
+
+                                if ( $this_widget._mouse_leaved ) {
+                                    replaceWidget( $this_widget );
+                                } else {
+                                    $this_widget.bind( "mouseleave", function() {
+                                        replaceWidget( $this_widget );
+                                    });
+                                }
+                            }
+                        })
+                    }).bind("mouseout", function() {
+                        // change markup to reflect current rating
+                        $(this).attr("class", "rating-" + wv + " r" + current_rating);
+                    });
+                })
+            }
+
+            rate($rating, 1);
+            rate($feature_rating, 3);
+
+            // step 2: rate in details -> write a short review
+            $this_widget.find('div.rate-more p:first-child a').bind("click", function() {
+                $this_widget.removeClass("sr2").addClass("sr3");
+                $message.text("");
+                return false;
+            });
+
+            // step 3
+            // back: write a short review -> reate in details
+            $this_widget.find('div.comment p:first-child a').bind("click", function() {
+                $this_widget.removeClass("sr3").addClass("sr2");
+                $message.text("");
+                return false;
+            });
+            //forward: write a short review -> final screen
+            $this_widget.find('.movie-short-review button').bind("click", function() {
+                var put_url = "http://" + location.host + "/api/" + FM.API_VERSION + "/profile/short-reviews/" + movie_url + "/";
+                var comment = $this_widget.find(".movie-short-review textarea").val();
+                if (comment.length < 10) {
+                    $message.text(gettext("Review cannot be shorter than 10 characters!"))
+                            .css("opacity", "1")
+                            .stop()
+                            .animate({opacity: 0.5}, 1000);
+                    return false;
+                }
+
+                // submit short review
+                $ajax_loader.show();
+                $.ajax({
+                    type: "PUT",
+                    url: put_url,
+                    data: {review_text: comment},
+                    success: function(msg) {
+                        var final_msg = gettext("<p>Thanks for rating <strong>") + movie_title + "</strong></p>" +
+                                        gettext("<p>Your short review has appeared at ") + '<a href="' + $this_widget.find(".user-profile").val() + '">' + gettext("your profile page</a>'") + ".</p>"
+                        console.log(msg);
+                        $ajax_loader.hide();
+                        $this_widget.removeClass("sr3").addClass("sr4");
+                        $message.remove();
+                        $this_widget.find(".final").append(final_msg);
+                        $this_widget.find(".rating-1").hide();
+                    }
+                });
+                this.disabled = true;
+                return false;
+            });
+
+            // rate next movie
+            $this_widget.find("p.rate-next a").bind("click", function() {
+                var url =  $(this).attr("href") + "ajax-rating/";
+                // get random movie to rate
+                $ajax_loader.show();
+                FM.ratingAjax.add({
+                    type: "POST",
+                    url: url,
+                    beforeCreate: function(xhr, opts) {
+                        opts.data = {prev_film_ids: FM._prev_film_ids()}
+                    },
+                    success: function(msg) {
+                        console.log(msg);
+                        $ajax_loader.hide();
+                        $this_widget.html(msg);
+                        $this_widget.attr("class", "rate-movie sr1");
+                        FM.rateMovieWidgetSmall({widget: $this_widget});
+                    }
+                });
+                return false;
+            });
+
+            // filmbasket actions DRY
+            function filmbasket(config) {
+                hoverable = false;
+                $ajax_loader.show();
+                $.ajax({
+                    type: "PUT",
+                    url: config.put_url,
+                    data: config.data,
+                    success: function(msg) {
+                        console.log(msg);
+                        $ajax_loader.hide();
+                        $this_widget.removeClass("sr1").addClass("sr4");
+                        $message.remove();
+                        $this_widget.find(".final").append(config.final_msg);
+                        $this_widget.find(".rating-1").hide();
+                    }
+                });
+            }
+
+            // add to whish list
+            $this_widget.find(".whishlist").bind("click", function() {
+                filmbasket({
+                    put_url: "http://" + location.host + "/api/" + FM.API_VERSION + "/profile/filmbasket/" + movie_url + "/",
+                    data: { wishlist: 1 },
+                    final_msg: gettext("<p>You've added <strong>") + movie_title +
+                            "</strong> " + gettext("to_your_wishlist") + ' <a href="' + $(this).attr("href") + '">' + gettext("wishlist</a>") +
+                            gettext("</p><p>You can send your wishlist to your friends so that they know what to get you or what to bring to your place for a movies night.</p>")
+                });
+                return false;
+            });
+
+            // add to shit list
+            $this_widget.find(".shitlist").bind("click", function() {
+                filmbasket({
+                    put_url: "http://" + location.host + "/api/" + FM.API_VERSION + "/profile/filmbasket/" + movie_url + "/",
+                    data: { wishlist: 9 },
+                    final_msg: gettext("<p>You've added <strong>") + movie_title +
+                            '</strong> ' + gettext("to_your_shitlist") + ' <a href="' + $(this).attr("href") + '">' + gettext("shitlist</a>") +
+                            gettext("</p><p>We won't be showing you this movie again.</p>")
+                });
+                return false;
+            });
+
+        }); // each widget
+    }
+}; // rateMovie
+
+FM.RATING_TOOLTIPS = {
+    1 : gettext( 'disaster' ),
+    2 : gettext( 'very bad' ),
+    3 : gettext( 'poor' ),
+    4 : gettext( 'below average' ),
+    5 : gettext( 'average' ),
+    6 : gettext( 'above average' ),
+    7 : gettext( 'good' ),
+    8 : gettext( 'very good' ),
+    9 : gettext( 'exceptional' ),
+    10: gettext( 'masterpiece' )
+};
+
+FM.showQuizSection = function() {
+    var $quiz = $( 'section.quiz' ),
+        $gp = $( '.global-progress' );
+    if ( $gp.find( '#progress-info' ).attr('data-goal-state') == 'initial_rating' ) {
+        $gp.show();
+        $quiz.hide();
+    } else {
+    $.post("{% block post_url %}{% url fbapp_rate_films %}{% endblock %}", {},
+      function( data ) {
+          $( "#result" ).empty().append( data );
+      });
+        $gp.hide();
+        $quiz.slideDown( 1000 );
+    }
+};
+
+/**
+ * updates number of rated movies on rate-movie page, checks recommendation status
+ * @param config
+ */
+FM.rateMovieProgress = function(config) {
+        $("body").bind("rated", function() {
+            var $progress_container = $("#rate-movies-progress"), t,
+                status_check_delay = config.status_check_delay || 30000;
+            var $movies_rated = $("#movies-rated"),
+            $movies_to_rate = $("#movies-to-rate"),
+            movies_rated = $movies_rated.text() || 0,
+            movies_to_rate = $movies_to_rate.text() || 0,
+            $rate_movie_progress = $("#rate-movie-progress"),
+            $progress_info = $("#progress-info");
+
+            if($movies_rated.length && $movies_to_rate.length && $rate_movie_progress.length) {
+                if(movies_to_rate > 0) {
+                    ++movies_rated;
+                    --movies_to_rate;
+                    $movies_rated.text(movies_rated);
+                    $movies_to_rate.text(movies_to_rate);
+                    $rate_movie_progress.css("width", (movies_rated * 100)/(movies_rated + movies_to_rate) + "%")
+                    }
+                console.log(movies_to_rate)
+                if(movies_to_rate < 1) {
+                    $.ajax({
+                        type    : 'POST',
+                        url     : "/fbapp/rate_films/",
+                        data    : { "rating": "new_film"},
+                        //success : function(response) {alert(response)},
+                        //error   : alert('error'),
+                    });
+                    FM.reload_progress_widget(true)
+                }
+                /* dirty - expanding rating section on the mainpage */
+                if($(".rate-movies-simple.collapsed")) {
+                    $("body.home .rate-movies-simple.collapsed").animate({height: '460px'}, "slow", function() {$(this).removeClass("collapsed");});
+                }
+            }
+        });
+
+};
+
+FM.reload_progress_widget = function(force) {
+    function check_autoreload() {
+        if(FM._progress_reload_tid)
+            clearTimeout(FM._progress_reload_tid)
+        var reload_delay = $("#rate-movies-progress").attr('data-reload-delay')
+        if(reload_delay) {
+            FM._progress_reload_tid = setInterval(reload, reload_delay);
+        }
+    }
+
+    function reload() {
+        var pc = $(".global-progress")
+        var tmp = $('<div>').load('/ajax/widget/badges/user_progress/', function(msg, status, xhr) {
+            if(msg && status!='error' && $(this).find('#progress-info').attr('data-goal-state') != pc.find('#progress-info').attr('data-goal-state')) {
+                pc.replaceWith(tmp.find('> *'))
+                FM.fixMarkup($(".global-progress"));
+                var info = $('#progress-info')
+                info.css("background-color", "#ff0")
+                            .stop()
+                            .animate({
+                                backgroundColor: "#191919"
+                            }, 1000)
+                check_autoreload()
+            }
+            
+            FM.showQuizSection();
+        })
+    }
+
+    if(force) reload();
+
+    check_autoreload()
+}
+
+
+/* ----------------------------------- init ----------------------------------- */
+
+window.fb_init && fb_init();
+
+FM.rateMovieWidgetSmall({
+});
+
+$("form.register").preventDoubleSubmit();
+
+// update publish time
+jQuery( "time.timeago" ).timeago();
+
+FM.ratingAjax = $.manageAjax.create('rating', {
+    queue: true,
+    preventDoubleRequests: false,
+});
+FM.rateNextAjax = $.manageAjax.create('ratenext', {
+    queue: true,
+    preventDoubleRequests: false,
+});
+
+FM.rateMovieProgress({
+    status_check_delay: 5000
+});
+
+FM.reload_progress_widget();
+
+FM.showQuizSection();
+
+</script>
+
+{% endcompress %}
+{% endblock end-script %}
+
+{% block footer %}
+    {% user_progress %}
+{% endblock %}

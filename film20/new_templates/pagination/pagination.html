@@ -1,0 +1,15 @@
+{% load i18n %}
+{% load map_url %}
+
+{% if is_paginated %}
+    <ul class="pagination">
+        {% if page_obj.has_previous %}<li><a href="?{{ args }}{% if has_args %}&{% endif %}page={{ page_obj.previous_page_number }}">{%  trans 'previous' %}</a></li>{% endif %}
+        {% if list_of_pages %}
+            {% for current_page in page_numbers %}
+                <li><a {% ifequal current_page page_obj.number %}class="selected" {% endifequal %}href="?{{ args }}{% if has_args %}&{% endif %}page={{ current_page }}">{{ current_page }}</a></li>
+            {% endfor %}
+        {% endif %}
+        {% if page_obj.has_next %}<li><a href="?{{ args }}{% if has_args %}&{% endif %}page={{ page_obj.next_page_number }}">{% trans 'next' %}</a></li>{% endif %}
+        {% if show_all %}{% if not is_showing_all %}<li><a href="?{{ args }}{% if has_args %}&{% endif %}show_all=1">{% trans 'show all' %}</a></li>{% endif %}{% endif %}
+    </ul>
+{% endif %}

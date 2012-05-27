@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load map_url %}
+
+{% block title %}{% trans "Not found" %}{% endblock %}
+
+{% block content %}
+
+<div id="main-first-column-error">
+    <img src="/static/img/sitefilm.png" alt="{% trans "Not found"%}"> 
+    <div id="info_error"> 
+        <h2>{% trans "Not found"%}</h2> 
+        <p>{% trans "Unfortunately it looks like the site you tried accessing doesn't exist." %}</p>        
+        <p><a href="{% map_url "SEARCH" %}/">{% trans "Go to the search page" %} &raquo;</a></p>
+        <p><a href="{% map_url "MAIN" %}">{% trans "Go to the main page" %} &raquo;</a></p>
+    </div>
+</div>
+
+{% endblock %}
+

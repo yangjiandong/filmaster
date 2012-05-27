@@ -1,0 +1,16 @@
+{% load i18n %}
+{% load map_url %}
+{% load useractivity_tags %}
+<section class="{% block class_name %}{% endblock %}">
+	<h1>{% block title %}{% endblock %}</h1>
+	{% if follow %}
+        <ul>
+            {% for user in follow %}
+                <li><a href="{% url_user_link user %}"><img width="32" height="32" src="{% avatars 45 user %}" alt="{{ user.get_profile.get_current_display_name }}" /><span>{{ user.get_profile.get_current_display_name }}</span></a></li>
+            {% endfor %}
+        </ul>
+        <p><a href="{% block show_all_link %}{% endblock %}" class="more">{% trans "Show all" %} ({{ number }})</a></p>
+	{% else %}
+	    <p class="empty">{% block empty_text %}{% endblock %}</p>
+	{% endif %}
+</section> <!-- .watches -->

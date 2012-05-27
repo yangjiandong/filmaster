@@ -1,0 +1,21 @@
+{% load map_url %}
+{% load show_film_tags %}
+{% load i18n %}
+{% load posters %}
+<section class="crew">
+    <h2>{% trans "Cast" %}:</h2>
+    <ul id="crew">
+    {% for actor in actors%}
+        <li class="actor{% if actor.character %} with-character{% endif %}">
+            <a href="{{ actor.person.get_absolute_url }}">
+                <img width="30" src="{% poster 30 40 actor.person %}" alt="[]" />
+                {{ actor.person }}
+            </a>
+            {% if actor.character %}<span class="as">{{ actor.character }}</span>{% endif %}
+        </li>
+    {% endfor %}
+    </ul><!-- #crew -->
+    {% if perms.add_films.can_edit_film_cast %}
+        <a class="edit" href="{% url edit-film-cast film.permalink %}">{% trans "Edit cast" %}</a>
+    {% endif %}
+</section><!-- .crew -->

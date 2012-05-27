@@ -1,0 +1,3 @@
+{% load i18n %}
+{{user}} {% blocktrans %}is going to watch{% endblocktrans %} {{film}}{% if channel %} {% blocktrans %}in{% endblocktrans %} {{channel}} {% blocktrans %}at{% endblocktrans %} {{time|date:TIME_FORMAT}}{% endif %}.
+{% blocktrans %}Visit {{url}} to see who else is.{% endblocktrans %}

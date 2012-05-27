@@ -1,0 +1,26 @@
+{% load i18n %}
+{% load map_url %}
+{% load useractivity_tags %}
+
+{%if activities%}
+<section class="featured-review-user stream">
+	<h1>{%trans "Featured Reviews"%}</h1>
+	{%for act in activities%}
+		<section>
+			<header>
+				<h1><a href="{{act.get_absolute_url}}">{{act.title}}</a></h1>
+				<!-- TODO: backend to generate 45x45 avatars -->
+				<p><a href="{%url_username_link act.username%}"><img title="{{act.username}}" width="45" height="45" src="{%avatars 72 act.username%}" alt="{{act.username}}" /></a></p>
+				{%if act.rating%}
+					<p><meter class="rating-2" max="10" value="{{act.rating}}">{{act.rating}} {% trans "stars" %}</meter></p>
+				{%endif%}
+			</header>
+			<p>{{act.content|striptags|truncatewords:60}}</p>
+			<footer>
+				<!-- TODO: facebook-like date -->
+				<p>{{act.created_at}} <a class="more" href="{{act.get_absolute_url}}">{% trans "read more" %}</a></p>
+			</footer>
+		</section>
+	{%endfor%}
+{%endif%}
+</section><!-- .featured-review-user stream -->

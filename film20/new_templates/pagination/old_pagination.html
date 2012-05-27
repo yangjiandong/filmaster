@@ -1,0 +1,12 @@
+{% load i18n %}
+<div class="pagination">
+    {% if prev_path %}
+     <a href="?{{ prev_path }}" class="prev">&laquo; {% trans "previous" %}</a>
+    {% endif %}
+    {% if show_all %}{% if not is_showing_all %}
+        <a href="{{ path }}{% if has_args %}&{% else %}?{% endif %}show_all=1" class="show_all" style="float:right">{% trans "show all" %}</a>
+    {% endif %}{% endif %}
+    {% if next_path %}
+     <a href="?{{ next_path }}" class="next" style="float:right;">{% trans "next" %} &raquo;</a>
+    {% endif %}
+</div>

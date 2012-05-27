@@ -1,0 +1,208 @@
+{% extends "base.html" %}
+{% load map_url %}
+{% load object %}
+{% load movie %}
+{% load posters %}
+{% load i18n %}
+{% load debug %}
+{% load fbconnect %}
+{% block title %}{{ film.get_both_titles|safe }} ({{film.get_release_year }}) &laquo; {% if film.is_tv_series %}{% trans "TV Series" %}{% else %}{% trans "Film" %}{% endif %} {% endblock %}
+
+{% block head_extra %}
+<meta property="og:title" content="{{ film.get_title }}"/>
+<meta property="og:description" content="{{film.description|striptags|truncatewords:60|default_tr:'This film does not have a description, yet.'}}" />
+<meta property="og:type" content="movie"/>
+<meta property="og:url" content="{%permalink_film film%}"/>
+<meta property="og:image" content="{{ settings.FULL_DOMAIN }}{% poster 50 auto film %}"/>
+{% endblock %}
+
+{%block content%}
+
+<article class="movie">
+	<header>
+        {% with film.get_title as title %}
+		<h1>{{title|safe}} {%if film.get_release_year %} <span>({{film.get_release_year}})</span>{%endif%}
+			{% if user.is_authenticated %}
+				<a id="edit_title" class="edit" href="#" title="{% trans "Edit Localized Title"%}">✎<!--{% trans "Edit Title" %}--></a>
+			{% endif %}
+		</h1>
+		{% endwith %}
+        {% if film.title %}
+			{% ifnotequal film.get_title film.title %}
+		<p class="original-title">{% trans "Original title" %}: <strong>{{ film.title|safe }}</strong></p>
+			{% endifnotequal %}
+		{% endif %}
+
+		<p>{% film_directors film %}</p>
+
+        <div class="categories-wrapper">
+		{% object_tags film %}
+		{% if user.is_authenticated %}
+			<a id="edit_tags" class="edit" href="#" title='{% trans "Edit Localized Tags"%}'>✎<!--{% trans "Edit Tags" %}--></a>
+		{% endif %}
+        </div>
+	
+	</header>
+
+	{% film_description film '' 'True' %}
+    {% load fbconnect %}
+    {% fb_like film %}
+    <!--fb:like href="{{ film.get_absolute_url }}" layout="standard" show_faces="false" width="400" action="like" font="verdana" colorscheme="light"></fb:like-->
+
+	{% film_actors film %}
+</article><!-- .movie -->
+
+{% film_tv_screenings film %}
+
+{% film_cinema_screenings film %}
+
+{% film_featured_posts film %}
+
+{% block wall %}
+   {%include "movies/wall.html" %}
+{% endblock wall %}
+
+{%endblock%}
+
+{% block primary-content-aside %}
+	<aside class="movie">
+		<section class="poster">
+			<h1>{% trans "Poster" %}</h1>
+			<p><img width="180" src="{%poster 180 auto film%}" alt="{{ film.get_title }}" /></p>
+            {% comment %}
+            <div class="gallery">
+            {% for poster in film.posters %}
+                <p>
+                    <img src="{% poster 60 60 poster %}" />
+                </p>
+            {% endfor %}
+            </div>
+            {% endcomment %}
+
+            {% if user.is_authenticated %}
+            <p>
+                <a id="add_photo" href="{% url add-poster film.permalink %}">{% if film.image %}{% trans "Replace poster" %}{% else %}{% trans "Add poster" %}{% endif %}</a>
+            </p>
+            {% endif %}
+        </section><!-- .poster -->
+		{% include 'movies/movie/videos.html'%}
+
+		{# film_related film #}
+        
+        {% if user.get_profile.is_moderator %}
+        <section class="trailer">
+        <p><a id="edit_film_features" class="edit" href="{% url edit-film-features film.pk %}">{% if film.is_tv_series %}{% trans "edit tv series features" %}{% else %}{% trans "edit film features" %}{% endif %}</a></p>
+        </section>
+        {% endif %}
+
+	</aside> <!-- .movie -->
+{% endblock %}
+
+{% block secondary-content-aside %}
+	<aside class="filmaster">
+
+		<section class="rate-movie-w">
+        <h1>{% if film.is_tv_series %}{% trans "Rate tv series" %}{% else %}{% trans "Rate film" %}{% endif %}</h1>
+			<div class="rate-movie s1">
+				{% single_film_ratings_form film %}
+			</div><!-- .rate-movie .s1 -->
+		</section><!-- .rate-movie-w -->
+	        {% if request.user.is_authenticated %}
+			{% include 'movies/movie/buttons.html' %}
+	        {% endif %}
+
+        {% if film.average_score %}
+            <section class="others-ratings">
+            <h1>{% trans "filmasters ratings" %}:</h1>
+            {% film_score film user %}
+            {#% film_similar_ratings film %#}
+            {% film_friends_ratings film %}
+            <a href='{{film.get_absolute_url}}?f=ratings#wall'>{% trans "Show all ratings"%}</a>
+            </section><!-- .others-ratings -->
+            {% endif %}
+            
+        {% if user.is_authenticated %}
+            {# TODO: uncomment when we fix the translation issue for I'm watching it in script.js #}
+            {# http://jira.filmaster.org/browse/FLM-1557 #}
+            {% film_checkin film %}
+        {% else %}
+            <a href="#" class="fb-button">{% trans "Connect with Facebook" %}</a>
+            {% connected_users %}
+        {% endif %}
+
+	</aside><!-- .filmaster -->
+
+{% endblock %}
+
+{% block end-scripts %}
+    <script>document.write("<script src='/static/js/plugins/jquery.autocomplete.min.js'>\x3C/script>")</script>
+	<script src="/static/js/utils.js"></script>
+	<script src="/static/js/movie.js"></script>
+<script>
+/*	FM.addToCollection({
+		widget: "form.collection-form"
+	});
+*/
+	FM.showMoreList({
+		selector: "#crew",
+        limit: 3,
+		msg: "{% trans 'Show all actors' %} +"
+	});
+
+	FM.trailers();
+  
+	FM.showAllScreenings({
+		selector: "#film-cinema-screenings > ul",
+		limit: 3
+	});
+
+	// FM.wallPost();
+
+// TODO: move this to an external script in /static/js/ so that translations can be done properly!
+
+function processJsonButtons(form,data,id) {
+    // 'data' is the json object returned from the server
+    // expected vars:
+    // success: True / False
+    // reason: reason for failure (in case success==False
+    if (data.success==true) {
+            $('form#' + id+ ' :submit').toggleClass('active');
+    }
+    else {
+        // TODO: trans
+        if (data.reason=="LOGIN")
+        {
+            // TODO: redirect as in FLM-77
+            display_error("Zaloguj się aby zagłosować!", $(".error-message-placeholder",form));
+            window.location = "/konto/login?next=" + document.location.pathname + "&reason=vote";
+            exit();
+        }
+        else
+        {
+            display_error("Porażka... Powód: "+data.reason, $(".error-message-placeholder",form));
+        }
+    }
+}
+
+function ajaxize_buttons_form(form, id) {
+
+    var on_succ = function(data) {
+        processJsonButtons(form,data,id);
+    }
+    var ajax_url = form.attr('action')+'json';
+    form.ajaxForm({
+        // dataType identifies the expected content type of the server response
+        dataType:  'json',
+
+        url: ajax_url,
+
+        // success identifies the function to invoke when the server response
+        // has been received
+        success: on_succ
+    });
+}
+
+    $( '#edit_film_features' ).filmFeatures();
+    $( ".description .text" ).truncate();
+</script>
+{% endblock %}

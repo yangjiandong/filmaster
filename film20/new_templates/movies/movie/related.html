@@ -1,0 +1,13 @@
+{% load i18n %}
+{% load posters %}
+
+{% if related%}
+<section class="similar-movies">
+	<h1>{%trans "Similar movies"%}:</h1>
+	<ul>
+	{%for film in related%}
+        <li><a href="{{ film.get_absolute_url }}"><img width="50" height="71" src="{% poster 50 71 film %}" alt="" />{{ film.get_title }} <span>{% if film.release_year %}({{ film.release_year }}){% endif %}</span></a></li>
+	{% endfor %}
+	</ul>
+</section><!-- .similar-movies -->
+{%endif%}

@@ -1,0 +1,24 @@
+{% load i18n %}
+{% load posters %}
+{% load showtimes %}
+
+{% if films %}
+    <ul style="list-style-type: none; padding: .5em;">
+    {% for film in films %}
+        <li style="clear: both;">
+            <img src="{% poster 30 50 film %}" style="float: left; margin: 2px 5px;"/>
+            {% if film.get_absolute_url %}<a href="{{ film.get_absolute_url }}">{{ film.get_title }}</a>{% else %}<b>{{ film.get_title }}</b>{% endif %}{% if film.pk %}, <i>{% trans "dir" %}</i>. {{film.get_directors|join:", "}}{% endif %}
+            {% filter lower %}
+                {% if film.guess_rating %}
+                    , {% trans "Your likely rating" %}: <b>{{film.guess_rating|floatformat:1}}</b>
+                {% else %}
+                    {% if film.average_score %}, {% trans "Average rating" %}: <b>{{film.average_score|floatformat:1}}{% endif %}</b>
+                {% endif %}
+            {% endfilter %}
+            {% if film.on_wishlist %} (<i>{% trans "on your wishlist" %}</i>){% endif %}
+            <p>{% filmscreenings_text user film channels date days %}</p>
+        </li>
+    {% endfor %}
+    </ul>
+    <div style="clear: both"></div>
+{% endif %}

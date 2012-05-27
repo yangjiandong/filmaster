@@ -1,0 +1,75 @@
+{% extends "moderation/merging_tools/index.html" %}
+
+{% load i18n %}
+{% load posters %}
+
+{% block title %}
+    {% trans "Admin tools - merging movies | resolve" %}
+{% endblock %}
+
+{% block content-section %}
+<style>
+.moderation-content ul.related-objects {
+    list-style: none;
+    margin:2em 0;
+}
+
+.moderation-content ul.related-objects ul {
+    list-style: none;
+}
+
+.moderation-content ul.related-objects h2 {
+    margin-top : 1em;
+}
+
+.moderation-content ul.related-objects h3 {
+    margin-bottom: .5em;
+}
+
+.moderation-content ul.related-objects.to-delete strike {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+</style>
+<h1>{% trans "Admin tools - merging movies | resolve step" %} {{ step }}</h1>
+<h2>{% trans "Confirm this actions" %}</h2>
+
+<div class="moderation-content notification-setting ajax-form">
+    <form action="{% url movie-merging-tool-resolve duplicate_film.pk %}" method="POST" class="ajax-form">
+        <input type="hidden" name="step" value="3" />
+        <input type="hidden" name="{{ option }}" value="1" />
+
+        <hr />
+        <h2>{% trans "You selected this film to save:" %}</h2>
+        <h3>{{ selected }}</h3>
+
+        <div>
+            <img src="{% poster 180 258 selected %}" width="180" height="258" />
+        </div>
+
+
+        <ul class="related-objects">
+            {% for category, content in preview.all.items %}
+                <li>
+                    <h2>{{ category }}</h2>
+                    <h3>{{ content.msg }}</h3>
+                </li>
+                <ul>
+                    {% for item in content.items %}
+                        <li>{{ item }}</li>
+                    {% endfor %}
+                </ul>
+            {% endfor %}
+        </ul>
+
+        <h2>{% trans "this related objects will be deleted" %}</h2>
+        <ul class="related-objects to-delete">{{ objects_to_delete|unordered_list }}</ul>
+
+        <div class="buttons">
+            <input type="submit" value="{% trans "Yes, I'm sure" %}"/>
+            <span> {% trans "or" %} <a href="javascript:window.history.back()">{% trans "Cancel" %}</a></span>
+        </div>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,45 @@
+{% load i18n %}
+{% load utils %}
+
+<aside class="browse-movies">
+    <nav class="global">
+        <ul>
+            <li>{% a rate_films match_prefix %}{% trans "Rate movies" %}{% enda %}</li>
+            <li>{% a reviews %}{% trans "Movie reviews" %}{% enda %}</li>
+            <li>{% a rankings match_prefix %}{% trans "Film Ranking" %}{% enda %}</li>
+            <li>{% a series_rankings match_prefix %}{% trans "TV Series Ranking" %}{% enda %}</li>
+        </ul>
+    </nav><!-- .global -->
+    <section>
+        <h1>{% trans "By genre" %}</h1>
+        <nav>
+        {% block nav_menu %}
+            <ul>
+            {% for tag in global.top_tags %}
+                <li>
+                {% block tag_url %}
+                    {% a movies_menu tag.name %}{{tag}}{% enda %}
+                {% endblock %}
+                </li>
+            {% endfor %}
+            </ul>
+        {% endblock nav_menu %}
+        </nav>
+    </section>
+
+    {% if user.is_authenticated %}
+    {% include "aside/movies/missing_movie.html" %}
+    <section>
+        <h1>{% trans "Found a duplicate?" %}</h1>
+        <nav>
+            <ul>
+                <li><a class="request-dm" href="{% url request-duplicate-movie %}">{% trans "Report duplicate Movie" %}</a></li>
+                <li><a class="request-dp" href="{% url request-duplicate-person %}">{% trans "Report duplicate Person" %}</a></li>
+            </ul>
+        </nav>
+    </section>
+    {% endif %}
+
+   {% block footer %}{% endblock %}
+
+</aside> <!-- .browse-movies -->

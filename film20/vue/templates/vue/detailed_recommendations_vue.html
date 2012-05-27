@@ -1,0 +1,6 @@
+{% extends "vue/detailed_recommendations_all.html" %}
+{% load i18n %}
+{% block recommendations_subtitle %}{% trans "in Vue Theaters" %}{% endblock %}
+{% block info %}
+<h1><a href="{% url vue_main %}">{% trans "Rate more movies" %}</a> {% trans "to get even better recommendations!" %}</a></h1>
+{% endblock %}

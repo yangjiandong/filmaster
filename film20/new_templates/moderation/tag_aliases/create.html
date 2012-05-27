@@ -1,0 +1,87 @@
+{% extends "moderation/index.html" %}
+
+{% load i18n %}
+
+{% block title %}
+    {% trans "Moderator tools - create tag alias" %}
+{% endblock %}
+
+{% block head_extra %}
+ <style>
+    .ajax-loader {
+        display: none;
+        margin-top: 10px;
+        min-height: 16px;
+        padding-left: 25px;
+        background: url( /static/layout/ajax-loader-wall.gif) left center no-repeat;
+    }
+</style>
+{% endblock %}
+
+{% block content-section %}
+    <h1>{% trans "Moderator tools - create tag alias" %}</h1>
+    
+    <form id="create-alias" method="post">
+        {{ form.as_p }}
+        <div>
+            <div class="ajax-loader"></div>
+            <input type="submit" disabled="true" value="{% trans "Create alias" %}" />
+        </div>
+    </form>
+{% endblock %}
+
+{% block end-scripts %}
+    <script>document.write("<script src='/static/js/plugins/jquery.autocomplete.min.js'>\x3C/script>")</script>
+    <script>
+
+        var $tag = $( '#id_tag' ),
+            $aliases = $( '#id_aliases' ),
+            $submit = $( '#create-alias input[type=submit]' ),
+            $loader = $( '#create-alias .ajax-loader' );
+
+        $tag.autocomplete( "/ajax/search_tag_autocomplete/", { 'mustMatch': true } );
+
+        // on submit or refresh make submit enabled
+        if ( $tag.val() != '' ) {
+            $submit.removeAttr( 'disabled' )
+            $aliases.removeAttr( 'disabled' )
+        } else {
+            $submit.attr( 'disabled', true );
+            $aliases.attr( 'disabled', true );
+        }
+        
+        $tag.result(function( event, data, formatted ) {
+
+            $( '.errorlist' ).hide();
+
+            $aliases.val( '' )
+                    .attr( 'autocomplete', 'off' )
+                    .attr( 'disabled', 'true' );
+
+            $submit.attr( 'disabled', 'true' );
+            
+            $loader.html( gettext( 'loading aliases, please wait ...' ) )
+                   .show();
+
+            $.ajax({
+                url: "/ajax/tag-aliases/" + $tag.val(),
+                dataType: 'json',
+                success: function( data ) {
+                    $aliases.val( data.result )
+                            .removeAttr( 'disabled' );
+
+                    $submit.removeAttr( 'disabled' );
+                    $loader.hide();
+                },
+                error: function() {
+                    $loader.hide();
+
+                    var $errorlist = $( '<ul class="errorlist"><ul>' )
+                        .append( '<li>' + gettext( 'Tag does not exists' ) + '</li>' )
+                        .prependTo( $tag.parent() );
+                }
+            });
+        });
+
+    </script>
+{% endblock %}

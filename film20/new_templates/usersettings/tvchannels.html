@@ -1,0 +1,23 @@
+{% extends "usersettings/base.html" %}
+{% load i18n %}
+
+{% block title %}{% blocktrans %}Your TV Channels{% endblocktrans %}{% endblock %}
+
+{%block content%}
+	<article class="settings">
+        <h1>{%trans "Settings"%}: <span>{% blocktrans %}Favorite TV Channels{% endblocktrans %}</span></h1>
+        <div id="content-section">
+        {% if channels %}
+        <form method="post">
+        {% include "form_fieldset.html" %}
+	    <input type="submit" value="{% trans 'Save Changes' %}" />
+        </form>
+        {% else %}
+        {% url edit_location as url %}
+        {% blocktrans with url=url%}
+            No channels available. Check your <a href="{{url}}">location settings</a>
+        {% endblocktrans %}
+        {% endif %}
+        </div>
+	</article><!-- .settings -->
+{%endblock%}

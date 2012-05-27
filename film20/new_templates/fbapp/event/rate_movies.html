@@ -1,0 +1,31 @@
+{% extends 'fbapp/rate_movies2.html' %}
+{% load i18n %}
+
+{% block menu %}{% endblock %}
+
+{% block info %}
+<section>
+    <div style="margin: 15px 0 0 0;" class="play">
+         <a href="{% url event_viral contest.slug %}">{% trans "DONE" %}</a>
+    </div>
+</section>
+{% endblock %}
+
+{% block footer %}
+    <div class="global-progress">
+        <section class="status">
+            <h1>{% trans "Your progress" %}</h1>
+            <div class="progress-bar" id="rate-movies-progress">
+                <progress value="{{progress_percent}}" max="100">{{progress_percent}}%</progress>
+                <span class="progress"><span id="rate-movie-progress" style="width: {{progress_percent}}%;"></span></span>
+                <p id="progress-info"><span class="ajax-loader"></span>
+                {% with count=progress_value left=progress_left max=progress_max %}
+                    {% blocktrans with count as count and max as max %}
+                        You have rated <strong id="movies-rated">{{count}}</strong> / {{max}} movies.
+                    {% endblocktrans %}
+                {% endwith %}
+                </p>
+            </div>
+        </section>
+    </div>
+{% endblock %}

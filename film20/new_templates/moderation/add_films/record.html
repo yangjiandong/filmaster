@@ -1,0 +1,7 @@
+{% extends "moderation/record.html" %}
+
+{% load i18n %}
+
+{% block title %}
+    <a href="{{ item.get_absolute_url }}">{{ item.title }} | {{ item.release_year }}</a>
+{% endblock %}

@@ -1,0 +1,21 @@
+{% load posters %}
+{% load i18n %}
+
+{% if movie %}
+<section class="rate-movie">
+	<h1><a href="{% url show_film_login movie.permalink %}">{{ movie.get_title }}</a></h1>
+	<img alt="{{ movie.get_title }}" src="{%poster 180 258 movie%}">
+    <p class="rate">
+        {% if movie.is_tv_series %}
+        {% trans "If you saw the tv series, rate it" %}:
+        {% else %}
+        {% trans "If you saw the movie, rate it" %}:
+        {% endif %}
+    <a href="{% url show_film_login movie.permalink %}"><meter value="0" max="10" class="rating-1"></meter></a></p>
+	<p>{% trans "If you haven't seen it" %}:</p>
+	<ul class="not-seen-yet-actions">
+		<li><a class="whishlist" href="{% url wishlist %}">{% trans "I want to watch it (haven't seen, yet)!" %}</a></li>
+		<li><a class="shitlist" href="{% url shitlist %}">{% trans "I don't want to see it, do not show me again!" %}</a></li>
+	</ul><!-- .not-seen-yet-actions -->
+</section>
+{% endif %}

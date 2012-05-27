@@ -1,0 +1,47 @@
+{% extends "usersettings/base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Main page" %}{% endblock %}
+
+{% block content %}
+	<form method="POST" class="notification-setting setting settings">
+	<h1>{% trans "Settings"%}: <span>{% trans "Notifications"%}</span></h1>
+	<section>
+		<h2>{% trans "How do I activate notifications?" %}</h2>
+		<ul>
+		{%for medium in media%}
+			{%if medium.description%}
+			<li>{{medium.description|safe}}</li>
+			{%endif%}
+		{%endfor%}
+		</ul>
+	</section>
+
+	<table cellspacing="0" cellpadding="0">
+	<thead>
+		<tr>
+			<th>{% trans "Notice type" %}</th>
+			{% for media in notice_settings.column_headers%}
+			<th style="min-width:50px">{{media}}</th>
+			{%endfor%}
+		</tr>
+	</thead>
+	<tbody>
+		{% for row in notice_settings.rows %}
+		<tr>
+			<td>{% trans row.notice_type.display %}</td>
+			{% for cell in row.cells %}
+				<td>
+				{% if cell %}
+				  <input type="checkbox" name="{{ cell.label }}" {% if cell.value %}checked="on"{% endif %} />
+				{% endif %}
+				</td>
+			{% endfor %}
+		</tr>
+		{% endfor %}
+	</tbody>
+	</table>
+	<input type="submit" value="{% trans 'Save Changes' %}" />
+        {% csrf_token %}
+	</form><!-- .settings -->
+{% endblock %}

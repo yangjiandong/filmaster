@@ -1,0 +1,52 @@
+{% load i18n %}
+<fieldset>
+    <div class="input-text">
+        {%if form.title.errors %}<div class="error">{{ form.title.errors }}</div>{%endif%}
+        <label for="id_title">{% trans "Title" %}</label>
+	<p class="hint">({% trans "catchy and informative" %})</p>
+        {{ form.title }}
+    </div>
+    <div>
+        <a id="show-lead" href="#" >{% trans "Show lead" %}</a>
+        <div id="lead" style="display: none;">
+        {%if form.lead.errors %}<div class="error">{{ form.lead.errors }}</div>{%endif%}
+        <label for="id_lead">{% trans "Lead" %}</label>
+	<p class="hint">{% trans "optional" %}({% trans "not more than three short sentences" %})</p>
+        {{form.lead}}
+        </div>
+    </div>
+    <div>
+        {% if form.body.errors %}<div class="error">{{ form.body.errors }}</div>{% endif %}
+        <label for="id_body">{% trans "Contents" %}</label>
+	<p class="hint">({% trans "remember to divide the content into short paragraphs" %})</p>
+        {{form.body}}
+    </div>
+    <div>
+        {{form.spoilers}}
+        <label for="post_status" style="display: inline;">{% trans "Article contains spoilers" %}</label><!-- move to external CSS when neccessary -->
+    </div>
+    <div class="input-text">
+        {%if form.related_film.errors %}<div class="error">{{form.related_film.errors}}</div>{%endif%}
+        <label for="id_related_film">{% trans "Movies in this article" %}</label>
+	<p class="hint">{% trans "optional" %} ({% trans "separate with commas, start typing, we'll try to autocomplete" %})</p>
+        {{form.related_film}}
+    </div>
+    <div class="input-text">
+        {%if form.related_person.errors %}<div class="error">{{form.related_person.errors}}</div>{%endif%}
+        <label for="id_related_person">{% trans "People in this article" %}</label>
+	<p class="hint">{% trans "optional" %} ({% trans "separate with commas, start typing, we'll try to autocomplete" %})</p>
+        {{form.related_person}}
+    </div>
+    <div class="input-text">
+        {%if form.tag_list.errors %}<div class="error">{{form.tag_list.errors}}</div>{%endif%}
+        <label for="id_related_person">{% trans "Tags" %}</label>
+	<p class="hint">{% trans "optional" %} ({% trans "separate with commas, start typing, we'll try to autocomplete" %})</p>
+        {{form.tag_list}}
+    </div>
+    <div class="add-note_submit">
+        <input type="hidden" name="next" value="{{next}}">
+        <input type="Submit" name="save" value="{% trans "Save as draft" %}"/>
+        <input type="submit" name="{% if post.is_public %}{% ifequal post.status 1 %}unpublish{% else %}publish{% endifequal %}{%else%}publish{% endif %}" value="{% if post.is_public %}{% ifequal post.status 1 %}{% trans "Unpublish" %}{% else %}{% trans "Publish" %}{% endifequal %}{%else%}{% trans "Publish" %}{% endif %}" >
+    </div>
+</fieldset>
+{% csrf_token %}

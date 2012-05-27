@@ -1,0 +1,22 @@
+{% extends "wall/useractivity/base.html" %}
+{% load i18n %}
+{% load map_url %}
+{% load useractivity_tags %}
+{% load format_date %}
+{% load threadedcommentstags %}
+{% load sanitize %}
+{% load truncatechars %}
+{% load parse_nicknames %}
+
+{% block activity-header %}
+    {% if activity.title %}
+        {% trans "commented" %} <a href="{{ activity.get_absolute_url }}">{{ activity.title }}</a>
+    {% else %} 
+        {% trans "commented" %} <a href="{{ activity.get_absolute_url }}">{% trans "a wall post" %}</a>
+    {% endif %}
+{% endblock %}
+
+{% block activity-content %}
+		{{ activity.content|remove_spoiler|striptags|truncatechars:500}}
+{% endblock %}
+

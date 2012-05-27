@@ -1,0 +1,4 @@
+{% load i18n %}
+{% load notification %}
+{%trans "published"%} "{{post.title|autocut2:ctx}}": {{post.lead|default:post.body|striptags|autocut1:ctx}}
+{{link|short_url}} via @filmaster {{hashtags|default:''}}

@@ -1,0 +1,33 @@
+{% extends "wall/useractivity/base.html" %}
+{% load i18n %}
+{% load map_url %}
+{% load useractivity_tags %}
+{% load format_date %}
+{% load threadedcommentstags %}
+{% load sanitize %}
+{% load truncatechars %}
+{% load showtimes %}
+
+{% block activity-header %}
+            {% if activity.checkin_date %}
+                {{ activity.checkin_date|to_checkin_activity_message:activity.modified_at }}
+            {% else %}
+                {% trans "is planing to watch" %}
+            {% endif %}
+            {% if activity.film_id %}
+                <a href="{{ activity.film_absolute_url }}">{{ activity.film_title }}</a>
+            {% else %}
+                {{ activity.film_title }}
+            {% endif %}
+{% endblock %}
+
+{% block activity-content %}
+        {% if activity.channel_name %}
+            {#} validate this {#}
+            <a href="{% url showtimes_tvchannel activity.channel_id %}">{{ activity.channel_name }}</a>,
+
+            {% with localtime=activity.checkin_date|to_local_time:request.timezone%}
+            <a href="{% url showtimes_screening activity.screening_id %}"> <time datetime="{{ localtime|date:"Y-m-d H:i" }}">{{ localtime|date:settings.SCREENING_TIME_FORMAT|lower }}</time></a>
+            {%endwith%}
+        {% endif %}
+{% endblock %}

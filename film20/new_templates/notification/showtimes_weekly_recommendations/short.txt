@@ -1,0 +1,1 @@
+{%load i18n%}{% if template.title %}{{ template.title }}{% else %}{%blocktrans%}Filmaster: this week's recommendations{%endblocktrans%}{% endif %}

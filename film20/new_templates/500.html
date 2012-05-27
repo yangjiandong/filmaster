@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load map_url %}
+
+{% block title %}{% trans "Site Error" %}{% endblock %}
+
+{% block content %}
+
+<div id="main-first-column-error">
+    <img src="/static/img/sitefilm.png" alt="{% trans "Site Error"%}"> 
+    <div id="info_error"> 
+        <h2>{% trans "Site Error"%}</h2> 
+        <p>{% trans "Unfortunately it looks like some malicious error occured on our site which prevented you from seeing the contents." %}</p>        
+        <p><a href="{% map_url "CONTACT" %}/">{% trans "Contact the administrators"%}</a> {% trans "about this incident explaining how did you get this error." %}</p>
+        <p><a href="{% map_url "MAIN" %}">{% trans "Go to the main page" %} &raquo;</a></p>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+{% load posters %}
+{% load i18n %}
+{% load showtimes %}
+{% load useractivity_tags %}
+{% load map_url %}
+{% load fragments %}
+
+{% block head_extra %}
+<link href="/static/css/festivals/{{festival.permalink}}/style.css?v=2" rel="stylesheet" type="text/css" media="screen,projection" />
+<style type="text/css">
+{{festival.css|default:""|safe}}
+</style>
+{% endblock %}
+
+{% block body-class %}festival{% endblock %}
+
+{% block primary-content-aside %}
+    <aside class="festival">
+    {% a show_festival festival.permalink %}
+        {% if festival.event_image %}<img alt="{{festival.name}}" src="{{ settings.FULL_DOMAIN }}{{ settings.MEDIA_URL }}{{ festival.event_image }}" />{% endif %}
+	{% enda %}
+    <h1>{{festival.name}}</h1>
+    <nav class="global">
+        <ul>
+            <li>{% a show_festival festival.permalink %}{% trans "Dashboard" %}{%enda%}</li>
+            <li>{% a festival_films festival.permalink match_prefix%}{% trans "Films" %}{%enda%}</li>
+            <li>{% a festival_recommendations festival.permalink %}{% trans "Recommendations" %}{%enda%}</li>
+            <li>{% a festival_ranking festival.permalink %}{% trans "Ranking" %}{%enda%}</li>
+            <li>{% a festival_reviews festival.permalink %}{% trans "Reviews" %}{%enda%}</li>
+            <!-- <li><a href="#">Ranking</a></li> -->
+        </ul>
+    </nav>
+    {% if festival_days and not is_past %}
+    <section class="agenda">
+        <h1>{% trans "Agenda" %}</h1>
+        <ul>    
+        {% for day in festival_days %}
+            {% with date=day.date|date:"Y-m-d" date_disp=day.date|date:"d N" %}
+            <li>{% a festival_agenda festival.permalink date %}{{date_disp}}{% enda %}</li>
+            {% endwith %}
+        {% endfor %}
+        </ul>
+    </section>
+    {% endif %}
+    {% if checked_in_users %}
+    <section class="watches">
+    <h1>{% if is_past %}{% trans "They were here" %}{% else %}{% trans "They are attending" %}{% endif %}</h1>
+    <ul>
+    {% for user in checked_in_users %}
+        <li>
+            <a href="{% url_user_link user %}">
+                <img width="32" height="32" src="{% avatars 45 user %}" alt="{{ user}}" />
+                <span>{{ user }}</span>
+            </a>
+        </li>
+    {% endfor %}
+    </ul>
+    </section>
+    {% endif %}
+    </aside>
+{% endblock %}
+
+{% block secondary-content-aside %}
+    <aside class="filmaster">
+    <section class="recommended">
+    <h1>{% trans "Recommended for you" %}</h1>
+	<ul>
+    {% for film in all_recommended_films|slice:"0:6" %}
+    		<li>
+            <a href="{{ film.get_absolute_url }}"><img src="{%poster 120 170 film %}" /></a>
+            <h2><a href="{{ film.get_absolute_url }}">{{film.get_title}}</a></h1>
+		</li>
+    {% endfor %}
+	</ul>
+    <a href="{% url festival_recommendations festival.permalink %}">{% trans "more" %}</a>
+    </section>
+    {% if today_screenings %}
+    <section class="others-ratings top-recommendations">
+        <h1>{% trans "Today" %}</h1>
+	<ul>
+            {% for s in today_screenings %}
+            <li>
+            <a href="{{ s.film.film.get_absolute_url }}">{{s.film.film.get_title}}</a> {{s.channel}} {{s|local_time_txt:request.timezone}}
+            </li>
+            {% endfor %}
+	</ul>
+        </section>
+    {% endif %}
+
+    </aside>
+{% endblock secondary-content-aside %}

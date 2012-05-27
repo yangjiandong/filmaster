@@ -1,0 +1,7 @@
+{%load notification%}
+{"id":{{message.pk|json}},
+"parent_id":{{message.parent_msg.pk|json}},
+"conversation_id":{{message.conversation_id|jsonstr}},
+"sender":{{message.sender.username|json}},
+"body":{{message.body|truncate:50|autocut:ctx|jsonstr}}
+}

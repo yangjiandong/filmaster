@@ -1,0 +1,183 @@
+<!doctype html>
+{% load account %}
+{% load i18n %}
+{% load map_url %}
+<html class="home color-beige">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<title></title>
+        <link rel="stylesheet" href="/static/vue/css/style.css?v=14">
+        <!--[if lt IE 9]>
+            <link rel="stylesheet" href="/static/vue/css/ie.css?v=1">
+            <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+            <script type="text/javascript" src="/static/vue/js/DD_roundies_0.0.2a-min.js"></script>
+            <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+        <![endif]-->
+        <!--[if IE 9]>
+            <link rel="stylesheet" href="/static/vue/css/ie9.css?v1">
+        <![endif]-->
+        <script>{% include "js/static.js" %}</script>
+        <script type="text/javascript" src="/jsi18n/?v=8"></script>
+        <script>
+            disable_geolocation=true;
+        </script>
+	</head>
+
+    <body class="{%block body-class%}{%endblock%}">
+		<div id="container">
+			<header>
+                <h1><a href="{% url vue_main %}">Vue</a></h1>
+			</header>
+
+			<div id="main">
+                <section class="info">
+                    {% block info %}
+                    <h1>Discover your favorite film of 2012... now!</h1>
+                    {% endblock %}
+		</section>
+                <section id="film-toplayer" class="top-layer">
+                    <a class="close" href="#">Close</a>
+                    <div class="ajax-loader">ajax-loader</div>
+                    <div class="content">
+                    </div>
+                </section>
+
+                {% block content %}
+                {% endblock %}
+			</div>
+
+			<footer>
+				<section class="powered-by">
+					<p>Film recommendations are delivered by <a href="http://filmaster.com">Filmaster</a>.</p>
+					<p><a href="http://filmaster.com"><img src="/static/vue/img/logo-filmaster.png" alt="Filmaster.com"/></a></p>
+                </section>
+				<section class="register">
+                {% if request.user.is_anonymous %}
+                <p>Save your recommendations <a href="{%url fb_begin%}?{% get_next request %}" class="fb-button">Login with Facebook</a></p>
+                {% else %}
+                <p>
+                    {% trans "Welcome" %} {{request.user.get_profile.get_current_display_name}}
+                    <a href="{% url acct_logout %}?{% get_next request %}">{% trans "Log out"%}</a>
+                </p>
+                {% endif %}
+                </section>
+			</footer>
+        </div>
+    {% load compress %}
+    {% compress js %}
+        <script src='/static/js/libs/jquery-1.6.2.min.js'></script>
+        <script src="/static/js/libs/jquery-ui-1.8.16.custom.min.js"></script>
+        <script src="/static/js/plugins/jquery.form-2.11.js"></script>
+        <script src="/static/js/plugins/jquery.autogrow.min.js"></script>
+        <script src="/static/js/plugins/jquery.filmaster.js"></script>
+        <script src="/static/js/plugins/jquery.timeago.js"></script>
+        <script src="/static/js/plugins/jquery.ajaxmanager.js"></script>
+        <script src="/static/js/script.js?vv=2"></script>
+    {% endcompress %}
+    {% include "facebook_connect/facebook_script_async.html" %}    
+    <script>
+
+function setupLabel() {
+        if ($('.recommendation-feedback label input').length > 0) {
+                $('.recommendation-feedback label').each(function(){
+                        $(this).removeClass('r_on');
+                });
+                $('.recommendation-feedback label input:checked').each(function(){
+                        $(this).parent('label').addClass('r_on');
+                });
+        };
+}
+
+$(document).ready(function(){
+        $('body').addClass('has-js');
+        $('.recommendation-feedback label').click(function(){
+                setupLabel();
+        });
+        setupLabel();
+}); 
+
+        var liked_film_ids = {}
+
+        function film_toplayer() {
+            var top_layer = $('#film-toplayer').css("top", $(document).scrollTop() + 20 + "px").show();
+            var url = $(this).attr('rel');
+            $('.ajax-loader', top_layer).show();
+            $.get(url, null, function(resp) {
+                $('.ajax-loader', top_layer).hide();
+                $('.content', top_layer).html(resp);
+                
+                var form = $('.content', top_layer).find('form.ajax').ajaxForm({
+                    beforeSubmit: function() {
+                        $('.ajax-loader', form).show();
+                        return true;
+                    },
+                    success: function() {
+                        $('.ajax-loader', form).hide();
+                        setupLabel();
+                        var film_id = form.find('input[name=film_id]').attr('value')
+                        var value = form.find('input:checked').attr('value')
+                        if((liked_film_ids[film_id] || "1") != value)
+                            window.reload_recommendations && reload_recommendations();
+                        liked_film_ids[film_id] = value
+                        return true;
+                    }
+                })
+                form.find('input').change(function() {form.submit()});
+
+                $('#crew a').each(function() {
+                    var actor = $('<span>').text($(this).text());
+                    $(this).replaceWith(actor);
+                });
+                FM.showMoreList({
+                    selector: "#crew",
+                    msg: "Show all actors +"
+                });
+                setupLabel();
+
+            });
+            return false;
+        }
+
+        $('.top-layer a.close').click(function() {
+            var top_layer = $(this).parents('.top-layer');
+            $('.content', top_layer).empty();
+            top_layer.hide();
+            return false;
+        });
+        $( document ).bind( 'keydown.toplayer', function(e) {
+            if ( e.keyCode == 27 ) { // close on escape
+                var top_layer = $('#film-toplayer');
+                e.preventDefault();
+                top_layer.hide();
+            }
+        });
+
+
+
+        $('body').delegate('a.film', 'click', film_toplayer);
+        </script>
+    <!--[if lt IE 9]>
+    <script type="text/javascript">
+        DD_roundies.addRule('section.info, section.rate-films, section.recommendations, section.detailed-recommendations, footer, #film-toplayer', '8px');
+        DD_roundies.addRule('header h1', '0 0 8px 8px');
+        DD_roundies.addRule('#film-toplayer .close', '0 7px 0 8px');
+        DD_roundies.addRule('a.main-button', '3px');
+    </script>
+    <![endif]-->
+    <!--[if lt IE 9]>
+        <script type="text/javascript" src="/static/vue/js/ie.js"></script>
+    <![endif]-->
+    {% block end-scripts %}
+    {% endblock %}
+    <script type="text/javascript">
+    var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+    document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+    <script type="text/javascript">
+    try {
+    var pageTracker = _gat._getTracker("{{ settings.ANALYTICS_CODE }}");
+    pageTracker._trackPageview();
+    } catch(err) {}</script> 
+	</body>
+</html>

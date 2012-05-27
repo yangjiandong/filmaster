@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load map_url %}
+{% block title %}{%trans "Login with Facebook"%}{%endblock%}
+{% block content %}
+<div id="fb-root"></div>
+<script src="http://connect.facebook.net/en_US/all.js"></script>
+<div style="text-align:center;padding:20xp;font-weight:bold;">
+{% trans "You can login to Filmaster using your Facebook account. Just press the button below." %}<br /><br />
+<fb:login-button autologoutlink="true"></fb:login-button>
+</div>
+{% if fcn %}<div style="hidden:true;"><b>{% trans "Facebook User!"  %}</b>
+<ul>
+            <li><a href="{% map_url "EDIT_FACEBOOK" %}">{% trans "Change your login" %}</a></li>
+            <li><a href="{% map_url "ASSIGN_FACEBOOK" %}">{% trans "Associate with existing account" %}</a></li>
+</ul>
+             </div>
+{% endif %}
+<script type="text/javascript">
+FB.init({appId: '{{ connect_key }}', status: true, cookie: true, xfbml:true});
+
+FB.Event.subscribe('auth.sessionChange', function(response) {
+	if (response.session) {
+		// A user has logged in, and a new cookie has been saved
+		FB.api({
+			method:'fql.query', 
+			query:'SELECT name, pic_small, proxied_email FROM user	WHERE uid=me()'
+		}, function(results) {
+			$.post("/", {fb_name: results[0].name, fb_pic:  results[0].pic_small , fb_mail: results[0].proxied_email} , function(data){
+				location.assign("/");
+			});
+		});
+	}
+});
+</script>
+{% endblock %}

@@ -1,0 +1,5 @@
+{%load json%}
+{
+    "from_user":{{from_user|jsonstr}},
+    "to_user":{{to_user|jsonstr}}
+}

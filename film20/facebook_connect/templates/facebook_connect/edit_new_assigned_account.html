@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load map_url %}
+{% block title %}{%trans "Change your login and or email"%}{%endblock%}
+{% block content %}
+    <form class="signupform left-form" id="signup_form" method="post" action="./">
+    <fieldset>
+        <legend>{% trans "Change your login and or email" %}</legend>
+        <div>{% trans "You may change your login (displayed on your profile) or email used on this site. This is a one-time change." %} {% trans "If you already have an account on this site you can assign this Facebook Account to your Filmaster account using" %} <a href="{% map_url "ASSIGN_FACEBOOK" %}">{% trans "simple login form" %}</a>.</div>
+        {% if form.username.errors %}<div class="error">{{ form.username.errors|join:", " }}</div>{% endif %}
+        <div>
+              <label>{% trans "Login" %}</label>
+              {{ form.username }}
+        </div>
+        {% if form.email.errors %}<div class="error">{{ form.email.errors|join:", " }}</div>{% endif %}
+        <div>
+              <label>{% trans "Email" %}</label>
+              {{ form.email }}
+        </div>
+        <div>
+              <input type="submit" value="{% trans "Save Changes" %}">
+        </div>
+    </fieldset>
+</form>
+{% endblock %}

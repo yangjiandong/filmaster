@@ -1,0 +1,9 @@
+<SearchPlugin xmlns="http://www.mozilla.org/2006/browser/search/" xmlns:os="http://a9.com/-/spec/opensearch/1.1/">
+<os:ShortName>Filmaster</os:ShortName>
+<os:Description>Filmaster</os:Description>
+<os:InputEncoding>UTF-8</os:InputEncoding>
+<os:Image width="16" height="16">data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAKklEQVQ4jWN478TxnxLMMIwNwAYGxgCKvUC1MBg4AwY+DMg2gFg88AYAAN7AaY+qsUP0AAAAAElFTkSuQmCC</os:Image>
+<os:Url type="text/html" method="GET" template="http://filmaster.com/search/">
+  <os:Param name="q" value="{searchTerms}"/>
+</os:Url>
+</SearchPlugin>

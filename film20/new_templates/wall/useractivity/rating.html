@@ -1,0 +1,25 @@
+{% extends "wall/useractivity/base.html" %}
+{% load i18n %}
+{% load useractivity_tags %}
+{% load map_url %}
+{% load format_date %}
+{% load movie %}
+
+{% block activity-header %}
+    {% trans "rated" %} <a href="{{ activity.film_absolute_url }}">{{ activity.film_title }}</a>
+    {% if not show_single and activity.content != '0' %}
+    {% trans "and" %}
+    <a href="{% url_username_link activity.user %}?f=ratings">
+        {%blocktrans count count=activity.extra_films_rated_count %}
+            1 other
+        {%plural%}
+            {{count }} others
+        {%endblocktrans%}
+        </a>
+    {% endif %}
+{% endblock %}
+
+{% block activity-content %}
+	<meter class="rating-2" max="10" value="{{ activity.rating }}">{{ activity.rating }} {% trans "stars" %}</meter>
+{% endblock %}
+

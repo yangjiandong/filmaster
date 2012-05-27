@@ -1,0 +1,22 @@
+{% load i18n %}
+{% if films %}
+    <a id="rate_next_film" href="{% url rate_next_film %}?rater={{rater|default:""}}"></a>
+    <ul class="rate-movies-simple">
+        {% for film in films %}
+        <li>
+            {% include "movies/rating/single_film_special.html" %}
+        </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    {% if tag %}
+        {% blocktrans %}
+        <p>You have seen all suggested movies for <strong>{{tag}}</strong>.</p>
+        {% endblocktrans %}
+    {% else %}
+        {% blocktrans %}
+        <p>You have seen all suggested movies.</p>
+        {% endblocktrans %}
+    {% endif %}
+{% endif %}
+

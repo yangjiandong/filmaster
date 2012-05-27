@@ -1,0 +1,18 @@
+{% load i18n %}
+<div id="main" class="upload-photo">
+<form action="{% url add-video permalink %}" method="POST" accept-charset="utf-8" enctype="multipart/form-data">
+    {% comment %}
+    {% csrf_token %}
+
+    <p>
+        <label for="id_url">{% trans "Provide video URL" %}</label>
+        <input id="id_url" type="text" name="url">
+    </p>
+    {% endcomment %}
+    {{ form.as_p }}
+    <div class="buttons">
+        <input type="submit" value="{% trans "Save" %}" />
+        <span>{% trans "or" %} <a href="#cancel">{% trans "cancel" %}</a></span>
+    </div>
+</form>
+</div>

@@ -1,0 +1,39 @@
+{% load i18n %}
+{% load showtimes %}
+
+{% if display %}
+<section class="others-ratings top-recommendations">
+<h1>{% trans "Your top recommendations" %}</h1>
+{% if not has_location %}
+    <p>{% trans "You haven't set the location" %}</p>
+    <p><a href="{% url edit_location %}">{% trans "Set your location" %}</a></p>
+{% endif %}
+{% if cinema_films %}
+    <p>{% trans "In theaters" %}</p>
+    <ul>
+    {% for film in cinema_films %} 
+    <li>
+        <a class="title" href="{{ film.get_absolute_url }}">{{ film.get_title }}</a>
+        {% trans "on" %} <a class="channel" href="{% channelurl film.channels.0 %}">{{ film.channels.0 }}</a>
+        <span class="utctime">{% with screening=film.channels.0.screenings.0 %}{% screening_weekday screening %}, {% include "showtimes/screening.html" %} {% endwith %}</span>
+    </li>
+    {% endfor %}
+    </ul>
+    <a href="{% url recommendations_theaters %}">{% trans "Show more" %}</a>
+{% endif %}
+{% if tv_films %}
+    <p>{% trans "On TV" %}</p>
+    <ul>
+    {% for film in tv_films %} 
+    <li>
+        <a class="title" href="{{ film.get_absolute_url }}">{{ film.get_title }}</a>
+        {% trans "on" %} <a class="channel" href="{% channelurl film.channels.0 %}">{{ film.channels.0 }}</a>
+        <span class="utctime">{% with screening=film.channels.0.screenings.0 %}{% screening_weekday screening %}, {% include "showtimes/screening.html" %} {% endwith %}</span>
+    </li>
+    {% endfor %}
+    </ul>
+    <a href="{% url recommendations_tv %}">{% trans "Show more" %}</a>
+{% endif %}
+</section>
+{% endif %} <!-- ifdisplay -->
+

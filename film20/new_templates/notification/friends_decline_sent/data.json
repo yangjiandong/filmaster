@@ -1,0 +1,4 @@
+{%load json%}
+{
+    "user":{{invitation.from_user|jsonstr}}
+}

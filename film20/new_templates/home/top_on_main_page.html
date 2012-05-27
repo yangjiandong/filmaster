@@ -1,0 +1,43 @@
+{% load i18n %}
+
+{% if cinema_films %}
+    <section class="cinema-movies">
+        {% if is_authenticated %}
+            <h1>{% if show_links %}<a href="{% url recommendations_theaters %}">{% endif %}{% trans "Recommendations for theatres" %}{% if show_links %}</a>{% endif %}</h1>
+        {% else %}
+            <h1><a href="{% url recommendations_theaters %}">{% trans "Best in theatres" %}</a></h1>
+            <p>{% trans "Create an account and rate 15 movies, and we'll recommend you new releases matching your taste" %}</p>
+        {% endif %}
+        {% with films=cinema_films %}
+            {% include 'movies/movie_list_main_page.html' %}
+        {% endwith %}
+    </section><!-- .cinema-movies -->
+{% endif %}
+
+{% if tv_films %}
+    <section class="cinema-movies">
+        {% if is_authenticated %}
+            <h1>{% if show_links %}<a href="{% url recommendations_tv %}">{% endif %}{% trans "Recommendations for TV" %}{% if show_links %}</a>{% endif %}</h1>
+        {% else %}
+            <h1><a href="{% url recommendations_tv %}">{% trans "Best on TV" %}</a></h1>
+            <p>{% trans "Create an account and rate 15 movies, and we'll recommend you new releases matching your taste" %}</p>
+        {% endif %}
+        {% with films=tv_films %}
+            {% include 'movies/movie_list_main_page.html' %}
+        {% endwith %}
+    </section><!-- .tv-movies -->
+{% endif %}
+
+{% if all_films %}
+    <section class="top-movies">
+        {% if is_authenticated %}
+            <h1>{% if show_links %}<a href="{% url my_recommendations %}">{% endif %}{% trans "Your all time top recommendations" %}{% if show_links %}</a>{% endif %}</h1>
+        {% else %}
+            <h1><a href="{% url rankings %}">{% trans "Best Movies Ever" %}</a></h1>
+            <p>{% trans "Create an account and rate 15 movies, and we'll recommend you new releases matching your taste" %}</p>
+        {% endif %}
+        {% with films=all_films %}
+            {% include 'movies/movie_list_main_page.html' %}
+        {% endwith %}
+    </section><!-- .top-movies -->
+{% endif %}

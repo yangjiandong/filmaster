@@ -1,0 +1,16 @@
+{% extends "moderation/merging_tools/index.html" %}
+
+{% load i18n %}
+
+{% block title %}
+    {% trans "Admin tools - merging movies | resolve" %}
+{% endblock %}
+
+{% block content-section %}
+
+<h1>{% trans "Admin tools - merging movies | resolved!" %}</h1>
+
+<div class="moderation-content notification-setting">
+    <p>{% trans "Go to movie page at " %} <a href="{{ selected.get_absolute_url }}">{{ selected.get_absolute_url }}</a>.</p>
+</div>
+{% endblock %}

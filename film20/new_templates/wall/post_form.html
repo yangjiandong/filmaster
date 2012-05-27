@@ -1,0 +1,12 @@
+{% load i18n %}
+
+<div class="share">
+    <form id="wall-form" action="" method="POST">
+        <fieldset>
+            {{ form.text.errors }}
+            {{ form.text }}
+			<span id="wall-post-char-limit" class="limit"></span>
+            <button>{% trans "Publish" %}</button>
+        </fieldset>
+    </form>
+</div><!-- .share -->

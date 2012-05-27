@@ -1,0 +1,62 @@
+{% load i18n %}
+{% load expr %}
+<div id="filter-form" class="filter-form">
+	<form method="GET" action=".">
+	<fieldset>
+		{% if film_specs_form.errors %}
+			{% if film_specs_form.year_from.errors %}
+				<div class="error">{{ film_specs_form.year_from.errors }}</div>
+			{% endif %}
+			{% if film_specs_form.year_to.errors %}
+				<div class="error">{{ film_specs_form.year_to.errors }}</div>
+			{% endif %}
+			{% if film_specs_form.related_director.errors %}
+				<div class="error">{{ film_specs_form.related_director.errors }}</div>
+			{% endif %}
+			{% if film_specs_form.related_actor.errors %}
+				<div class="error">{{ film_specs_form.related_actor.errors }}</div>
+			{% endif %}
+			{% if film_specs_form.tags.errors %}
+				<div class="error">{{ film_specs_form.tags.errors }}</div>
+			{% endif %}
+			{% if film_specs_form.popularity.errors %}
+				<div class="error">{{ film_specs_form.popularity.errors }}</div>
+			{% endif %}
+		{% endif %}
+		<div>
+			<label for="id_year_from_0">{{ film_specs_form.year_from.label }}</label>
+			{{ film_specs_form.year_from }}
+			<label for="id_year_to_0">{{ film_specs_form.year_to.label }}</label>
+			{{ film_specs_form.year_to }}
+			<label for="id_country_0">{{ film_specs_form.country.label }}</label>
+			{{ film_specs_form.country }}
+		</div>
+		<div>
+			<label for="id_related_director_0">{{ film_specs_form.related_director.label }}</label>
+			{{ film_specs_form.related_director }}
+		</div>
+		<div>
+			<label for="id_related_actor_0">{{ film_specs_form.related_actor.label }}</label>
+			{{ film_specs_form.related_actor }}
+		</div>
+		<div>
+			<label for="id_tags_0">{{ film_specs_form.tags.label }}</label>
+			{{ film_specs_form.tags }}
+			<label for="id_popularity_0">{{ film_specs_form.popularity.label }} &gt;=</label>
+			{{ film_specs_form.popularity }}
+		</div>
+	</fieldset>
+
+	<div class="rating-options">
+		<p>{% trans "Display ratings for" %}:</p>
+		<ul>
+		{% for key, value in rating_types %}
+			<li>
+    			<a {% ifequal value rating_type_str %}class='selected'{% endifequal %} href="{% if user_profile %}{% url ratings user_profile key %}{% else %}{% url ratings key %}{% endif %}">{{ value }}</a>
+			</li>
+		{% endfor %}
+		</ul>
+	</div><!-- .rating-options -->
+	<input type="submit" name="filter" value="{% trans "Apply filter" %}" />
+	</form>
+</div><!-- #filter-form .filter-form -->

@@ -1,0 +1,43 @@
+{% extends "wall/useractivity/base.html" %}
+{% load i18n %}
+{% load movie %}
+{% load person %}
+{% load map_url %}
+{% load format_date %}
+{% load useractivity_tags %}
+
+{% block activity-header %}
+    {% if activity.film_permalink %}
+    {% trans "added a movie poster" %} <a href="{% if activity.is_tv_series %}{%url show_series activity.film_permalink %}{% else %}{% url show_film activity.film_permalink %}{% endif %}">{{ activity.film_title }}</a>
+    {% else %}
+        {% trans "added a person photo" %} <a href="{% url show_person activity.object_slug %}">{{ activity.object_title }}</a>
+    {% endif %}
+    {% if not show_single and activity.hidden_activities > 0 %}
+        {% trans "and" %}
+        <a href="{% url_username_link activity.user %}?f=images">
+            {% blocktrans count count=activity.hidden_activities %}
+                1 other
+            {% plural %}
+                {{ count }} others
+            {% endblocktrans %}
+        </a>
+    {% endif %}
+{% endblock %}
+
+{% block activity-content %}
+    <span class="wall-posters {% if activity_view %}bigger{% endif %}">
+        {% if activity.hidden_activities > 0 %}
+            {% if show_single %}
+                {% with item=activity.get_json_content|first %}
+                    <a href="{% map_domain %}{{ item.link }}"><img src="{{ item.src }}" alt=""/></a>
+                {% endwith %}
+            {% else %}
+                {% for item in activity.get_json_content %}
+                    <a href="{% map_domain %}{{ item.link }}"><img src="{{ item.src }}" alt=""/></a>
+                {% endfor %}
+            {% endif %}
+        {% else %}
+            <img src="{{ MEDIA_URL }}{{ activity.content }}" alt=""/>
+        {% endif %}
+    </span>
+{% endblock %}

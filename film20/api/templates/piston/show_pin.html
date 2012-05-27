@@ -1,0 +1,17 @@
+{%extends "base.html"%}
+{%load i18n%}
+{%block content%}
+<div id="content-section">
+	<b>{%blocktrans with token.consumer.name as app%}
+	You've succesfully granted access to {{app}}
+	{%endblocktrans%}
+	</b>
+	<p>
+	{%blocktrans with token.consumer.name as app%}
+	Simply return to {{app}} and enter the following PIN to complete
+	the process.
+	{%endblocktrans%}
+	</p>
+	<h1>{{token.verifier}}</h1>
+</div>
+{%endblock%}

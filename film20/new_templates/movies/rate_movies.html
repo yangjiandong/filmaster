@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load movie %}
+{% load utils %}
+
+{% block body-class %}rate-movies-page{% endblock %}
+{% block primary-content-wrapper-start %}{% endblock %}
+{% block content %}
+<section>
+	<section id="rate-movies-progress" class="rate-movies-progress">
+		<h1>{% trans "Rate movies" %}</h1>
+	</section>
+	<p class="rate-movies-more">
+		<a href="." class="main-button">{% trans "Show other movies" %}</a>
+		<span class="ajax-loader"></span>
+    </p>
+    {% include "movies/rate_movies_ajax.html" %}
+    <p class="rate-movies-more">
+		<a href="." class="main-button">{% trans "Show other movies" %}</a>
+		<span class="ajax-loader"></span>
+	</p>
+</section>
+{% endblock %}
+{% block primary-content-wrapper-end %}{% endblock %}
+
+{% block primary-content-aside %}
+	{% include "aside/movies/rate_movies.html" %}
+{% endblock %}

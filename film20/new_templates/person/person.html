@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+{% load map_url %}
+{% load object %}
+{% load person %}
+{% load posters %}
+{% load smartlinebreaks %}
+{% load i18n %}
+{% block title %}{{ person.name|safe }} {{ person.surname|safe }} &laquo; {% trans "Person" %} {% endblock %}
+
+{% block head_extra %}
+<meta property="og:title" content="{{ person.name|safe }} {{ person.surname|safe }}"/>
+<meta property="og:description" content="{{ person.biography|striptags|truncatewords:60 }}" />
+<meta property="og:url" content="{% url show_person person.permalink %}"/>
+<meta property="og:image" content="{{ settings.FULL_DOMAIN }}{% poster 50 auto person %}"/>
+{% endblock %}
+
+{%block content%}
+
+<article class="person">
+    <h1 id="person_name">{{ person.localized_name|safe }} {{ person.localized_surname|safe }}
+    {% if user.is_authenticated %}
+        <a id="edit_title" class="edit" href="#">✎</a>
+    {% endif %}
+    </h1>
+    {% if person.year_of_birth %}
+    <dl>
+        <dt>{% trans "Date of birth" %}</dt>
+        <dd>{{ the_person.year_of_birth }}</dd>
+    </dl>
+    {% endif %}
+
+    {%object_tags person%}
+
+    {% if user.is_authenticated %}
+    <div class="biography">
+        <div class="text">{{ person.biography|safe|smartlinebreaks }}</div>
+
+        <a id="edit_biography" class="edit" href="#">
+            {% if person.biography %}
+                {% trans "Edit Biography" %}
+            {% else %}
+                {% trans "Add Biography" %}
+            {% endif %}
+        </a>
+    </div>
+    {% endif %}
+
+    {% load fbconnect %}
+    {% fb_like person %}
+
+    {%person_films_directed person%}<!-- TODO: generate all -->
+
+    {%person_films_played person%}<!-- TODO: generate all -->
+    
+    {% if user.is_authenticated %}
+        <p>{% trans "Cannot find a movie with this person?" %} <a href="{% url import_film %}">{% trans "Suggest adding it!" %}</a></p>
+    {% endif %}
+</article><!-- .person -->
+
+{%include "person/wall.html"%}
+
+{%endblock%}
+
+{% block primary-content-aside %}
+    {% include 'aside/person.html' %}
+{% endblock primary-content-aside %}
+
+{% block secondary-content-aside %}
+    <aside class="filmaster">
+        {% if person.is_actor %}
+            {% actor_score person %}
+        {% endif %}
+        {% if person.is_director %}
+            {% director_score person %}
+        {% endif %}
+    </aside><!-- .filmaster -->
+{% endblock secondary-content-aside %}
+
+{% block end-scripts %}
+<script type="text/javascript" src="/static/js/utils.js"></script>
+<script type="text/javascript" src="/static/js/person.js"></script>
+<script>
+    FM.showMoreList({
+        selector: "#films_directed",
+        msg: "{% trans 'show all movies' %}"
+    });
+
+    FM.showMoreList({
+        selector: "#films_played",
+        msg: "{% trans 'show all movies' %}"
+    });
+
+    $( "#add_photo" ).addPhoto();
+    $( ".biography .text" ).truncate();
+</script>
+{% endblock %}

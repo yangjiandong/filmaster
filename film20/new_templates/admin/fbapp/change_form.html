@@ -1,0 +1,9 @@
+{% extends "admin/change_form.html" %}
+{% block object-tools-items %}
+{{ block.super }}
+{% if buttons %}
+{% for button in buttons %}
+  <li><a href="{{ button.name }}">{{ button.short_description }}</a></li>
+{% endfor %}
+{% endif %}
+{% endblock %}

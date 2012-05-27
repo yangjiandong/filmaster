@@ -1,0 +1,12 @@
+{% load i18n %}
+
+{# genre #}
+{% if genre %}
+    {% if genre_ranking_str %}
+        {{ genre_ranking_str }}
+    {% else %}
+        {% if not tv_series %}{% trans "Best movies" %}{% else %}{% trans "Best TV series" %}{% endif %}: {{ genre }}
+    {% endif %} 
+{% else %}
+    {% if not tv_series %}{% trans "Best movies" %}{% else %}{% trans "Best TV series" %}{% endif %}{% if fake_film_specs_form.tags %}: {{ fake_film_specs_form.tags }}{% endif %}
+{% endif %}

@@ -1,0 +1,16 @@
+{% load map_url %}
+{% load account %}
+{% load debug %}
+{% load movie %}
+{% if film %}
+
+<section class="rate-movie">
+    {% block form %}
+        {% if rater %}
+            {% film_ratings_form_special film rater %}
+        {% else %}
+            {% film_ratings_form_special film %}
+        {% endif %}
+    {% endblock %}
+</section><!-- .rate-movie -->
+{% endif %}

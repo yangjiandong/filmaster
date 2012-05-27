@@ -1,0 +1,13 @@
+{% extends "profile/base.html" %}
+{% load i18n %}
+
+{% block title %}
+    {% trans "Users followed by " %} {{ user_profile.get_profile.get_current_display_name }}
+{% endblock title %}
+
+{% block content %}
+<section>
+	<h1>{{ user_profile.get_profile.get_current_display_name }} follows {{ followed_number }} users </h1>
+	{% include 'filmasters/filmasters.html' %}
+</section>
+{% endblock content %}

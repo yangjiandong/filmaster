@@ -1,0 +1,21 @@
+{%load i18n%}
+{%load showtimes%}
+{%load movie%}
+{%url showtimes_films as showtimes_url%}
+{{user.username}},
+
+{%trans "We've found some new movies that you are likely to enjoy."%}:
+
+{%if cinema_films%}{%trans "Those are screened in cinemas near you:"%}
+
+{%with films=cinema_films channels=cinemas%}{%include "showtimes/notification/recommended_films.txt"%}{%endwith%}
+{%endif%}
+{%if tv_films%}{%if cinema_films%}{%trans "And those are being shown on TV:"%}{%else%}{%trans "Those are being shown on TV:"%}{%endif%}
+
+{%with films=tv_films channels=tv_channels%}{%include "showtimes/notification/recommended_films.txt"%}{%endwith%}
+{%endif%}
+{%blocktrans%}Remember to check-in when you're planning to watch them and rate the movies after seeing them. 
+
+Have a great week! 
+Filmaster staff
+{%endblocktrans%}

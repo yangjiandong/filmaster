@@ -1,0 +1,1 @@
+{% load i18n %}{% blocktrans %}I wrote a short review of {{ film }} on Filmaster.{% endblocktrans %}

@@ -1,0 +1,44 @@
+{% load i18n %}
+{% load expr %}
+{% load show_film_tags %}
+{% load movie %}
+{% load map_url %}
+{% load posters %}
+
+{% block user-info %}
+{% endblock user-info %}
+{% include "pagination/pagination.html" %}
+{% if object_list %}
+	<ul class="collection rate-movies-simple">
+	{% for basketitem in object_list %}
+		<li>
+			{% if user.is_authenticated %}
+				{% with film=basketitem.film %}
+					{% include "movies/rating/single_film_simple.html" %}
+				{%endwith%}
+			{% else %}
+                <a href="{{ basketitem.film.get_absolute_url }}">
+					<img width="50" height="70" src="{% poster 50 70 basketitem.film %}" alt="{{ basketitem.film.get_title }}" />
+					{{ basketitem.film.get_title }}
+				</a>
+				<p>
+					{{ basketitem.film.get_title|safe }}, {{ basketitem.film.release_year }}, {% film_directors basketitem.film %}
+				</p>
+				<p class="r">
+				{% trans "Average rating" %}: {{ basketitem.film.average_score|floatformat:'2' }}
+					<meter class="rating-2" max="10" value="{{ basketitem.film.average_score|floatformat:'0' }}">
+						{{ basketitem.film.average_score|floatformat:'0' }} {% trans "stars" %}
+					</meter>
+				</p>
+				{% film_description basketitem.film 10 %}
+			{% endif %}
+		</li>
+	{% endfor %}
+	</ul><!-- .collection -->
+	{% include "pagination/pagination.html" %}
+	{% else %}
+		<p>
+			{% trans "There are no movies in your collection, yet. Add some, it's fun!" %}
+		</p>
+	{% endif %}
+

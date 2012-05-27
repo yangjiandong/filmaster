@@ -1,0 +1,17 @@
+{%load i18n%}{%load showtimes%}{%filter striplinebreaks%}
+  {%with screenings.0 as first%}{{first.0}}: 
+    {%for s in first.1|slice:":6"%}
+      {%if days > 1 %}{%ifchanged%}{{s|local_time:timezone|date:"D"}} {%endifchanged%}{%endif%}
+        {{s|local_time_txt:timezone}}
+      {%if not forloop.last%}, {%endif%}
+    {%endfor%}
+  {%endwith%}
+{%endfilter%}
+{%if screenings.1%}{%filter striplinebreaks%}
+  {%trans "Also in"%}: 
+  {%for scr in screenings|slice:"1:5"%}
+    {{scr.0}}
+    {%if not forloop.last%}, {%endif%}
+  {%endfor%}
+{%endfilter%}
+{%endif%}

@@ -1,0 +1,7 @@
+{% extends 'movies/rating/ratings_form.html' %}
+{% load i18n %}
+{% load movie %}
+
+{% block rate_next_url %}
+	<p class="rating-more-link"><a class="button" href="{% url rate_films %}">{% trans "Rate more movies" %}</a></p>{# link to rating all movies #}
+{% endblock rate_next_url %}

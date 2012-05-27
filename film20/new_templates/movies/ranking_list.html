@@ -1,0 +1,35 @@
+{% load expr %}
+{% load object %}
+{% load movie %}
+{% load posters %}
+{% load i18n %}
+
+{% if object_list %}
+{% expr ((page_obj.number - 1)*page_size + 1) as start_numeration %}
+<ol class="ranking-movies" start={{ start_numeration }}>
+{% for ranking in object_list %}
+    <li>
+
+        <section class="rate-movie-simple">
+        <a class="t" href="{{ ranking.film.get_absolute_url }}">
+            <img width="100" height="140" src="{% poster 100 140 ranking.film %}" alt="{{ ranking.film.get_title }}" />
+            {{ ranking.film.get_title }} ({{ ranking.film.release_year }})
+        </a>
+        <p class="votes">({{ ranking.number_of_votes }} {% trans "votes" %})</p>
+        {% object_tags ranking.film %}
+        <p>{% film_directors ranking.film %}</p>
+
+        {% film_average_score ranking.film request.user %}
+        {% add_edit_film_rate_form ranking.film %}
+
+        </section>
+    </li>
+{% endfor %}
+</ol><!-- .ranking-movies -->
+
+{% include "pagination/pagination.html" %}
+
+{% else %}
+    <p>{% trans "There are no films that fulfill the given criteria." %}</p>
+    <p>{% trans "Please modify the criteria to get better results." %}</p>
+{% endif %}

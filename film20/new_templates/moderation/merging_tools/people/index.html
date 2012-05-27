@@ -1,0 +1,30 @@
+{% extends "moderation/merging_tools/index.html" %}
+
+{% load i18n %}
+
+{% block title %}
+    {% trans "Admin tools - merging people" %}
+{% endblock %}
+
+{% block content-section %}
+
+<h1>{% trans "Admin tools - merging people" %}</h1>
+{% if items %}
+    <div class="moderation-content">
+        <ul>
+        {% for item in items %}
+            <li>
+            {{ item.personA }} (<a href="{% url show_person item.personA.permalink %}">{% url show_person item.personA.permalink %}</a>)
+            vs 
+            {{ item.personB }} (<a href="{% url show_person item.personB.permalink %}">{% url show_person item.personB.permalink %}</a>)
+            <a href="{% url people-merging-tool-resolve item.pk %}">{% trans "RESOLVE" %}</a>
+            </li>
+        {% endfor %}
+        </ul>
+    </div>
+
+{% else %}
+    <div class="empty">{%trans "Nothing to display ..." %}</div>
+{% endif %}
+
+{% endblock %}

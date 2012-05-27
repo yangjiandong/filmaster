@@ -1,0 +1,20 @@
+{% load i18n %}
+{% load map_url %}
+{% load useractivity_tags %}
+{% load format_date %}
+{% load threadedcommentstags %}
+{% load sanitize %}
+{% load truncatechars %}
+
+<li>
+    <p>
+        <a href="{% url_username_link activity.user %}">{{ activity.user.get_profile.get_current_display_name }}<img width="45" height="45" src="{% avatars 45 activity.user %}" alt="{{ activity.user.get_profile.get_current_display_name }}" /></a>
+        {% trans "commented" %}
+        {{ activity.content|remove_spoiler|striptags|truncatechars:200}}
+        <a href="{{ activity.get_absolute_url }}">{% trans "read more" %}</a>
+    </p>
+    <p class="timeago">
+        {% human_readable_date activity.created_at %}
+    </p>
+</li>
+

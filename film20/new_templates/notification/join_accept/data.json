@@ -1,0 +1,4 @@
+{%load json%}
+{
+    "user":{{new_user|jsonstr}}
+}

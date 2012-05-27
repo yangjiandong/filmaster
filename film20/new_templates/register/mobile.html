@@ -1,0 +1,97 @@
+<!doctype html>
+<!--[if lt IE 7 ]> <html lang="en" class="no-js ie6 mobile"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en" class="no-js ie7 mobile"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en" class="no-js ie8 mobile"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en" class="no-js ie9 mobile"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="pl" class="no-js mobile"> <!--<![endif]-->
+{%load i18n%}
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>{% trans "Film buffs community" %} &laquo; {% trans "filmaster.com" %}</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/static/favicon.ico">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    
+    <link rel="stylesheet" href="/static/reloaded/css/style.css">
+
+    <script src="/static/reloaded/js/libs/modernizr-2.0.6.min.js"></script>
+</head>
+<body>
+	<div id="container">
+        <header>
+            <hgroup>
+                <h1><a href="/">Filmaster</a></h1>
+                <h2>watch.review.share</h2>
+            </hgroup>
+            
+		</header>
+		
+        <div id="main">
+
+            <div class="content">
+            	<section>
+            		<article>
+            			<h1>{%trans "Very mobile"%}</h1>
+            	   		<img class="iphone-app-promo" src="/static/reloaded/images/iphone-mobile-lp.png" alt="{%trans 'Filmaster on iPhone'%}" />
+                        <p>{%blocktrans%}Filmaster Mobile is a free movie check-in and recommendation app that connects film buffs both locally and around the globe. Every day it provides you with top movie suggestions in your area that fit your personal taste thanks to the powerful social recommendation engine. Check-in to screenings, interact with friends and film lovers like yourself in your area. Watch, review, share!{%endblocktrans%}</p>
+	            	</article>
+            		<h2>{%trans "DOWNLOAD FILMASTER for iPhone!"%}</h2>
+                    <p class="app-store"><a href="http://itunes.apple.com/app/filmaster/id403634677">{%trans "DOWNLOAD FILMASTER for iPhone!"%}</a></p>
+            		<h2>{%trans "DOWNLOAD FILMASTER for Android!"%}</h2>
+                    <p class="android"><a href="https://market.android.com/details?id=app.filmaster">{%trans "DOWNLOAD FILMASTER for Android!"%}</a></p>
+                    <!--p class="android"><a href="http://filmaster.com/static/android/Filmaster_signed.apk">{%trans "DOWNLOAD FILMASTER for Android!"%}</a></p-->
+				</section>
+				<section>
+					<h1>{%trans "Other platforms"%}</h1>
+                    <p>{%blocktrans%}If you are waiting for Filmaster Mobile on another platform, please be patient. Simply enter your e-mail address, and mobile platform below and we'll contact you when a version for your platform is ready for beta testing!{%endblocktrans%}</p>
+                {% if form %}
+                <form method="POST" action="" id="mobile_newsletter">
+                        <fieldset>
+                            <legend>{{form.email.label}}:</legend>
+                            <span class="submit-failed">{{form.email.errors}}</span>
+                            <div class="email">{{form.email}}</div>
+                        </fieldset>
+                        <fieldset>
+                            <legend>{{form.beta_code.label}}:</legend>
+                            <span class="submit-failed">{{form.beta_code.errors}}</span>
+                            <div class="email">{{form.beta_code}}</div>
+                        </fieldset>
+                        <fieldset>
+                            <legend>{{form.opinion.label}} </legend>
+                            <span class="submit-failed">{{form.opinion.errors}}</span>
+                            <div class="opinion">{{form.opinion}}</div>
+                        </fieldset>
+                <input type="submit" value="{% trans "submit" %}" class="newsletter-submit" />
+                </form>
+                {% else %}
+                <span class="submit-ok">{% trans "Thanks for your interest in Filmaster Mobile!" %}</span>
+                <p>&nbsp;</p>
+                <p>{%trans "Now, you can go back to" %} <a href="/">Filmaster</a></p>
+                {% endif %}
+				</section>
+             </div> <!-- .content -->
+             
+        </div><!-- #main -->
+       
+    </div> <!-- #container -->
+
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+	<script>window.jQuery || document.write("<script src='static/js/libs/jquery-1.6.2.min.js'>\x3C/script>")</script>
+	<script src="/static/reloaded/js/script.js"></script>
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("{{ settings.ANALYTICS_CODE }}");
+pageTracker._trackPageview();
+} catch(err) {}</script> 
+
+</body>
+</html>

@@ -1,0 +1,32 @@
+{% load pyif %}
+{% load i18n %}
+
+<rss version="2.0">
+	<channel>
+		<title>
+			{% block title %}
+				{{ moderated_item.get_verbose_name }} - 
+				{% pyif status == -1 %}
+					{% trans "Last added" %}
+				{% endif %}
+
+				{% pyif status == 0 %}
+					{% trans "Last rejected" %}
+				{% endif %}
+
+				{% pyif status == 1 %}
+					{% trans "Last accepted" %}
+				{% endif %}
+			{% endblock %}
+		</title>
+		<language>{% block language %}pl{% endblock %}</language>
+		{% for item in items %}
+		<item>
+			<guid>{% block item_guid %}{{ item.pk }}{% endblock %}</guid>
+			<link>{% block item_link %}{% endblock %}</link>
+			<title>{% block item_title %}{% endblock %}</title>
+			<pubDate>{% block item_pub_date %}{% endblock %}</pubDate>
+		</item>
+		{% endfor %}
+	</channel>
+</rss>

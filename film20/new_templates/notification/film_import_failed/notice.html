@@ -1,0 +1,14 @@
+{% load i18n %}
+{% load pyif %}
+
+{% pyif film_to_import.status == film_to_import.ALREADY_IN_DB %}
+{% blocktrans with film_to_import.title as title and film.get_absolute_url as url %} Failed to import "{{ title }}" from IMDB, the film is already in database. Go to the film page at: <a href="{{ url }}">{{ url }}</a>{% endblocktrans %}
+{% else %}
+	{% pyif film_to_import.status == film_to_import.TV_SERIES %}
+		{% blocktrans with film_to_import.title as title %} Failed to import "{{ title }}" from IMDB, the film is a television series (and we don't support TV).
+		{% endblocktrans %}
+	{% else %}
+		{% blocktrans with film_to_import.title as title %} Failed to import "{{ title }}" from IMDB.
+		{% endblocktrans %}
+	{% endif %}
+{% endif %}

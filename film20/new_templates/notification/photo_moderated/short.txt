@@ -1,0 +1,16 @@
+{% load i18n %}
+{% load pyif %}
+{% pyif item.content_type.name == 'Film' %}
+{% pyif status == 0 %}
+{% blocktrans with item.content_object as film %}Poster for film {{ film }} has been rejected.{% endblocktrans %}
+{% else %}
+{% blocktrans with item.content_object as film %}Poster for film {{ film }} has been accepted.{% endblocktrans %}
+{% endif %}
+{% endif %}
+{% pyif item.content_type.name == 'Person' %}
+{% pyif status == 0 %}
+{% blocktrans with item.content_object as person %}Photo for person {{ person }} has been rejected.{% endblocktrans %}
+{% else %}
+{% blocktrans with item.content_object as person %}Photo for person {{ person }} has been accepted.{% endblocktrans %}
+{% endif %}
+{% endif %}

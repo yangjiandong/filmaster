@@ -1,0 +1,40 @@
+{% load i18n %}
+{% load utils %}
+{% load map_url %}
+{% load followers %}
+{% load display_user %}
+{% load useractivity_tags %}
+{% load nofollow %}
+{% load sanitize %}
+{% load similar_users %}
+<section class="meta">
+    <h1><a href="{% url_username_link user_profile %}" title="{{ user_profile.get_profile.get_current_display_name }}">{{ user_profile.get_profile.get_current_display_name }}</a></h1>
+    {% if user_profile.get_full_name %}
+        <h2>{{ user_profile.get_full_name }}</h2>
+    {% endif %}
+    {% if user_profile.get_profile.website %}
+        <p>{{ user_profile.get_profile.website|urlize|noprotocol }}</p>
+    {% endif %}
+    {% if user_profile.get_profile.description %}
+        <p>{{ user_profile.get_profile.description|sanitize:"b i em strong a:href"|nofollow|safe }}</p>
+    {% endif %}
+    <p><a href="{% url_username_link user_profile %}"><img width="180" height="180" src="{% avatars 180 user_profile %}" alt="{{ user_profile.get_profile.get_current_display_name }}" /></a></p>
+    {% display_users_common_taste request.user user_profile %}
+    {% if request.user.is_authenticated %}
+        {% follow_widget "PROFILE" request.user user_profile %}
+    {% endif %}
+    <nav>
+        <h2>{{ user_profile.get_profile.get_current_display_name }} @Filmaster</h2>
+        <ul>
+            {% if user.is_authenticated and user.username == user_profile.username %}
+                {% include "aside/dashboard/user_links.html" %}
+            {% else %}
+                <li><a href="{% url articles username=user_profile %}">{% trans "Articles" %}</a></li>
+                <li><a href="{% url ratings username=user_profile %}">{% trans "Rated movies" %}</a></li>
+                <li><a href="{% url collection username=user_profile %}">{% trans "Home collection" %}</a></li>
+                <li><a href="{% url wishlist username=user_profile %}">{% trans "Wishlist" %}</a></li>
+                <li><a href="{% url shitlist username=user_profile %}">{% trans "Shitlist" %}</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+</section> <!-- .meta -->

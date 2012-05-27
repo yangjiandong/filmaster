@@ -1,0 +1,22 @@
+{% extends "moderation/record.html" %}
+
+{% load i18n %}
+{% load oembed_tags %}
+
+{% block title %}
+    <p>
+    {% trans "Film" %} <a href="{{ item.film.get_absolute_url }}">{{ item.film.get_title }} ({{ item.film.release_year }})</a> {{ item.get_url_kind|lower }}:
+    </p>
+    <br />
+    {% if item.video_thumb %}
+        <section class="trailers">
+            <a title="{% trans "Watch trailer" %}" href="#">
+                <img width="180" src="{{ item.video_thumb }}" alt="{% trans 'Trailer' %}: {{ item.film.get_title }}" />
+                <span></span>
+            </a>
+            <div class="v">{% oembed 560x345 %}{{ item.url }}{% endoembed %}</div>
+        </section>
+    {% else %}
+        <p><a href="{{ item.url }}">{{ item.url|urlizetrunc:50 }}</p>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,6 @@
+<ul class="mood-selector">
+    <li><a href="?">All</a></li>
+    {% for mood in moods %}
+    <li data-tag="{{mood.tag}}" class="mood-{{mood.tag}}"><a href="?mood={{mood.tag}}" title="{{mood.name}}"><span>{{mood.name}}</span></a></li>
+    {% endfor %}
+</ul>

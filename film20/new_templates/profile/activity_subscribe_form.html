@@ -1,0 +1,8 @@
+{% if form %}
+<form style="position:relative; text-align:right; padding-right:20px;" id="watching_form" action="/action/activity/subscribe/" method="POST">
+    {{form.is_observed}} {{form.is_observed.label}}
+    {{form.activity}}
+    <input type="submit" />
+    <span class="ajax-loader"></span>
+</form>
+{% endif %}

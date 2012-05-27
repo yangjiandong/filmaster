@@ -1,0 +1,59 @@
+{% load map_url %}
+{% load posters %}
+{% load show_film_tags %}
+{% load i18n %}
+{% load chunks%}
+{% load comment_depth %}
+{% load escapelinks %}
+{% load debug %}
+{% load movie %}
+
+<section class="featured-review-movie">
+	<h1>{% trans "Featured review" %}</h1>
+	{% if featured_review %}
+        <section>
+            <header>
+                <p><a href="{{ featured_review.get_absolute_url }}">
+                    <img width="100" height="141" alt="{% if featured_film %}{{ featured_film.get_title|safe }}{% else %}{{ featured_review.get_title }}{% endif %}" src="{% if featured_film %}{% poster 100 141 featured_film %}{% else %}{% poster_default %}{% endif %}"></a></p>
+                <h1><a href="{{ featured_review.get_absolute_url }}">{{ featured_review.get_title }}</a></h1>
+                {% if film %}
+                    <p>{% film_user_rating film featured_review.user 'SIMPLE' %}</p>
+                {% endif %}
+            </header>
+            {% if featured_review.lead %}
+                {{ featured_review.lead|striptags|linebreaks }}
+            {% else %}
+                {{ featured_review.body|striptags|escapeurls|linebreaks|truncatewords_html:150 }}
+            {% endif %}
+            <footer>
+                <p class="lead"><a href="{% url_user_link featured_review.user %}">{{ featured_review.user }}</a></p>
+                <p><a href="{{ featured_review.get_absolute_url }}">{% trans "more" %}</a></p>
+            </footer>
+        </section>
+	{% else %}
+		<p>{% trans "No featured review, start blogging!" %}</p>
+	{% endif %}
+</section>
+
+<section class="other-reviews">
+	<h1>{% trans "Other reviews" %}</h1>
+    {% if recent_reviews %}
+		<ul class="movies-short">
+			{% for review in recent_reviews %}
+				<li>
+                    <a href="{{ review.get_absolute_url }}">
+						{% if review.get_main_related_film %}
+							<img width="100" height="141" alt="{{ review.main_related_film.get_title|safe }}" src="{% poster 100 141 review.main_related_film %}">{{ review.main_related_film.get_title|safe }}
+						{% else %}
+							<img width="100" height="141" src="{% poster_default %}" alt="" />{{ review.title }}
+						{% endif %}
+					</a>
+				</li>
+			{% endfor %}
+		</ul><!-- .movies-short -->
+    {% else %}
+        <p>{% trans "No recent reviews, start blogging!" %}</p>
+    {% endif %}
+	<p class="see-all"><a href="{% url reviews %}">{% trans 'Show all'%}</a></p>
+</section>
+

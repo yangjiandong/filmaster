@@ -1,0 +1,24 @@
+{% extends "dashboard/base.html" %}
+{% load i18n %}
+
+{% block title %}
+    {% trans "Similar Users" %}
+{% endblock title %}
+
+{% block content %}
+	<section>
+    <h1>{%  trans "Filmasters similar to you" %}</h1>
+    {% if users %}
+	<div class="filters">
+		<p>{% trans "Show:" %}</p>
+		<ul>
+            <li>{% a similar_users_url %}{% trans "all" %}{% enda %}</li>
+            <li>{% a similar_users_following %}{% trans "followed" %}{% enda %}</li>
+		</ul>
+	</div>
+    {% include 'filmasters/filmasters.html' %}
+    {% else %}
+        <p>{% trans "Rate some films and we will compute users similar to you." %}</p>
+    {% endif %}
+	</section>
+{% endblock content %}

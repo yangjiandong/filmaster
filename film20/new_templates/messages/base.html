@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% load i18n %}  
+
+{% block title %}{% trans "Your private messages" %}{% endblock %}
+{% block body-class %}messages{% endblock %}
+{% block primary-content-wrapper-start %}
+{% endblock %}
+
+{% block primary-content-aside %}
+<aside class="profile">
+<section>
+<h1>{% trans "Your private messages" %}</h1>
+<nav>
+	<ul>
+		<li><a href="{% url messages_inbox %} ">{% trans "Inbox" %}</a></li>
+		<li><a href="{% url messages_outbox %} ">{% trans "Sent Messages" %}</a></li>
+		<li><a href="{% url messages_compose %} ">{% trans "New Message" %}</a></li>
+	</ul>
+</nav>
+</aside>
+</section>
+{% endblock %}
+
+{% block primary-content-wrapper-end %}{% endblock %}

@@ -1,0 +1,21 @@
+{%load i18n%}
+{%if days %}
+<section id="film-cinema-screenings">
+<h1>{%trans "In cinemas"%}</h1>
+<ul>
+{%for day in days%}
+    <li>
+    <h2>{{day.name}}</h2>
+        <ul class="in-cinemas">
+            {%for channel in day.channels|slice:":99"%}
+            <li>
+            {%include "movies/movie/channel_screenings_row.html"%}
+            </li>
+        {%endfor%}
+        </ul>
+    </li>
+{%endfor%}
+</ul>
+</section>
+{% endif %}
+

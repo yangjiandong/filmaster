@@ -1,0 +1,18 @@
+{% load i18n %}
+{% load utils %}
+
+{% if tags %}
+    <ul class="categories">
+    {% for genre in tags %}
+    <li>
+        <a href="{% url show_tag_page genre|lower %}">{{ genre }}</a>
+        {#% if not forloop.last %}, {%endif%#}
+    </li>
+    {% endfor %}
+	</ul><!-- .categories -->
+{% endif %}
+{%if perms.core.can_edit_tags %}
+  <a class="edit" href='#'
+     title='{% trans "Edit Tags"%}'
+     onclick='edit_tags(this,"{{object.permalink}}","{{object.type}}")'>{% trans "Edit Tags" %}</a>
+{%endif%}

@@ -1,0 +1,3 @@
+{% load i18n %}{% trans "User" %} {{ from_user }} {% trans "started following your activity." %}
+
+{% trans "You can start following this user at:" %} {{ link }}

@@ -1,0 +1,19 @@
+{% load i18n %}
+{% load movie %}
+{% load object %}
+{% load posters %}
+<ul class="movies">
+{% for film in recommendations %}
+<li id="film-{{film.id}}">
+    <a class="film" rel="{% url vue_film_details film.id %}" ><img width="200" height="266" src="{% poster 200 266 film %}" /></a>
+    <h2><a class="film" rel="{% url vue_film_details film.id %}" title="{% trans 'Directed by' %} {{film.get_directors|join:", "}}">{{ film.get_title }}{% include "vue/release_date.html" %}</a></h2> 
+    {% film_description film 60 %}
+    <span class="more">
+        <a class="film" rel="{% url vue_film_details film.id %}">
+            {% trans "Read more" %}
+        </a>
+    </a></span>
+ </li>
+{% endfor %}
+</ul><!-- .movies -->
+

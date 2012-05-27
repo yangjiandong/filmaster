@@ -1,0 +1,7 @@
+{% load i18n %}
+{% if flat_page %}
+<section class="recommendations">
+	<h1>{% trans "Filmaster recommends" %}</h1>
+	{{ flat_page.content }}
+</section><!-- .recommendations -->
+{% endif %}

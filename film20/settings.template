@@ -1,0 +1,126 @@
+# Django settings for film20 project.
+
+from settings_defaults import *
+
+DOMAIN = 'localhost:8000'
+EMAIL_DOMAIN = 'localhost'
+
+# SESSION_COOKIE_DOMAIN = '.localhost'
+
+# SUBDOMAIN_AUTHORS = True
+
+# To execute all celery tasks locally
+CELERY_ALWAYS_EAGER = True
+
+# LOGGING['handlers']['console']['level'] = 'WARNING'
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'film20',
+        'USER': 'film20',
+        'PASSWORD': 'justenter', # set password at prod server
+        'HOST': '127.0.0.1',
+        'PORT': '', # set port at prod server
+    }
+}
+
+# cache settings
+# CACHE_BACKEND = 'locmem://'
+# CACHE_BACKEND = 'dummy://'
+# CACHE_BACKEND = 'memcached://127.0.0.1:11211/'
+# CACHE_MIDDLEWARE_SECONDS = 3600
+# CACHE_MIDDLEWARE_KEY_PREFIX = 'dev_'
+# CACHE_MIDDLEWARE_ANONYMOUS_ONLY = True
+
+
+#For Polish version:
+LANGUAGE_CODE = 'pl'
+COUNTRY = 'Poland'
+COUNTRY_CODE = 'pl'
+LANGUAGES = (
+    ('pl', 'Polish'),
+)
+
+#For Polish version:
+LOGIN_URL = "/konto/login/"
+LOGOUT_URL = "/konto/logout/"
+
+SITE_ID = 1
+
+# Make this unique, and don't share it with anybody.
+SECRET_KEY = '2g86w*g_1v8z69o720htgt5c$1(rf4_5#q7ew=q@g7^hb3t+dg'
+
+INTERNAL_IPS  = ('127.0.0.1', 'localhost', '86.162.137.177', '160.83.32.14', '81.155.106.66',)
+
+INSTALLED_APPS += (
+	# ...
+)
+
+# APNS_SANDBOX = False
+
+# BROKER_HOST = "127.0.0.1"
+# BROKER_USER = "guest"
+# BROKER_PASSWORD = "guest"
+
+# CELERYD_CONCURRENCY = 2
+
+# EMAIL_HOST='localhost'
+# EMAIL_HOST_USER=''
+# EMAIL_HOST_PASSWORD=''
+# EMAIL_PORT='25'
+
+TMDB_API_KEY = "5ba39e81c0a9248add62049a864c3838"
+
+# uncomment this for solr backend
+# HAYSTACK_SEARCH_ENGINE = 'solr'
+# HAYSTACK_SOLR_URL = 'http://127.0.1:8983/solr'
+# HAYSTACK_DEFAULT_OPERATOR = 'OR'
+# HAYSTACK_INCLUDE_SPELLING = False
+# HAYSTACK_CUSTOM_HIGHLIGHTER = 'film20.search.utils.SolrHighlighter'
+
+# facebook apps: http://www.facebook.com/developers/apps.php
+# FACEBOOK_CONNECT_KEY = ''
+# FACEBOOK_CONNECT_SECRET = ''
+
+# twitter apps: http://dev.twitter.com/apps
+# TWITTER_KEY = ""
+# TWITTER_SECRET = ""
+
+# foursquare apps: https://foursquare.com/oauth/
+# FOURSQUARE_KEY = ""
+# FOURSQUARE_SECRET = ""
+
+# English url
+FACEBOOK_URL = 'http://www.facebook.com/FilmasterCom'
+# Polish url
+#FACEBOOK_URL = 'http://www.facebook.com/FilmasterPL'
+
+# uncomment to mute console
+# LOGGING['handlers']['console']['level']='WARNING'
+
+# uncomment to enable sql query logging
+# LOGGING['loggers']['django.db.backends']['level'] = 'DEBUG'
+
+
+try:
+    from local_settings import *
+except ImportError:
+    pass
+
+postprocess_settings(globals())
+
+LOCAL = True
+DEBUG = True
+
+TEMPLATE_DEBUG = DEBUG
+LOGGING_OUTPUT_ENABLED = DEBUG
+LOGGING_INTERCEPT_REDIRECTS = DEBUG
+LOGGING_LOG_SQL = DEBUG
+LOGGING_SHOW_METRICS = DEBUG
+LOGGING['handlers']['console']['level']='INFO'
+if DEBUG:
+    LOGGING['handlers']['console']['level']='DEBUG'
+    MIDDLEWARE_CLASSES += ('djangologging.middleware.LoggingMiddleware', )
+
+CACHE_BACKEND = 'dummy://'

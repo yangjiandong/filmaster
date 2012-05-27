@@ -1,0 +1,66 @@
+{% extends "usersettings/base.html" %}
+{% load i18n %}
+{% load useractivity_tags %}
+
+{% block title %}{% trans "Change my avatar" %}{% endblock %}
+
+{% block head_extra %}
+<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/imgareaselect-default.css" /> 
+{% endblock %}
+
+{% block content %}
+   <form method="post" class="settings" accept-charset="utf-8">
+        <h1>{% trans "Settings" %}: <span>{% trans "Avatar" %}</span></h1>
+        <h3>{% trans "Crop &amp; resize the area you want." %}</h3>
+   
+        <fieldset>
+                {% if form.non_field_errors %}{{ form.non_field_errors }}{% endif %}
+
+                <div>
+                        <img src="{{ avatar.image.url }}" id="cropimage" />
+                </div>
+
+                <input type="hidden" name="top" value="0"/>
+                <input type="hidden" name="bottom" value="0"/>
+                <input type="hidden" name="left" value="0"/>
+                <input type="hidden" name="right" value="0"/>
+        </fieldset>
+        <input type="submit" class="done" value="{% trans 'Save my avatar' %}" /><span> {% trans "or" %} <a href="{% url edit_avatar %}">{% trans "cancel" %}</a></span>
+    </form>
+{% endblock %}
+
+{% block end-scripts %}
+<script type="text/javascript" src="{{ MEDIA_URL }}js/libs/jquery.imgareaselect-0.9.2.min.js"></script>
+<script type="text/javascript">
+        $(function() {          
+                function updateValues(img, selection) {
+                        $("input[name='left']").val(selection.x1);
+                        $("input[name='top']").val(selection.y1);
+                        $("input[name='right']").val(selection.x2);
+                        $("input[name='bottom']").val(selection.y2);
+                }
+
+                $(window).load(function() {
+                        var img = $( "#cropimage" );
+                        // ..
+                        var minWidht = 96, minHeight = 96;
+                        var h = img.height(), w = img.width(), ch = h/2, cw = w/2, rh = minHeight/2, rw = minWidht/2;
+                        // ..
+                        var ic = img.imgAreaSelect( 
+                                { 
+                                        minWidht: minWidht,
+                                        minHeight: minHeight,
+                                        x1: cw - rw,
+                                        y1: ch - rh,
+                                        x2: cw + rw,
+                                        y2: ch + rh,
+                                        aspectRatio: "1:1", 
+                                        handles: true,
+                                        onSelectEnd: updateValues,
+                                        onInit: updateValues
+                                } 
+                        );
+                });
+        });
+</script>
+{% endblock %}

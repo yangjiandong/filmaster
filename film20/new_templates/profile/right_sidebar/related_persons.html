@@ -1,0 +1,13 @@
+{% load i18n %}
+{% load map_url %}
+
+{% if persons %}
+<section class="recommendations movies-in-article">
+    <h1>{% trans "People in this article" %}</h1>
+    <ul>
+        {% for person in persons %}
+        <li><a href="{% url show_person person.permalink %}">{{ person.localized_name|safe }} {{ person.localized_surname|safe }}</a></li>
+        {% endfor %}
+    </ul>
+</section>
+{% endif %}

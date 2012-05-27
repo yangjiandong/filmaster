@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content%}
+<p>Filmaster.pl to nowy serwis internetowy przeznaczony dla miłośników kina. Korzystając z Filmastera dowiesz się jakie filmy warto obejrzeć, poznasz innych kinomaniaków o podobnym guście, poczytasz ciekawe recenzje i wypowiedzi na forum, a być może również sam zaangażujesz się w tworzenie treści serwisu poprzez założenie bloga filmowego.</p>
+                <span class="form">Wpisz poniżej swój adres e-mail, a poinformujemy Cię jak zdarzy się coś ciekawego:</span>
+                 {% if form %}
+                <form method="POST" action="">
+                    {{form.email}}
+                    <input type="submit" value="wyślij" class="newsletter-submit" />
+                </form>
+                <span class="submit-failed">{{form.email.errors}}</span>
+                {%else%}
+                <span class="submit-ok">Twój adres został pomyślnie dodany do bazy. Dzięki za zainteresowanie! Na pewno poinformujemy Cię jak zdarzy się coś interesującego!</span>
+                {%endif%}
+                <br/><br/>
+                <p class="register_link">Chcesz zostać beta-testerem? Wypełnij <a href="/rejestracja-testera/">formularz zgłoszeniowy</a>!</p>
+{% endblock %}
